@@ -433,7 +433,6 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   }
 
   if (!isCollectionUpdate && !isProductUpdate) {
-    // We don't need to revalidate anything for any other topics.
     return NextResponse.json({ status: 200 });
   }
 
