@@ -1,7 +1,6 @@
 import { CartItem } from "@/lib/shopify/types";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { useFormState } from "react-dom";
 import { updateItemQuantity } from "./actions";
 import { useActionState } from "react";
 
@@ -35,6 +34,7 @@ export function EditItemQuantityButton({
 }: {
   item: CartItem;
   type: "plus" | "minus";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   optimisticUpdate: any;
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);

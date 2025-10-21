@@ -2,7 +2,6 @@
 
 import { Product, ProductVariant } from "@/lib/shopify/types";
 import { useProduct } from "../product/product-context";
-import { useFormState } from "react-dom";
 import clsx from "clsx";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { addItem } from "./actions";

@@ -1,7 +1,6 @@
 "use client";
 import { CartItem } from "@/lib/shopify/types";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useFormState } from "react-dom";
 import { removeItem } from "./actions";
 import { useActionState } from "react";
 
@@ -10,6 +9,7 @@ export function DeleteItemButton({
   optimisticUpdate,
 }: {
   item: CartItem;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   optimisticUpdate: any;
 }) {
   const [message, formAction] = useActionState(removeItem, null);
