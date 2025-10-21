@@ -50,13 +50,14 @@ export async function generateMetadata({
 }
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     handle: string;
-  };
+  }>;
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProduct(params.handle);
+  const { handle } = await params;
+  const product = await getProduct(handle);
   if (!product) return notFound();
   return (
     <ProductProvider>
