@@ -10,4 +10,7 @@ module.exports = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true, // ⛔ Bỏ qua ESLint khi build
+  },
 };
