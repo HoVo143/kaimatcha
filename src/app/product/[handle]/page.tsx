@@ -10,6 +10,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
+
 export async function generateMetadata({
   params,
 }: {
@@ -48,11 +49,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { handle: string };
-}) {
+interface ProductPageProps {
+  params: {
+    handle: string;
+  };
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
   const product = await getProduct(params.handle);
   if (!product) return notFound();
   return (
