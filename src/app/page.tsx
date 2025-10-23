@@ -38,11 +38,11 @@ export default async function Home() {
           height={600}
           className="w-full h-[89vh] object-cover"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-start text-center text-white px-6 py-40">
           <h1 className="text-4xl md:text-6xl font-medium tracking-tight">
             Pure Nature,
             <br />
-            <span className="text-emerald-500">Perfect Harmony</span>
+            Perfect Harmony
           </h1>
           <p className="mt-4 max-w-[700px] text-lg md:text-xl">
             Discover our collection of ethically sourced, organic teas 
@@ -51,7 +51,7 @@ export default async function Home() {
           </p>
           <Link
             href="/search/matcha"
-            className="mt-6 inline-flex h-10 items-center justify-center text-emerald-500 px-6 text-sm font-medium hover:text-emerald-400 transition-colors"
+            className="mt-6 underline inline-flex h-10 items-center justify-center text-emerald-500 px-6 text-sm font-medium hover:text-emerald-400 transition-colors"
           >
             Explore matcha
           </Link>
@@ -61,12 +61,18 @@ export default async function Home() {
       <section className="w-full py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-medium mb-4">Our Products</h2>
-        <p className="text-muted-foreground max-w-[700px] mx-auto mb-12">
+        <p className="text-muted-foreground max-w-[700px] mx-auto mb-2">
           Carefully curated selections from our master tea blenders, each
           <br />
           crafted with love and respect for nature
         </p>
-
+        <Link
+            href="/search"
+            className=" text-sm font-medium hover:text-emerald-600 transition-colors mb-12"
+          >
+             View all
+        </Link>
+        <p className="mb-12"></p>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           {topProducts.map((product) => (
             <div
@@ -82,7 +88,7 @@ export default async function Home() {
                   className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                <h3 className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-xl font-semibold tracking-wide">
+                <h3 className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-xxl font-medium tracking-wide">
                   {product.title}
                 </h3>
               </Link>
@@ -133,7 +139,7 @@ export default async function Home() {
           height={600}
           className="w-full h-[80vh] object-cover"
         />
-        <div className="absolute pt-7 inset-0 bg-black/40 flex flex-col items-start justify-start text-start text-white px-8">
+        <div className="absolute pt-24 inset-0 bg-black/40 flex flex-col items-start justify-start text-start text-white px-22">
           <h1 className="text-xxl md:text-2xl font-medium tracking-tight">
             Signature Tea Collection
           </h1>

@@ -10,7 +10,7 @@ export default function SearchLayout({
 }) {
   return (
     <>
-      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black md:flex-row ">
+      <div className="mx-auto mt-14 flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black md:flex-row ">
         <div className="order-first w-full flex-none md:max-w-[125px]">
           <Collections />
         </div>

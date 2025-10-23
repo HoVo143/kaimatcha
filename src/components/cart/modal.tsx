@@ -54,7 +54,7 @@ export default function CartModal() {
         <OpenCart quantity={cart?.totalQuantity} />
       </button>
       <Transition show={isOpen}>
-        <Dialog onClose={closeCart} className="relative z-[999]">
+        <Dialog onClose={closeCart} className="relative z-999">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -75,7 +75,7 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] ">
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white p-6 text-black backdrop-blur-xl md:w-[390px] ">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">My Cart</p>
                 <button aria-label="Close cart" onClick={closeCart}>
@@ -92,7 +92,7 @@ export default function CartModal() {
                 </div>
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-hidden p-1">
-                  <ul className="flex-grow overflow-auto py-4">
+                  <ul className="grow overflow-auto py-4">
                     {cart.lines
                       .sort((a, b) =>
                         a.merchandise.product.title.localeCompare(
@@ -122,13 +122,8 @@ export default function CartModal() {
                             key={i}
                             className="lex w-full flex-col border-b border-neutral-300 "
                           >
-                            <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                              <DeleteItemButton
-                                item={item}
-                                optimisticUpdate={updateCartItem}
-                              />
-                            </div>
-                            <div className="flex flex-row">
+                            
+                            <div className="relative flex flex-row">
                               <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 ">
                                 <Image
                                   className="h-full w-full object-cover"
@@ -159,8 +154,14 @@ export default function CartModal() {
                                   ) : null}
                                 </div>
                               </Link>
+                              <div className="absolute right-2 transition-all ease-in-out hover:scale-110">
+                                <DeleteItemButton
+                                  item={item}
+                                  optimisticUpdate={updateCartItem}
+                                />
+                              </div>
                             </div>
-                            <div className="flex h-16 flex-col justify-between">
+                            <div className="flex h-16 justify-between items-center">
                               <Price
                                 className="flex justify-end space-y-2 text-right text-sm"
                                 amount={item.cost.totalAmount.amount}

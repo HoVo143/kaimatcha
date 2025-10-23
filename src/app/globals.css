@@ -31,3 +31,9 @@ h2,
 h1 {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
 }
+
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
