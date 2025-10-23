@@ -11,7 +11,7 @@ export const metadata = {
 export default async function SearchPage(props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // ✅ Next.js 15: searchParams là Promise, cần await
+  // Next.js 15: searchParams là Promise, cần await
   const searchParams = await props.searchParams;
 
   const { sort, q: searchValue } = (searchParams || {}) as {

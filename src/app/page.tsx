@@ -1,172 +1,153 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getCollections, getProducts  } from "@/lib/shopify";
 
 export const metadata = {
   description:
-    "High-performance e-commerce store built with Next.js, Vercel, and Shopify.",
+    "Discover the world of Matcha and premium teas — crafted for calm, focus, and wellness.",
   openGraph: {
     type: "website",
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const collections = await getCollections();
+
+  // Lấy 5 collection đầu tiên
+  // const topCollections = collections.slice(0, 5);
+  const topCollections = collections
+  .filter((c) => c.handle && c.handle.trim() !== "")
+  .slice(0, 5);
+
+  // const products = await getProducts({ sortKey: "CREATED_AT", reverse: true });
+  const products = await getProducts({
+    sortKey: "BEST_SELLING",
+    reverse: false, // không cần đảo ngược vì Shopify đã sắp giảm dần sẵn
+  });
+
+  const topProducts = products.slice(0, 6);
+
   return (
-    <main className="flex-1">
-      <section className="w-full pt-12 md:pt-24 lg:pt-32 border-bottom-b">
-        <div className="px-4 md:px-6 space-y-10 xl:space-y-16">
-          <div className="grid max-w-[1300px] mx-auto gap-4 px-4 sm:px-6 md:px-10 md:grid-cols-2 md:gap-16">
-            <div>
-              <h1 className="lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-                Discover the Latest Fashion Trends
-              </h1>
-            </div>
-            <div className="flex flex-col items-start space-y-4">
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Explore our curated collections of stylish apparel and
-                accessories for every occasion.
-              </p>
-              <div className="flex flex-col w-full md:flex-row gap-2 text-nowrap">
-                <Link
-                  href="/search/meats"
-                  className="inline-flex h-9 items-center justify-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  prefetch={false}
-                >
-                  Meats
-                </Link>
-                {/* <Link
-                  href="/search/mens-collection"
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  prefetch={false}
-                >
-                  Shop Men
-                </Link>
-                <Link
-                  href="/search/sales"
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-red-300 border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-red-300 hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  prefetch={false}
-                >
-                  Shop Sales
-                </Link> */}
-              </div>
-            </div>
-          </div>
-          <Image
-            src=""
-            width="1270"
-            height="300"
-            alt="Hero"
-            className="mx-auto rounded-t-xl object-cover"
-          />
+    <main className="flex-1 bg-[#f9f5ea] text-[#2c2c2c]">
+      {/* Hero Banner */}
+      <section className="relative w-full">
+        <Image
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761022115"
+          alt="Matcha Banner"
+          width={1600}
+          height={600}
+          className="w-full h-[89vh] object-cover"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+          <h1 className="text-4xl md:text-6xl font-medium tracking-tight">
+            Pure Nature,
+            <br />
+            <span className="text-emerald-500">Perfect Harmony</span>
+          </h1>
+          <p className="mt-4 max-w-[700px] text-lg md:text-xl">
+            Discover our collection of ethically sourced, organic teas 
+            <br />
+             that nurture both body and soul
+          </p>
+          <Link
+            href="/search/matcha"
+            className="mt-6 inline-flex h-10 items-center justify-center text-emerald-500 px-6 text-sm font-medium hover:text-emerald-400 transition-colors"
+          >
+            Explore matcha
+          </Link>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 grid place-content-center">
-        <div className="container space-y-12 px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
-                New Arrivals
-              </div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Trending Now
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Check out our latest collection of stylish and comfortable
-                clothing.
-              </p>
-            </div>
-          </div>
-          <div className="mx-auto grid items-start justify-center gap-8 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4">
-            <div className="grid gap-1">
-              <Link
-                href="/search/womens-collection"
-                className="group"
-                prefetch={false}
-              >
-                <Image
-                  src=""
-                  width="400"
-                  height="500"
-                  alt="Women's Collection"
-                  className="aspect-[4/5] overflow-hidden rounded-lg object-cover group-hover:scale-105 transition-transform"
-                />
-                <h3 className="mt-4 text-lg font-bold group-hover:underline">
-                  Women\&apos;s Collection
-                </h3>
-              </Link>
-            </div>
-            <div className="grid gap-1">
-              <Link
-                href="/search/mens-collection"
-                className="group"
-                prefetch={false}
-              >
-                <Image
-                  src=""
-                  width="400"
-                  height="500"
-                  alt="Men's Collection"
-                  className="aspect-[4/5] overflow-hidden rounded-lg object-cover group-hover:scale-105 transition-transform"
-                />
-                <h3 className="mt-4 text-lg font-bold group-hover:underline">
-                  Men\&apos;s Collection
-                </h3>
-              </Link>
-            </div>
-            <div className="grid gap-1">
-              <Link href="/search/kids" className="group" prefetch={false}>
-                <Image
-                  src=""
-                  width="400"
-                  height="500"
-                  alt="Kids' Collection"
-                  className="aspect-[4/5] overflow-hidden rounded-lg object-cover group-hover:scale-105 transition-transform"
-                />
-                <h3 className="mt-4 text-lg font-bold group-hover:underline">
-                  Kids\&apos;s Collection
-                </h3>
-              </Link>
-            </div>
-            <div className="grid gap-1">
-              <Link href="/search/sales" className="group" prefetch={false}>
-                <Image
-                  src=""
-                  width="400"
-                  height="500"
-                  alt="Sale's Collection"
-                  className="aspect-[4/5] overflow-hidden rounded-lg object-cover group-hover:scale-105 transition-transform"
-                />
-                <h3 className="mt-4 text-lg font-bold group-hover:underline">
-                  Sale\&apos;s Collection
-                </h3>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="w-full py-12 lg:py-7 bg-[url('/sale-backdrop.svg')] grid place-content-center">
-        <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
-          {/* <Image src="" alt="sale footer banner" /> */}
-          <div className="space-y-3 z-50">
-            <div className="bg-white ">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight p-2">
-                Explore Our Sale Collection
-              </h2>
-            </div>
-            <div className="bg-white">
-              <p className="mx-auto max-w-[600px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed p-2">
-                Don&apos;t miss out on our amazing deals and discounts.
-              </p>
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-sm space-y-2 z-50">
-            <Link
-              href="#"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-slate-200  px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-              prefetch={false}
+      {/* products */}
+      <section className="w-full py-16 md:py-24">
+      <div className="container mx-auto px-4 md:px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-medium mb-4">Our Products</h2>
+        <p className="text-muted-foreground max-w-[700px] mx-auto mb-12">
+          Carefully curated selections from our master tea blenders, each
+          <br />
+          crafted with love and respect for nature
+        </p>
+
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+          {topProducts.map((product) => (
+            <div
+              key={product.id}
+              className="group relative overflow-hidden rounded-2xl shadow-md bg-white"
             >
-              Shop Sale
-            </Link>
-          </div>
+              <Link href={`/product/${product.handle}`}>
+                <Image
+                  src={product.featuredImage?.url || ""}
+                  alt={product.title}
+                  width={400}
+                  height={400}
+                  className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <h3 className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-xl font-semibold tracking-wide">
+                  {product.title}
+                </h3>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+      {/* Our Collection */}
+     <section className="w-full py-16 md:py-24">
+      <div className="container mx-auto px-4 md:px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-medium mb-8">Our Collection</h2>
+
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 max-w-8xl mx-auto">
+          {topCollections.map((collection) => (
+            <div
+              key={collection.id}
+              className="group relative overflow-hidden"
+            >
+              <Link href={`/search/${collection.handle}`}>
+                <Image
+                  src={collection.image?.url || ""}
+                  alt={collection.title}
+                  width={400}
+                  height={400}
+                  className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 transition-colors" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg">
+                      {collection.title}
+                    </h3>
+                  </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+      {/* Sale / CTA Section */}
+      <section className="relative w-full">
+        <Image
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/13.png?v=1761022128"
+          alt="Matcha Banner"
+          width={1600}
+          height={600}
+          className="w-full h-[80vh] object-cover"
+        />
+        <div className="absolute pt-7 inset-0 bg-black/40 flex flex-col items-start justify-start text-start text-white px-8">
+          <h1 className="text-xxl md:text-2xl font-medium tracking-tight">
+            Signature Tea Collection
+          </h1>
+          <p className="mt-4 max-w-[700px] text-xxl md:text-xxl">
+            Discover our master blender’s exclusive creations, available only at
+            <br />
+            Herbal Haven. Limited quantities, infinite possibilities.
+          </p>
+          <Link
+            href="/search/matcha"
+            className="mt-6 inline-flex h-10 items-start justify-start text-emerald-500 text-sm font-medium hover:text-emerald-400 transition-colors"
+          >
+            Explore matcha
+          </Link>
         </div>
       </section>
     </main>

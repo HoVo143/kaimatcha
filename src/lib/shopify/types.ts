@@ -95,11 +95,16 @@ export type ShopifyProductsOperation = {
 };
 
 export type ShopifyCollection = {
+  id: string;
   handle: string;
   title: string;
   description: string;
   seo: SEO;
   updatedAt: string;
+  image?: {
+    url: string;
+    altText?: string;
+  } | null;
 };
 
 export type Collection = ShopifyCollection & {

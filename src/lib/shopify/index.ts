@@ -175,14 +175,27 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     },
   });
 
+  // return (
+  //   res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
+  //     title: item.title,
+  //     path: item.url
+  //       .replace(domain, "")
+  //       .replace("/collections", "/search")
+  //       .replace("/pages", ""),
+  //   })) || []
   return (
-    res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
-      title: item.title,
-      path: item.url
-        .replace(domain, "")
-        .replace("/collections", "/search")
-        .replace("/pages", ""),
-    })) || []
+    res.body?.data?.menu?.items.map((item: { title: string; url: string }) => {
+      // Loại bỏ domain (nếu có)
+      const cleanUrl = item.url
+        .replace(/^https?:\/\/[^/]+/, "") // bỏ https://domain.com
+        .replace("/collections", "/search") // đổi collections → search
+        .replace("/pages", ""); // bỏ /pages
+
+      return {
+        title: item.title,
+        path: cleanUrl.startsWith("/") ? cleanUrl.slice(1) : cleanUrl, // bỏ slash đầu để path đẹp
+      };
+    }) || []
   );
 }
 
@@ -244,6 +257,7 @@ export async function getCollections(): Promise<Collection[]> {
   const shopifyCollections = removeEdgesAndNodes(res?.body?.data?.collections);
   const collections = [
     {
+      id: "all",
       handle: "",
       title: "All",
       description: "All products",
@@ -253,6 +267,7 @@ export async function getCollections(): Promise<Collection[]> {
       },
       path: "/search",
       updatedAt: new Date().toISOString(),
+      image: null, 
     },
     // Filter out the hidden products
     ...reshapeCollections(shopifyCollections).filter(
