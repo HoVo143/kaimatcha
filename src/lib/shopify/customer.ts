@@ -59,17 +59,12 @@ export async function shopifyFetch<T>({
   }
 }
 
-
-
 export async function getCustomer(accessToken: string) {
   const res = await shopifyFetch<{
     data: { customer: any };
   }>({
     query: getCustomerQuery,
-    variables: {}, // biến rỗng vì token qua header
-    headers: {
-      "X-Shopify-Customer-Access-Token": accessToken,
-    },
+    variables: { accessToken },
   });
 
   return res.body.data.customer;

@@ -31,7 +31,12 @@ export default function LoginPage() {
       body: JSON.stringify({ email, code }),
     });
     const data = await res.json();
-    setMessage(data.message);
+    // setMessage(data.message);
+    if (data.token) {
+  // token set trong cookie => Navbar tự đổi nút Login -> Logout
+  // Redirect sang Shopify
+  window.location.href = data.redirectUrl;
+}
   }
 
   return (

@@ -5,14 +5,16 @@ import MobileMenu from "./mobile-menu";
 import Search from "./search";
 import LogoSquare from "@/components/logo-square";
 import CartModal from "@/components/cart/modal";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import NavbarClient from "@/components/NavbarClient";
 
 export async function Navbar() {
   const menu = await getMenu("main-menu");
 
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("shopify_customer_token")?.value;
+  // const cookieStore = cookies();
+  // const token = (await cookieStore).get("shopify_customer_token")?.value;
+  
+
 
   return (
     <nav className="flex items-center justify-between p-4 lg:px-16 sticky top-0 backdrop-blur-sm z-999 bg-black">
@@ -54,7 +56,7 @@ export async function Navbar() {
           <Search />
           {/* login */}
           <div className="hidden justify-end md:flex md:w-1/3 gap-5">
-            <NavbarClient token={token} />
+            <NavbarClient />
           </div>
 
           {/* cart */}

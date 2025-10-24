@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { otpStore } from "@/lib/otpStore";
-import { shopifyFetch } from "@/lib/shopify/customer";
 import {
   customerCreateMutation,
   customerAccessTokenCreateMutation,
 } from "@/lib/shopify/queries/customer";
+import { shopifyFetch } from "@/lib/shopify/customer";
 
 export async function POST(req: Request) {
   const { email, code } = await req.json();
@@ -15,16 +15,13 @@ export async function POST(req: Request) {
   }
 
   otpStore.delete(email);
-
   const defaultPassword = process.env.SHOPIFY_DEFAULT_PASS || "default@123";
 
-  // tạo customer nếu chưa có
   await shopifyFetch({
     query: customerCreateMutation,
     variables: { input: { email, password: defaultPassword } },
   });
 
-  // tạo token
   const res = await shopifyFetch({
     query: customerAccessTokenCreateMutation,
     variables: { input: { email, password: defaultPassword } },
@@ -40,9 +37,17 @@ export async function POST(req: Request) {
 
   const token = data.customerAccessToken.accessToken;
 
-  const response = NextResponse.json({ message: "Login success" });
+ 
+  // **Chỉ trả JSON kèm token** cho client
+  const response = NextResponse.json({
+    message: "Login success",
+    token,
+    redirectUrl: "https://shopify.com/68266360920/account/orders",
+  });
+
+  // Cookie chỉ set cho domain của bạn để Navbar nhận biết
   response.cookies.set("shopify_customer_token", token, {
-    httpOnly: true,
+    httpOnly: false,
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });

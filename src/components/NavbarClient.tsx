@@ -1,41 +1,39 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getCustomer } from "@/lib/shopify/customer";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import LogoutButton from "@/app/logout/page";
 
-export default function NavbarClient({ token }: { token?: string }) {
+export default function NavbarClient() {
   const [customer, setCustomer] = useState<any>(null);
 
   useEffect(() => {
     async function fetchCustomer() {
-      if (!token) return;
-      try {
-        const data = await getCustomer(token);
-        setCustomer(data);
-      } catch (err) {
-        setCustomer(null);
-      }
+      const token = Cookies.get("shopify_customer_token");
+
+      if (!token) return setCustomer(null);
+
+      const res = await fetch("/api/shopify/customer", {
+        headers: { "x-shopify-token": token },
+      });
+      const data = await res.json();
+      setCustomer(data.customer);
     }
+
     fetchCustomer();
-  }, [token]);
+  }, []);
+
+      console.log('customer', customer);
 
   return (
     <>
       {customer ? (
         <>
-          <span className="text-sm text-gray-600">
-            Hi, {customer.firstName || customer.email.split("@")[0]}
-          </span>
+          <span className="text-sm text-gray-700">Hi, {customer.firstName || customer.email.split("@")[0]}</span>
           <LogoutButton />
         </>
       ) : (
-        <Link
-          href="/login"
-          className="text-sm text-gray-700 hover:text-black"
-        >
-          Login
-        </Link>
+        <Link href="/login" className="text-sm text-gray-700 hover:text-black">Login</Link>
       )}
     </>
   );
