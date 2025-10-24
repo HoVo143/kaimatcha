@@ -32,8 +32,20 @@ h1 {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
 }
 
+.products-price p {
+  font-family: "Canela Text Web", serif !important;
+}
+
 input:focus {
   outline: none !important;
   box-shadow: none !important;
   border-color: transparent !important;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

@@ -5,15 +5,30 @@ import MobileMenu from "./mobile-menu";
 import Search from "./search";
 import LogoSquare from "@/components/logo-square";
 import CartModal from "@/components/cart/modal";
+import { cookies } from "next/headers";
+import { getCustomer } from "@/lib/shopify/customer";
 
 export async function Navbar() {
   const menu = await getMenu("main-menu");
+
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("shopify_customer_token")?.value;
+
+  let customer = null;
+  if (token) {
+    try {
+      customer = await getCustomer(token);
+    } catch (err) {
+      console.error("Error fetching customer:", err);
+    }
+  }
+
   return (
     <nav className="flex items-center justify-between p-4 lg:px-16 sticky top-0 backdrop-blur-sm z-999 bg-black">
       <div className="block flex-none md:hidden">
         <MobileMenu menu={menu} />
       </div>
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center justify-center container" style={{margin:'0 auto'}}>
         <div className="flex w-full md:w-1/3">
          
           {menu.length > 0 ? (
@@ -36,7 +51,7 @@ export async function Navbar() {
            <Link
             href={"/"}
             prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+            className="flex w-full items-center justify-center md:w-auto"
           >
             <LogoSquare />
 
@@ -46,6 +61,29 @@ export async function Navbar() {
         <div className="hidden justify-end md:flex md:w-1/3 gap-5">
           {/* Search */}
           <Search />
+          {/* login */}
+          {customer ? (
+            <>
+              <span className="text-sm text-gray-600">
+                Hi, {customer.firstName || customer.email.split("@")[0]}
+              </span>
+              <form action="/api/logout" method="post">
+                <button
+                  type="submit"
+                  className="text-sm text-gray-700 hover:text-black"
+                >
+                  Logout
+                </button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm text-gray-700 hover:text-black"
+            >
+              Login
+            </Link>
+          )}
 
           {/* cart */}
           <CartModal />

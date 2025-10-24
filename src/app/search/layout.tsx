@@ -10,14 +10,14 @@ export default function SearchLayout({
 }) {
   return (
     <>
-      <div className="mx-auto mt-14 flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black md:flex-row ">
-        <div className="order-first w-full flex-none md:max-w-[125px]">
+      <div className="mx-auto  flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black md:flex-row ">
+        <div className="order-first w-full flex-none md:max-w-[125px] md:sticky md:top-28 self-start">
           <Collections />
         </div>
-        <div className="order-last min-h-screen w-full md:order-none">
+        <div className="order-last min-h-screen w-full md:order-0 md:overflow-y-auto md:max-h-[calc(100vh-5rem)]">
           {children}
         </div>
-        <div className="order-none flex-none md:order-last md:w-[125px]">
+        <div className="order-0 flex-none md:order-last md:w-[125px] md:sticky md:top-28 self-start">
           <FilterList list={sorting} title="Sort by" />
         </div>
       </div>
