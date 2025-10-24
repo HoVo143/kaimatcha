@@ -65,20 +65,20 @@ export default async function Home() {
             <p>
               We are the{" "}
               <img
-                className="inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
                 alt="tea"
               />{" "}
               premier tea brand specializing <br />
               in artisanal teas {" "}
               <img
-                className="inline rounded-full align-middle h-12 w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline rounded-full align-middle h-12 w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
                 alt="tea"
               />{" "} sourced directly from <br />
               Korean estates and curating {" "}
               <img
-                className="inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
                 alt="tea"
               />{" "} handcrafted <br />
@@ -87,6 +87,7 @@ export default async function Home() {
           </div>
       </section>
 
+      {/* hr */}
       <div className="flex max-w-[250] m-auto items-center justify-center mt-20 my-5">
         <div className="grow border-t border-gray-500"></div>
         {/* <SparklesIcon className="w-6 h-6 mx-4 text-gray-500" /> */}
@@ -140,6 +141,7 @@ export default async function Home() {
         </div>
       </section> */}
 
+      {/* hr */}
       <div className="flex max-w-[250] m-auto items-center justify-center my-8">
         <div className="grow border-t border-gray-500"></div>
         <img 

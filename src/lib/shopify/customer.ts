@@ -1,9 +1,6 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "../constants";
-import { isShopifyError } from "../type-guards";
 import { ensureStartWith } from "../utils";
 import {
-  customerCreateMutation,
-  customerAccessTokenCreateMutation,
   getCustomerQuery,
 } from "./queries/customer";
 
@@ -62,51 +59,17 @@ export async function shopifyFetch<T>({
   }
 }
 
-interface RegisterInput {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-}
 
-interface LoginInput {
-  email: string;
-  password: string;
-}
-
-export async function registerCustomer({
-  email,
-  password,
-  firstName,
-  lastName,
-}: RegisterInput) {
-  const res = await shopifyFetch<{
-    data: { customerCreate: unknown };
-  }>({
-    query: customerCreateMutation,
-    variables: { input: { email, password, firstName, lastName } },
-  });
-
-  return res.body.data.customerCreate;
-}
-
-export async function loginCustomer({ email, password }: LoginInput) {
-  const res = await shopifyFetch<{
-    data: { customerAccessTokenCreate: unknown };
-  }>({
-    query: customerAccessTokenCreateMutation,
-    variables: { input: { email, password } },
-  });
-
-  return res.body.data.customerAccessTokenCreate;
-}
 
 export async function getCustomer(accessToken: string) {
   const res = await shopifyFetch<{
-    data: { customer: unknown };
+    data: { customer: any };
   }>({
     query: getCustomerQuery,
-    variables: { accessToken },
+    variables: {}, // biến rỗng vì token qua header
+    headers: {
+      "X-Shopify-Customer-Access-Token": accessToken,
+    },
   });
 
   return res.body.data.customer;
