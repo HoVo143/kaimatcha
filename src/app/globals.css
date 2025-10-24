@@ -32,7 +32,8 @@ h1 {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
 }
 
-.products-price p {
+.products-price p,
+.text-home p {
   font-family: "Canela Text Web", serif !important;
 }
 

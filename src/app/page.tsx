@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
 import { getCollections, getProducts  } from "@/lib/shopify";
@@ -29,7 +30,7 @@ export default async function Home() {
   const topProducts = products.slice(0, 6);
 
   return (
-    <main className="flex-1 bg-[#f9f5ea] text-[#2c2c2c]">
+    <main className="flex-1 bg-[#f9f5ea] text-[#2c2c2c]">      
       {/* Hero Banner */}
       <section className="relative w-full">
         <Image
@@ -52,12 +53,51 @@ export default async function Home() {
           </p>
           <Link
             href="/search/matcha"
-            className="mt-6 underline inline-flex h-10 items-center justify-center text-emerald-700 px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
+            className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
           >
             Explore matcha
           </Link>
         </div>
       </section>
+      {/* Text */}
+      <section className="w-full flex flex-col items-center justify-start text-center mt-20 my-14">
+        <div className="text-3xl text-home leading-relaxed">
+            <p>
+              We are the{" "}
+              <img
+                className="inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
+                alt="tea"
+              />{" "}
+              premier tea brand specializing <br />
+              in artisanal teas {" "}
+              <img
+                className="inline rounded-full align-middle h-12 w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
+                alt="tea"
+              />{" "} sourced directly from <br />
+              Korean estates and curating {" "}
+              <img
+                className="inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
+                alt="tea"
+              />{" "} handcrafted <br />
+              teaware by Korean artists.
+            </p>
+          </div>
+      </section>
+
+      <div className="flex max-w-[250] m-auto items-center justify-center mt-20 my-5">
+        <div className="grow border-t border-gray-500"></div>
+        {/* <SparklesIcon className="w-6 h-6 mx-4 text-gray-500" /> */}
+        <img 
+          className="w-12 h-12 mx-1" 
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683" 
+          alt="Hr" 
+          />
+        <div className="grow border-t border-gray-500"></div>
+      </div>
+
       {/* products */}
       <ProductSlider topProducts={topProducts} />
       {/* <section className="w-full py-16 md:py-24">
@@ -100,6 +140,16 @@ export default async function Home() {
         </div>
       </section> */}
 
+      <div className="flex max-w-[250] m-auto items-center justify-center my-8">
+        <div className="grow border-t border-gray-500"></div>
+        <img 
+          className="w-12 h-12 mx-1" 
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683" 
+          alt="Hr" 
+          />
+        <div className="grow border-t border-gray-500"></div>
+      </div>
+      
       {/* Our Collection */}
      <section className="w-full py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 text-center">
@@ -152,7 +202,7 @@ export default async function Home() {
           </p>
           <Link
             href="/search/matcha"
-            className="mt-2 inline-flex h-10 items-start justify-start underline text-emerald-500 text-sm font-medium hover:text-emerald-400 transition-colors"
+            className="mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
           >
             Explore matcha
           </Link>
