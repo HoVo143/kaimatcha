@@ -1,20 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import { getCustomer } from "@/lib/shopify/customer";
 import Link from "next/link";
 import LogoutButton from "@/app/logout/page";
 
-export default function NavbarClient() {
+export default function NavbarClient({ token }: { token?: string }) {
   const [customer, setCustomer] = useState<any>(null);
 
   useEffect(() => {
     async function fetchCustomer() {
-      const token = Cookies.get("shopify_customer_token"); // lấy trực tiếp từ client
-      if (!token) {
-        setCustomer(null);
-        return;
-      }
+      if (!token) return;
       try {
         const data = await getCustomer(token);
         setCustomer(data);
@@ -22,13 +17,8 @@ export default function NavbarClient() {
         setCustomer(null);
       }
     }
-
     fetchCustomer();
-
-    // Optional: poll hoặc subscribe để detect logout/login
-    const interval = setInterval(fetchCustomer, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  }, [token]);
 
   return (
     <>
