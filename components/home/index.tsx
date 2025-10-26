@@ -26,13 +26,13 @@ export default async function HomeSection() {
       {/* Hero Banner */}
       <section className="relative w-full">
         <Image
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761022115"
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761554661"
           alt="Matcha Banner"
           width={1600}
           height={600}
           className="w-full h-[95vh] object-cover"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-start text-center text-white px-6 py-40">
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-start text-center text-white px-6 py-40">
           <h1 className="text-4xl md:text-6xl font-medium tracking-tight">
             Pure Nature,
             <br />

@@ -11,7 +11,6 @@ export const metadata = {
 export default async function SearchPage(props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // Next.js 15: searchParams là Promise, cần await
   const searchParams = await props.searchParams;
 
   const { sort, q: searchValue } = (searchParams || {}) as {
@@ -41,10 +40,12 @@ export default async function SearchPage(props: {
       ) : null}
 
       {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-7">
+        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <ProductGridItems products={products} />
         </Grid>
       ) : null}
     </>
   );
 }
+
+// page all products - collections

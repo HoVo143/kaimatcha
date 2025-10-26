@@ -32,3 +32,5 @@ export default async function CategoryPage(props: {
     </section>
   );
 }
+
+// page products - collection
