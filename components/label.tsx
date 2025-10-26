@@ -21,8 +21,8 @@ export default function Label({
         }
       )}
     >
-      <div className="products-price flex items-center rounded-full bg-white/70 font-medium text-sm  text-black backdrop-blur-md">
-        <h3 className="mr-4 uppercase line-clamp-2 grow pl-5 leading-none tracking-tight">
+      <div className="products-price flex items-center rounded-full bg-white/70 font-medium text-[10px] md:text-sm text-black backdrop-blur-md">
+        <h3 className="mr-4 md:uppercase line-clamp-2 grow pl-5 leading-none tracking-tight">
           {title}
         </h3>
         <Price

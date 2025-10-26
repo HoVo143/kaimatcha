@@ -22,9 +22,8 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
     <section className="w-full py-16 md:py-24 relative">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-medium mb-4">Featured Tea Blends</h2>
-        <p className="text-muted-foreground max-w-[700px] mx-auto mb-2">
+        <p className="text-muted-foreground max-w-[300px] md:max-w-[500px] mx-auto mb-2">
           Carefully curated selections from our master tea blenders, each
-          <br />
           crafted with love and respect for nature
         </p>
         <Link

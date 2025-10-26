@@ -30,15 +30,15 @@ export default async function HomeSection() {
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[95vh] object-cover"
+          className="w-full h-[70vh] object-cover md:h-[95vh]"
         />
-        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-start text-center text-white px-6 py-40">
-          <h1 className="text-4xl md:text-6xl font-medium tracking-tight">
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-end text-center text-white px-6 py-40">
+          <h1 className="text-3xl md:text-6xl font-medium tracking-tight">
             Pure Nature,
             <br />
             Perfect Harmony
           </h1>
-          <p className="mt-4 max-w-[700px] text-lg md:text-xl">
+          <p className="mt-4 max-w-[260px] text-sm md:text-xl md:max-w-[700px]">
             Discover our collection of ethically sourced, organic teas 
             <br />
              that nurture both body and soul
@@ -52,35 +52,35 @@ export default async function HomeSection() {
         </div>
       </section>
       {/* Text */}
-      <section className="w-full flex flex-col items-center justify-start text-center mt-20 my-14">
-        <div className="text-3xl text-home leading-relaxed">
+      <section className="w-full flex flex-col items-center justify-start text-center mt-5 md:mt-20 my-14">
+        <div className="text-xl md:text-3xl text-home leading-relaxed mx-5 max-w-[300px] md:max-w-[520px]">
             <p>
               We are the{" "}
               <img
-                className="cursor-pointer inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
                 alt="tea"
               />{" "}
-              premier tea brand specializing <br />
+              premier tea brand specializing 
               in artisanal teas {" "}
               <img
-                className="cursor-pointer inline rounded-full align-middle h-12 w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline rounded-full align-middle h-8 w-h-8 md:h-12 md:w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
                 alt="tea"
-              />{" "} sourced directly from <br />
+              />{" "} sourced directly from 
               Korean estates and curating {" "}
               <img
-                className="cursor-pointer inline align-middle h-16 w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+                className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
                 src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
                 alt="tea"
-              />{" "} handcrafted <br />
+              />{" "} handcrafted 
               teaware by Korean artists.
             </p>
           </div>
       </section>
 
       {/* hr */}
-      <div className="flex max-w-[250] m-auto items-center justify-center mt-20 my-5">
+      <div className="flex max-w-[250] m-auto items-center justify-center mt-1 md:mt-20 my-5">
         <div className="grow border-t border-gray-500"></div>
         {/* <SparklesIcon className="w-6 h-6 mx-4 text-gray-500" /> */}
         <img 
@@ -149,7 +149,7 @@ export default async function HomeSection() {
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-medium mb-8">Our Collection</h2>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 max-w-8xl mx-auto">
+        <div className="grid gap-2 md:gap-8 grid-cols-2 lg:grid-cols-5 max-w-8xl mx-auto">
           {topCollections.map((collection) => (
             <div
               key={collection.id}
@@ -183,10 +183,10 @@ export default async function HomeSection() {
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[80vh] object-cover"
+          className="w-full h-[50vh] object-cover md:h-[80vh]"
         />
-        <div className="absolute pt-24 inset-0 bg-black/40 flex flex-col items-start justify-start text-start text-white px-22">
-          <h1 className="text-xxl md:text-2xl font-medium tracking-tight">
+        <div className="absolute pt-4 md:pt-24 inset-0 bg-black/40 flex flex-col items-center justify-center text-center md:items-start md:justify-start md:text-start text-white px-10 md:px-22">
+          <h1 className="text-2xl md:text-2xl font-medium tracking-tight">
             Signature Tea Collection
           </h1>
           <p className="mt-4 max-w-[700px] text-xxl md:text-xxl">
