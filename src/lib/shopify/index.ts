@@ -60,6 +60,7 @@ const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 type ExtractVariables<T> = T extends { variables: object }
   ? T["variables"]
   : never;
+  
 export async function shopifyFetch<T>({
   cache = "force-cache",
   headers,
