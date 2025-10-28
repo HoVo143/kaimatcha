@@ -41,7 +41,7 @@ export default function Search() {
         className="text-md w-full py-2 text-black placeholder:text-gray-500 md:text-sm md:text-white md:placeholder:text-neutral-300 border-b border-b-gray-500"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center pb-2.5">
-        <MagnifyingGlassIcon className="h-6 text-white" />
+        <MagnifyingGlassIcon className="h-6 text-black md:text-white" />
       </div>
     </form>
   );

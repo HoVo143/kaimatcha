@@ -11,7 +11,9 @@ export async function generateMetadata({
   const { page } = await params; // ✅ thêm await ở đây
 
   // Ưu tiên page → policy
-  let data = await getPage(page);
+  let data;
+
+  data =await getPage(page);
 
   if (!data) {
     data = await getPolicy(page);
@@ -33,8 +35,9 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { page: string } }) {
   const { page } = await params; // ✅ thêm await ở đây
 
-  // Ưu tiên page → policy
-  let data = await getPage(page);
+  let data;
+  
+  data =await getPage(page);
 
   if (!data) {
     data = await getPolicy(page);
