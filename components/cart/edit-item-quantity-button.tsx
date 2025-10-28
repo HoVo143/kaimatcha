@@ -52,11 +52,10 @@ export function EditItemQuantityButton({
         title: "Quantity limit",
         text: "You must have at least one item in your cart. To remove it, please use the delete button instead.",
         background: `
-          linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-          url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761554661")
+          linear-gradient(rgb(0 0 0 / 58%), rgb(0 0 0 / 58%)),
+          url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/12.png?v=1761022125")
           center / cover no-repeat
         `,
-        icon: "warning",
         confirmButtonText: "OK",
         confirmButtonColor: "#6a994e", // matcha green tone
       });
