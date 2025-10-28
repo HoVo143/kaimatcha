@@ -39,3 +39,30 @@ export const getPagesQuery = /* GraphQL */ `
   }
   ${pageFragment}
 `;
+
+
+
+export const getPolicyQuery = /* GraphQL */ `
+  query getPolicy {
+    shop {
+      termsOfService {
+        ...policy
+      }
+      refundPolicy {
+        ...policy
+      }
+      shippingPolicy {
+        ...policy
+      }
+    }
+  }
+
+  fragment policy on ShopPolicy {
+    id
+    title
+    body
+    handle
+    url
+  }
+`;
+

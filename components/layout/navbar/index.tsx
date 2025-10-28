@@ -11,11 +11,22 @@ export async function Navbar() {
   const menu = await getMenu("main-menu");
 
   return (
-    <nav className="flex items-center justify-between p-4 lg:px-16 sticky top-0 backdrop-blur-sm z-999 bg-black">
+    <nav className="flex items-center justify-between p-4 lg:px-6 sticky top-0 backdrop-blur-sm z-999 bg-black">
+      {/* Mobile menu icon */}
       <div className="block flex-none md:hidden">
         <MobileMenu menu={menu} />
       </div>
-      <div className="flex w-full items-center justify-center container" style={{margin:'0 auto'}}>
+      {/* Logo — khi mobile */}
+      <Link
+        href="/"
+        prefetch={true}
+        className="md:hidden absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center justify-center"
+      >
+        <LogoSquare />
+      </Link>
+
+      {/* Right side desktop items */}
+      <div className="flex w-full items-center justify-center" style={{margin:'0 auto'}}>
         <div className="flex w-full md:w-1/3">
          
           {menu.length > 0 ? (
@@ -34,7 +45,7 @@ export async function Navbar() {
             </ul>
           ) : null}
         </div>
-        <div className="flex justify-center md:w-1/3">
+        <div className="hidden md:flex justify-center md:w-1/3">
            <Link
             href={"/"}
             prefetch={true}
@@ -45,9 +56,11 @@ export async function Navbar() {
           </Link>
 
         </div>
-        <div className="hidden justify-end md:flex md:w-1/3 gap-5">
+        <div className="justify-end flex md:w-1/3 md:gap-5">
           {/* Search */}
-          <Search />
+          <div className="hidden md:flex">
+            <Search />
+          </div>
 
           {/* Account */}
           <NavbarClient />

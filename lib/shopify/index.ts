@@ -50,7 +50,7 @@ import {
 } from "./types";
 import { headers } from "next/headers";
 import { revalidateTag } from "next/cache";
-import { getPageQuery, getPagesQuery } from "./queries/page";
+import { getPageQuery, getPagesQuery, getPolicyQuery } from "./queries/page";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")
@@ -190,7 +190,8 @@ export async function getMenu(handle: string): Promise<Menu[]> {
       const cleanUrl = item.url
         .replace(/^https?:\/\/[^/]+/, "") // bỏ https://domain.com
         .replace("/collections", "/search") // đổi collections → search
-        .replace("/pages", ""); // bỏ /pages
+        .replace("/pages", "") // bỏ /pages
+        .replace("/policies", ""); // bỏ /policies
 
       return {
         title: item.title,
@@ -480,4 +481,38 @@ export async function getPages(): Promise<Page[]> {
   });
 
   return removeEdgesAndNodes(res.body.data.pages);
+}
+
+
+
+// các link trong policies/  
+export async function getPolicy(handle: string) {
+  const res = await shopifyFetch<{
+    data: {
+      shop: {
+        // privacyPolicy?: Page;
+        termsOfService?: Page;
+        refundPolicy?: Page;
+        shippingPolicy?: Page;
+      };
+    };
+  }>({
+    query: getPolicyQuery,
+    cache: "no-store",
+  });
+
+  const { shop } = res.body.data;
+
+  switch (handle) {
+    // case "privacy-policy":
+    //   return shop.privacyPolicy || null;
+    case "terms-of-service":
+      return shop.termsOfService || null;
+    case "refund-policy":
+      return shop.refundPolicy || null;
+    case "shipping-policy":
+      return shop.shippingPolicy || null;
+    default:
+      return null;
+  }
 }
