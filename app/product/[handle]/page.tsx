@@ -68,7 +68,7 @@ export default async function ProductPage({
               }
             >
               <Gallery
-                images={product.images.slice(0, 5).map((image: Image) => ({
+                images={product.images.slice(0, 8).map((image: Image) => ({
                   src: image.url,
                   altText: image.altText,
                 }))}

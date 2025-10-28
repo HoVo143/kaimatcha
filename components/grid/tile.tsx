@@ -22,13 +22,17 @@ export function GridTileImage({
     <>
       <div
        className={clsx(
-        "group relative overflow-hidden flex flex-col h-full w-full items-center justify-center rounded-lg"
+        "group relative overflow-hidden flex flex-col h-full w-full items-center justify-center rounded-lg bg-white",
+          {
+            "border border-black p-2 bg-white": active, // border nổi bật khi active
+            "border border-transparent": !active, // border trong suốt khi không active
+          }
       )}
       >
         {props.src ? (
           <>
             <Image
-              className={clsx(" h-full w-full object-contain ", {
+              className={clsx(" h-full w-full object-contain rounded-lg", {
                 "transition duration-300 ease-in-out group-hover:scale-105":
                   isInteractive,
               })}

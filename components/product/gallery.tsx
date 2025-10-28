@@ -64,11 +64,11 @@ export default function Gallery({
         ) : null}
       </div>
       {images.length > 1 ? (
-        <ul className="my-2 flex items-center justify-start gap-2 py-1 lg:mb-0">
+        <ul className="my-2 flex items-center gap-2 overflow-x-auto py-1 lg:mb-0 ">
           {images.map((image, index) => {
             const isActive = index === imageIndex;
             return (
-              <li key={image.src} className="md:h-25 md:w-25">
+              <li key={image.src} className="shrink-0 md:h-25 md:w-25 ">
                 <button
                   formAction={() => {
                     const newState = updateImage(index.toString());
