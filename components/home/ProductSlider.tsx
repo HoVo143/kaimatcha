@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Price from "../price";
+import { AddToCart } from "../cart/add-to-cart";
+import { QuickAddToCart } from "../cart/quick-add-to-cart";
 
 export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -19,7 +21,7 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
   };
 
   return (
-    <section className="w-full py-16 md:py-24 relative">
+    <section className="w-full py-6 md:py-24 relative">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-medium mb-4">Featured Tea Blends</h2>
         <p className="text-muted-foreground max-w-[300px] md:max-w-[500px] mx-auto mb-2">
@@ -55,28 +57,46 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
           {topProducts.map((product) => (
 
             <div
+              // className="products-price group relative max-w-[250] md:max-w-[450] shrink-0 overflow-hidden rounded-2xl shadow-md bg-white"
               key={product.id}
-              className="products-price group relative max-w-[250] md:max-w-[450] shrink-0 overflow-hidden rounded-2xl shadow-md bg-white"
+              className="products-price max-w-[250] md:max-w-[450] shrink-0 "
             >
-              <Link href={`/product/${product.handle}`}>
+              <div 
+              className="group relative overflow-hidden rounded-2xl shadow-md"
+              >
+                <Link href={`/product/${product.handle}`}>
                 <Image
                   src={product.featuredImage?.url || ""}
                   alt={product.title}
                   width={400}
                   height={400}
                   className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                <h3 className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white text-lg font-medium tracking-wide">
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+
+                </Link>
+                <div
+                    className="
+                      absolute bottom-2 md:bottom-4 left-1/9 md:left-1/2 -translate-x-1/2
+                      md:opacity-0 md:translate-y-6
+                      md:group-hover:opacity-100 md:group-hover:translate-y-0
+                      md:transition-all md:duration-500 md:ease-out
+                    "
+                >
+                  <QuickAddToCart  product={product} />
+                </div>
+              </div>
+              <div className="mt-4">
+                <h3 className=" text-black text-base md:text-lg font-medium tracking-wide">
                   {product.title}
                 </h3>
                 <Price
-                  className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-sm font-medium tracking-wide"
+                  className="text-black text-sm font-medium tracking-wide"
                   amount={product.priceRange?.minVariantPrice?.amount}
                   currencyCode={product.priceRange?.minVariantPrice?.currencyCode}
                   currencyCodeClassName="hidden src[275px]/label:inline"
                 />
-              </Link>
+              </div>
             </div>
           ))}
         </div>

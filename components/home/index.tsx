@@ -145,7 +145,7 @@ export default async function HomeSection() {
       </div>
       
       {/* Our Collection */}
-     <section className="w-full py-16 md:py-24">
+     <section className="w-full py-6 md:py-24">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-medium mb-8">Our Collection</h2>
 
@@ -189,9 +189,8 @@ export default async function HomeSection() {
           <h1 className="text-2xl md:text-2xl font-medium tracking-tight">
             Signature Tea Collection
           </h1>
-          <p className="mt-4 max-w-[700px] text-xxl md:text-xxl">
+          <p className="mt-4 max-w-[600px] text-xxl md:text-xxl">
             Discover our master blender’s exclusive creations, available only at
-            <br />
             Herbal Haven. Limited quantities, infinite possibilities.
           </p>
           <Link

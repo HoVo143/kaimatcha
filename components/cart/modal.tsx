@@ -120,7 +120,7 @@ export default function CartModal() {
                         return (
                           <li
                             key={i}
-                            className="lex w-full flex-col border-b border-neutral-300 "
+                            className="lex w-full flex-col border-b border-neutral-300 mb-4 "
                           >
                             
                             <div className="relative flex flex-row">
