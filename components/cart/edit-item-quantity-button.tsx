@@ -3,6 +3,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { updateItemQuantity } from "./actions";
 import { useActionState } from "react";
+import Swal from "sweetalert2";
 
 function SubmitButton({ type }: { type: "plus" | "minus" }) {
   return (
@@ -43,12 +44,32 @@ export function EditItemQuantityButton({
     quantity: type === "plus" ? item.quantity + 1 : item.quantity - 1,
   };
   const actionWithVariant = formAction.bind(null, payload);
+
+
+  async function handleUpdate() {
+    if (type === "minus" && item.quantity === 1) {
+      await Swal.fire({
+        title: "Quantity limit",
+        text: "You must have at least one item in your cart. To remove it, please use the delete button instead.",
+        background: `
+          linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+          url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761554661")
+          center / cover no-repeat
+        `,
+        icon: "warning",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#6a994e", // matcha green tone
+      });
+      return;
+    }
+
+    optimisticUpdate(payload.merchandiseId, type);
+    await actionWithVariant();
+  }
+
   return (
     <form
-      action={async () => {
-        optimisticUpdate(payload.merchandiseId, type);
-        await actionWithVariant();
-      }}
+      action={handleUpdate}
     >
       <SubmitButton type={type} />
       <p aria-label="polite" className="sr-only" role="status">

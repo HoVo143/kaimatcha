@@ -23,7 +23,7 @@ export default async function Footer() {
             <Link
               href={item.path.startsWith("/") ? item.path : `/${item.path}`}
               prefetch={true}
-              className="text-neutral-800 hover:text-black transition"
+              className="text-neutral-800 hover:text-black transition hover:underline"
             >
               {item.title}
             </Link>

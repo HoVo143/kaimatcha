@@ -33,8 +33,18 @@ h1 {
 }
 
 .products-price p,
-.text-home p {
+.text-home p,
+h2.swal2-title {
   font-family: "Canela Text Web", serif !important;
+}
+
+/* confirm swal2 */
+h2.swal2-title,
+.swal2-html-container {
+  color: #ffffff;
+}
+
+.swal2-html-container {
 }
 
 input:focus {
