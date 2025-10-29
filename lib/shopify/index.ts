@@ -144,14 +144,22 @@ function reshapeProduct(
     return undefined;
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, collections, ...rest } = product;
 
   return {
     ...rest,
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants),
+    collections: collections
+      ? collections.edges.map(({ node }: any) => ({
+          id: node.id,
+          handle: node.handle,
+          title: node.title,
+        }))
+      : [],
   };
 }
+
 function reshapeProducts(products: ShopifyProduct[]) {
   const reshapedProducts = [];
 

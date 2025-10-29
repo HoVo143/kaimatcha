@@ -8,7 +8,7 @@ type UpdateType = "plus" | "minus" | "delete";
 type CartContextType = {
   cart: Cart | undefined;
   updateCartItem: (merchandiseId: string, updateType: UpdateType) => void;
-  addCartItem: (variant: ProductVariant, product: Product) => void;
+  addCartItem: (variant: ProductVariant, product: Product, quantity?: number) => void;
 };
 type CartAction =
   | {
@@ -17,7 +17,7 @@ type CartAction =
     }
   | {
       type: "ADD_ITEM";
-      payload: { variant: ProductVariant; product: Product };
+      payload: { variant: ProductVariant; product: Product; quantity?: number };
     };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -94,14 +94,21 @@ function updateCartTotals(
 function createOrUpdateCartItem(
   existingItem: CartItem | undefined,
   variant: ProductVariant,
-  product: Product
+  product: Product,
+  quantity: number 
+
 ): CartItem {
-  const quantity = existingItem ? existingItem.quantity + 1 : 1;
-  const totalAmount = calculateItemCost(quantity, variant.price.amount);
+  // const quantity = existingItem ? existingItem.quantity + 1 : 1;
+  // const totalAmount = calculateItemCost(quantity, variant.price.amount);
+  const newQuantity = existingItem
+    ? existingItem.quantity + quantity
+    : quantity;
+  const totalAmount = calculateItemCost(newQuantity, variant.price.amount);
 
   return {
     id: existingItem?.id,
-    quantity,
+    quantity: newQuantity,
+    // quantity,
     cost: {
       totalAmount: {
         amount: totalAmount,
@@ -155,14 +162,15 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
       };
     }
     case "ADD_ITEM": {
-      const { variant, product } = action.payload;
+      const { variant, product, quantity = 1 } = action.payload;
       const existingItem = currentCart.lines.find(
         (item) => item.merchandise.id === variant.id
       );
       const updatedItem = createOrUpdateCartItem(
         existingItem,
         variant,
-        product
+        product,
+        quantity 
       );
 
       const updatedLines = existingItem
@@ -202,8 +210,8 @@ export function CartProvider({
     });
   };
 
-  const addCartItem = (variant: ProductVariant, product: Product) => {
-    updateOptimisticCart({ type: "ADD_ITEM", payload: { variant, product } });
+  const addCartItem = (variant: ProductVariant, product: Product, quantity: number = 1) => {
+    updateOptimisticCart({ type: "ADD_ITEM", payload: { variant, product, quantity } });
   };
 
   const value = useMemo(

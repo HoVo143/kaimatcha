@@ -30,6 +30,7 @@ export const productFragment = /* GraphQl */ `
           id
           title
           availableForSale
+          sku           
           selectedOptions {
             name
             value
@@ -56,6 +57,15 @@ export const productFragment = /* GraphQl */ `
     }
     tags
     updatedAt
+    collections(first: 10) {
+      edges {
+        node {
+          id
+          handle
+          title
+        }
+      }
+    }
     }
     ${imageFragment}
     ${seoFragment}

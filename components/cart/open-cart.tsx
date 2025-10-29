@@ -11,6 +11,7 @@ export default function OpenCart({
   return (
     <div className="relative md:pb-3 flex h-9 w-10 md:h-11 md:w-11 items-center justify-center text-white transition-colors cursor-pointer">
       <ShoppingCartIcon
+        id="cart-icon"
         className={clsx(
           "h-6 transition-all ease-in-out hover:scale-110",
           className

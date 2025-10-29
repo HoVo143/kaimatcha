@@ -40,6 +40,7 @@ export type ProductVariant = {
   id: string;
   title: string;
   availableForSale: boolean;
+  sku?: string;
   selectedOptions: {
     name: string;
     value: string;
@@ -76,6 +77,15 @@ export type ShopifyProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
+  collections?: {
+    edges: {
+      node: {
+        id: string;
+        handle: string;
+        title: string;
+      };
+    }[];
+  };
 };
 
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {

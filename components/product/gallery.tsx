@@ -4,6 +4,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { GridTileImage } from "../grid/tile";
 import { useProduct, useUpdateURL } from "./product-context";
+import { useEffect, useRef } from "react";
 
 export default function Gallery({
   images,
@@ -20,6 +21,23 @@ export default function Gallery({
 
   const buttonClassName =
     "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black ";
+
+  // ref cho ul chứa thumbnails
+  const thumbListRef = useRef<HTMLUListElement>(null);
+  // const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const thumbRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  // scroll thumbnail active vào view khi imageIndex thay đổi
+  useEffect(() => {
+    const currentThumb = thumbRefs.current[imageIndex];
+    if (currentThumb && thumbListRef.current) {
+      currentThumb.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [imageIndex]);
 
   return (
     <form className="max-w-[550px] m-auto">
@@ -64,12 +82,18 @@ export default function Gallery({
         ) : null}
       </div>
       {images.length > 1 ? (
-        <ul className="my-2 flex items-center gap-2 overflow-x-auto py-1 lg:mb-0 ">
+        <ul
+          ref={thumbListRef}
+          className="my-2 flex items-center gap-2 overflow-x-auto py-1 lg:mb-0 scrollbar-hide"
+        >
           {images.map((image, index) => {
             const isActive = index === imageIndex;
             return (
-              <li key={image.src} className="shrink-0 md:h-25 md:w-25 ">
+              <li key={image.src} className="shrink-0 md:h-25 md:w-25">
                 <button
+                  ref={(el) => {
+                    thumbRefs.current[index] = el; // trả về void
+                  }}
                   formAction={() => {
                     const newState = updateImage(index.toString());
                     updateURL(newState);

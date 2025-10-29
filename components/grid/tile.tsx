@@ -24,7 +24,7 @@ export function GridTileImage({
        className={clsx(
         "group relative overflow-hidden flex flex-col h-full w-full items-center justify-center rounded-lg bg-white",
           {
-            "border border-black p-2 bg-white": active, // border nổi bật khi active
+            "p-2 bg-white": active, // border nổi bật khi active
             "border border-transparent": !active, // border trong suốt khi không active
           }
       )}
