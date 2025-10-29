@@ -197,7 +197,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
       // Loại bỏ domain (nếu có)
       const cleanUrl = item.url
         .replace(/^https?:\/\/[^/]+/, "") // bỏ https://domain.com
-        .replace("/collections", "/search") // đổi collections → search
+        // .replace("/collections", "/search") // đổi collections → search
         .replace("/pages", "") // bỏ /pages
         .replace("/policies", ""); // bỏ /policies
 
@@ -238,7 +238,7 @@ function reshapeCollection(
 
   return {
     ...collection,
-    path: `/search/${collection.handle}`,
+    path: `/collections/${collection.handle}`,
   };
 }
 
@@ -275,7 +275,7 @@ export async function getCollections(): Promise<Collection[]> {
         title: "All",
         description: "All products",
       },
-      path: "/search",
+      path: "/collections",
       updatedAt: new Date().toISOString(),
       image: null, 
     },

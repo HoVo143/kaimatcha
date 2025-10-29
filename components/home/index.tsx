@@ -44,7 +44,7 @@ export default async function HomeSection() {
              that nurture both body and soul
           </p>
           <Link
-            href="/search/matcha"
+            href="/collections/matcha"
             className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
           >
             Explore matcha
@@ -102,7 +102,7 @@ export default async function HomeSection() {
             crafted with love and respect for nature
           </p>
           <Link
-              href="/search"
+              href="/collections"
               className=" text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12"
             >
               View all
@@ -155,7 +155,7 @@ export default async function HomeSection() {
               key={collection.id}
               className="group relative overflow-hidden"
             >
-              <Link href={`/search/${collection.handle}`}>
+              <Link href={`/collections/${collection.handle}`}>
                 <Image
                   src={collection.image?.url || ""}
                   alt={collection.title}
@@ -194,7 +194,7 @@ export default async function HomeSection() {
             Herbal Haven. Limited quantities, infinite possibilities.
           </p>
           <Link
-            href="/search/matcha"
+            href="/collections/matcha"
             className="mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
           >
             Explore matcha

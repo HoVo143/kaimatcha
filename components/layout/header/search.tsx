@@ -22,7 +22,7 @@ export default function Search() {
       newParams.delete("q");
     }
 
-    router.push(createUrl("/search", newParams));
+    router.push(createUrl("/collections", newParams));
   }
   return (
     <form

@@ -28,7 +28,7 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
           crafted with love and respect for nature
         </p>
         <Link
-          href="/search"
+          href="/collections"
           className="text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12 inline-block"
         >
           View all
