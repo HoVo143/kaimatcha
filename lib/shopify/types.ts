@@ -78,14 +78,10 @@ export type ShopifyProduct = {
   tags: string[];
   updatedAt: string;
   collections?: {
-    edges: {
-      node: {
-        id: string;
-        handle: string;
-        title: string;
-      };
-    }[];
-  };
+    id: string;
+    handle: string;
+    title: string;
+  }[];
 };
 
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {

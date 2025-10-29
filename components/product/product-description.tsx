@@ -30,7 +30,7 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>            
         </div>    
         <div>
-          {product.collections && product.collections.length > 0 && (
+          {product.collections && product.collections?.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2 text-sm text-neutral-600">
               <span className="font-medium text-neutral-700">Collections:</span>
               {product.collections.map((c) => (
@@ -45,6 +45,7 @@ export function ProductDescription({ product }: { product: Product }) {
             </div>
           )}          
         </div>
+
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
       {product.descriptionHtml ? (
