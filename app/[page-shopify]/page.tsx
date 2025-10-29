@@ -1,5 +1,5 @@
-import ContactForm from "../../components/contact-form";
-import Prose from "../../components/prose";
+import ContactForm from "../../components/contact/contact-form";
+import Prose from "../../components/ui/prose";
 import { getPage, getPolicy } from "../../lib/shopify";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";

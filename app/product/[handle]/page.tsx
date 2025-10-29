@@ -1,4 +1,4 @@
-import { QuickAddToCart } from "../../../components/cart/quick-add-to-cart";
+import { QuickAddToCart } from "../../../components/ui/quick-add-to-cart";
 import { GridTileImage } from "../../../components/grid/tile";
 import Gallery from "../../../components/product/gallery";
 import { ProductProvider } from "../../../components/product/product-context";

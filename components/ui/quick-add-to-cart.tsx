@@ -1,8 +1,8 @@
 "use client";
 
-import { useCart } from "./cart-context";
+import { useCart } from "../cart/cart-context";
 import { useActionState } from "react";
-import { addItem } from "./actions";
+import { addItem } from "../cart/actions";
 import clsx from "clsx";
 import { Product, ProductVariant } from "../../lib/shopify/types";
 import { PackageX, ShoppingCart } from "lucide-react";

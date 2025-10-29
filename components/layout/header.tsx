@@ -1,11 +1,11 @@
-import { getMenu } from "../../../lib/shopify";
-import { Menu } from "../../../lib/shopify/types";
+import { getMenu } from "../../lib/shopify";
+import { Menu } from "../../lib/shopify/types";
 import Link from "next/link";
-import MobileMenu from "./mobile-menu";
-import Search from "./search";
-import LogoSquare from "../../logo-square";
-import CartModal from "../../cart/modal";
-import NavbarClient from "./account-client";
+import MobileMenu from "./header/mobile-menu";
+import Search from "./header/search";
+import LogoSquare from "./header/logo-square";
+import CartModal from "../cart/modal";
+import NavbarClient from "./header/account-client";
 
 export async function Navbar() {
   const menu = await getMenu("main-menu");

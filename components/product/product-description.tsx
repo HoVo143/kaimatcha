@@ -1,7 +1,7 @@
 import { Product } from "../../lib/shopify/types";
-import Price from "../price";
+import Price from "../grid/parts/price";
 import VariantSelector from "./variant-selector";
-import Prose from "../prose";
+import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
 import Link from "next/link";
 

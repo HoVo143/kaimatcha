@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import clsx from "clsx";
 import Image from "next/image";
-import Label from "../label";
+import Label from "./parts/label";
 
 export function GridTileImage({
   isInteractive = true,

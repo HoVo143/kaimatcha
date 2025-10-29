@@ -3,9 +3,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import Price from "../price";
-import { AddToCart } from "../cart/add-to-cart";
-import { QuickAddToCart } from "../cart/quick-add-to-cart";
+import Price from "../grid/parts/price";
+import { QuickAddToCart } from "../ui/quick-add-to-cart";
 
 export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);

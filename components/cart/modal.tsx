@@ -7,7 +7,7 @@ import { useCart } from "./cart-context";
 import { createUrl } from "../../lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import Price from "../price";
+import Price from "../grid/parts/price";
 import OpenCart from "./open-cart";
 import CloseCart from "./close-cart";
 import { DEFAULT_OPTION } from "../../lib/constants";
@@ -15,7 +15,7 @@ import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import { useFormStatus } from "react-dom";
 import { createCartAndSetCookie, redirectToCheckout } from "./actions";
-import LoadingDots from "../loading-dots";
+import LoadingDots from "../ui/loading-dots";
 
 type MerchandiseSearchParams = {
   [key: string]: string;

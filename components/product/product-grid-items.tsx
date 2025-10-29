@@ -2,7 +2,7 @@ import { Product } from "../../lib/shopify/types";
 import Grid from "../grid";
 import Link from "next/link";
 import { GridTileImage } from "../grid/tile";
-import { QuickAddToCart } from "../cart/quick-add-to-cart";
+import { QuickAddToCart } from "../ui/quick-add-to-cart";
 
 export default function ProductGridItems({
   products,
