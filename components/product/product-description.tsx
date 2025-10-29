@@ -29,7 +29,7 @@ export function ProductDescription({ product }: { product: Product }) {
             )}          
           </div>            
         </div>    
-        <div>
+        <div className="border-t border-t-neutral-300 mt-3 pt-3">
           {product.collections && product.collections?.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2 text-sm text-neutral-600">
               <span className="font-medium text-neutral-700">Collections:</span>

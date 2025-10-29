@@ -150,13 +150,13 @@ function reshapeProduct(
     ...rest,
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants),
-    collections: collections
-      ? collections.edges.map(({ node }: any) => ({
+    collections: (collections as any)?.edges
+      ? (collections as any).edges.map(({ node }: any) => ({
           id: node.id,
           handle: node.handle,
           title: node.title,
         }))
-      : [],
+      : collections || [],
   };
 }
 
