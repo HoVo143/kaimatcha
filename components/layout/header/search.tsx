@@ -1,17 +1,19 @@
 "use client";
+
 import { createUrl } from "../../../lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import clsx from "clsx";
 
 export default function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     const val = e.target as HTMLFormElement;
     const search = val.search as HTMLInputElement;
     const newParams = new URLSearchParams(searchParams.toString());
@@ -23,11 +25,31 @@ export default function Search() {
     }
 
     router.push(createUrl("/collections", newParams));
+    setOpen(false);
   }
+
+  // Đóng khi click ra ngoài
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node) &&
+        !(e.target as HTMLElement).closest(".search-wrapper")
+      ) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <form
       onSubmit={onSubmit}
-      className="w-max-[300px] relative w-45 md:w-60 bord "
+      className={clsx(
+        "search-wrapper relative flex items-center transition-all duration-300",
+        open ? "w-30 md:w-52" : "w-8 md:w-8"
+      )}
     >
       <input
         ref={inputRef}
@@ -37,27 +59,91 @@ export default function Search() {
         placeholder="Search for products..."
         autoComplete="off"
         defaultValue={searchParams?.get("q") || ""}
-        onFocus={(e) => e.target.scrollIntoView({ behavior: "auto", block: "nearest" })}
-        className="text-md w-full py-2 text-black placeholder:text-gray-500 md:text-sm md:text-white md:placeholder:text-neutral-300 border-b border-b-gray-500"
+        className={clsx(
+          "border-b border-gray-400 bg-transparent text-sm text-black placeholder:text-gray-400 transition-all duration-300 md:text-white md:placeholder:text-neutral-300",
+          open
+            ? "w-full opacity-100 px-2 py-1"
+            : "w-0 opacity-0 px-0 py-0 pointer-events-none"
+        )}
       />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center pb-2.5">
-        <MagnifyingGlassIcon className="h-6 text-black md:text-white" />
-      </div>
+      <button
+        type="button"
+        onClick={() => {
+          setOpen(!open);
+          if (!open) {
+            setTimeout(() => inputRef.current?.focus(), 100);
+          }
+        }}
+        className="cursor-pointer absolute right-0 flex h-full items-center justify-center text-black md:text-white"
+      >
+        <MagnifyingGlassIcon className="h-6 w-6" />
+      </button>
     </form>
   );
 }
 
-export function SearchSkeleton() {
-  return (
-    <form className="w-max-[550px] relative w-80 lg:w-80 xl:w-80">
-      <input
-        type="text"
-        placeholder="Search for products..."
-        className="w-full rounded-lg px-4 py-2 text-sm text-black placeholder:text-neutral-500 "
-      />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <MagnifyingGlassIcon className="h-4" />
-      </div>
-    </form>
-  );
-}
+// "use client";
+// import { createUrl } from "../../../lib/utils";
+// import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+// import { useRouter, useSearchParams } from "next/navigation";
+// import { useRef } from "react";
+
+// export default function Search() {
+//   const router = useRouter();
+//   const searchParams = useSearchParams();
+//   const inputRef = useRef<HTMLInputElement>(null);
+
+//   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+//     e.preventDefault();
+
+//     const val = e.target as HTMLFormElement;
+//     const search = val.search as HTMLInputElement;
+//     const newParams = new URLSearchParams(searchParams.toString());
+
+//     if (search.value) {
+//       newParams.set("q", search.value);
+//     } else {
+//       newParams.delete("q");
+//     }
+
+//     router.push(createUrl("/collections", newParams));
+//   }
+//   return (
+//     <form
+//       onSubmit={onSubmit}
+//       className="w-max-[300px] relative w-45 md:w-60 bord "
+//     >
+//       <input
+//         ref={inputRef}
+//         key={searchParams?.get("q")}
+//         type="text"
+//         name="search"
+//         placeholder="Search for products..."
+//         autoComplete="off"
+//         defaultValue={searchParams?.get("q") || ""}
+//         onFocus={(e) =>
+//           e.target.scrollIntoView({ behavior: "auto", block: "nearest" })
+//         }
+//         className="text-md w-full py-2 text-black placeholder:text-gray-500 md:text-sm md:text-white md:placeholder:text-neutral-300 border-b border-b-gray-500"
+//       />
+//       <div className="absolute right-0 top-0 mr-3 flex h-full items-center pb-2.5">
+//         <MagnifyingGlassIcon className="h-6 text-black md:text-white" />
+//       </div>
+//     </form>
+//   );
+// }
+
+// export function SearchSkeleton() {
+//   return (
+//     <form className="w-max-[550px] relative w-80 lg:w-80 xl:w-80">
+//       <input
+//         type="text"
+//         placeholder="Search for products..."
+//         className="w-full rounded-lg px-4 py-2 text-sm text-black placeholder:text-neutral-500 "
+//       />
+//       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
+//         <MagnifyingGlassIcon className="h-4" />
+//       </div>
+//     </form>
+//   );
+// }

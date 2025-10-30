@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/logo_matcha_old.png" }, // favicon chính
-      { url: "/logo_matcha_old.png", type: "image/x-icon"},
+      { url: "/logo_matcha_old.png", type: "image/x-icon" },
     ],
   },
 };

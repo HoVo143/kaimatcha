@@ -26,9 +26,11 @@ export async function Navbar() {
       </Link>
 
       {/* Right side desktop items */}
-      <div className="flex w-full items-center justify-center" style={{margin:'0 auto'}}>
+      <div
+        className="flex w-full items-center justify-center"
+        style={{ margin: "0 auto" }}
+      >
         <div className="flex w-full md:w-1/3">
-         
           {menu.length > 0 ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
@@ -46,17 +48,15 @@ export async function Navbar() {
           ) : null}
         </div>
         <div className="hidden md:flex justify-center md:w-1/3">
-           <Link
+          <Link
             href={"/"}
             prefetch={true}
             className="flex w-full items-center justify-center md:w-auto"
           >
             <LogoSquare />
-
           </Link>
-
         </div>
-        <div className="justify-end flex md:w-1/3 md:gap-5">
+        <div className="justify-end items-center flex md:w-1/3 md:gap-5">
           {/* Search */}
           <div className="hidden md:flex">
             <Search />

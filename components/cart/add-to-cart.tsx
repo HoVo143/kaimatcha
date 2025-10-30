@@ -72,9 +72,7 @@ export function AddToCart({ product }: { product: Product }) {
   );
   const selectedVariantId =
     variant?.id || (variants.length === 1 ? variants[0]?.id : undefined);
-  const finalVariant = variants.find(
-    (v) => v.id === selectedVariantId
-  );
+  const finalVariant = variants.find((v) => v.id === selectedVariantId);
 
   return (
     <form
@@ -113,7 +111,7 @@ export function AddToCart({ product }: { product: Product }) {
           type="button"
           onClick={() => setQuantity(quantity + 1)}
           className="w-full px-4 py-3 cursor-pointer 
-          transition duration-500 ease-in-out hover:bg-black hover:text-white rounded-r-md"
+                                          transition duration-500 ease-in-out hover:bg-black hover:text-white rounded-r-md"
         >
           <PlusIcon className="h-4 w-4" />
         </button>

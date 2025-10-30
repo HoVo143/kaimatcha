@@ -45,7 +45,6 @@ export function EditItemQuantityButton({
   };
   const actionWithVariant = formAction.bind(null, payload);
 
-
   async function handleUpdate() {
     if (type === "minus" && item.quantity === 1) {
       await Swal.fire({
@@ -67,9 +66,7 @@ export function EditItemQuantityButton({
   }
 
   return (
-    <form
-      action={handleUpdate}
-    >
+    <form action={handleUpdate}>
       <SubmitButton type={type} />
       <p aria-label="polite" className="sr-only" role="status">
         {message}

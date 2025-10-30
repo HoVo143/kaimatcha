@@ -122,7 +122,6 @@ export default function CartModal() {
                             key={i}
                             className="lex w-full flex-col border-b border-neutral-300 mb-4 "
                           >
-                            
                             <div className="relative flex flex-row">
                               <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 ">
                                 <Image

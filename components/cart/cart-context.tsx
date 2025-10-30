@@ -1,6 +1,11 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Cart, CartItem, Product, ProductVariant } from "../../lib/shopify/types";
+import {
+  Cart,
+  CartItem,
+  Product,
+  ProductVariant,
+} from "../../lib/shopify/types";
 import { createContext, use, useContext, useMemo, useOptimistic } from "react";
 
 type UpdateType = "plus" | "minus" | "delete";
@@ -8,7 +13,11 @@ type UpdateType = "plus" | "minus" | "delete";
 type CartContextType = {
   cart: Cart | undefined;
   updateCartItem: (merchandiseId: string, updateType: UpdateType) => void;
-  addCartItem: (variant: ProductVariant, product: Product, quantity?: number) => void;
+  addCartItem: (
+    variant: ProductVariant,
+    product: Product,
+    quantity?: number
+  ) => void;
 };
 type CartAction =
   | {
@@ -95,8 +104,7 @@ function createOrUpdateCartItem(
   existingItem: CartItem | undefined,
   variant: ProductVariant,
   product: Product,
-  quantity: number 
-
+  quantity: number
 ): CartItem {
   // const quantity = existingItem ? existingItem.quantity + 1 : 1;
   // const totalAmount = calculateItemCost(quantity, variant.price.amount);
@@ -170,7 +178,7 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
         existingItem,
         variant,
         product,
-        quantity 
+        quantity
       );
 
       const updatedLines = existingItem
@@ -210,8 +218,15 @@ export function CartProvider({
     });
   };
 
-  const addCartItem = (variant: ProductVariant, product: Product, quantity: number = 1) => {
-    updateOptimisticCart({ type: "ADD_ITEM", payload: { variant, product, quantity } });
+  const addCartItem = (
+    variant: ProductVariant,
+    product: Product,
+    quantity: number = 1
+  ) => {
+    updateOptimisticCart({
+      type: "ADD_ITEM",
+      payload: { variant, product, quantity },
+    });
   };
 
   const value = useMemo(

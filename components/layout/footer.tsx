@@ -41,10 +41,11 @@ export default async function Footer() {
             Keep in touch
           </h3>
           <p className="text-sm mb-6 leading-6">
-            Join our newsletter to get monthly updates about our tea masters and artists.
+            Join our newsletter to get monthly updates about our tea masters and
+            artists.
           </p>
 
-          <NewsletterForm/>
+          <NewsletterForm />
 
           <div>
             <h4 className="uppercase text-xs tracking-widest mb-3 font-medium text-neutral-700">
@@ -80,10 +81,13 @@ export default async function Footer() {
             </p>
           </div>
         </div>
-
       </div>
       <div className="m-auto w-full flex justify-center">
-          <img className="h-12 mb-2" src="/logo-kaimatcha-new.svg" alt="logo kaimatcha" />
+        <img
+          className="h-12 mb-2"
+          src="/logo-kaimatcha-new.svg"
+          alt="logo kaimatcha"
+        />
       </div>
       {/* Bottom Line */}
       <div className="border-t border-neutral-300 text-xs text-center py-4 tracking-wide text-neutral-700 space-x-3">
