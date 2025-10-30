@@ -46,7 +46,7 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
         <div className="flex w-full md:w-1/3">
           {menu.length > 0 ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
+              {menu.map((item) => (
                 <li key={item.title}>
                   <NavActiveLink
                     title={item.title}
@@ -56,6 +56,20 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
                   />
                 </li>
               ))}
+              {/* {menu.map((item: Menu) => (
+                <li key={item.title}>
+                  <Link
+                    href={`/${item.path}`}
+                    prefetch={true}
+                    className={clsx(
+                      "uppercase underline-offset-4 hover:text-emerald-600 hover:underline transition-colors duration-300",
+                      scrolled ? "text-black" : "text-white"
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))} */}
             </ul>
           ) : null}
         </div>
