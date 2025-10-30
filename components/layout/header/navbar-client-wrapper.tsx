@@ -9,6 +9,7 @@ import LogoSquare from "./logo-square";
 import Search from "./search";
 import NavbarClient from "./account-client";
 import CartModal from "../../cart/modal";
+import NavActiveLink from "../../ui/nav-active-link";
 
 export default function HeaderClient({ menu }: { menu: Menu[] }) {
   const [scrolled, setScrolled] = useState(false);
@@ -47,16 +48,12 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
                 <li key={item.title}>
-                  <Link
+                  <NavActiveLink
+                    title={item.title}
                     href={`/${item.path}`}
-                    prefetch={true}
-                    className={clsx(
-                      "uppercase underline-offset-4 hover:text-emerald-600 hover:underline transition-colors duration-300",
-                      scrolled ? "text-black" : "text-white"
-                    )}
-                  >
-                    {item.title}
-                  </Link>
+                    scrolled={scrolled} // có ảnh hưởng màu khi scroll
+                    variant="header"
+                  />
                 </li>
               ))}
             </ul>

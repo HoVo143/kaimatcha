@@ -4,7 +4,7 @@ import { getMenu } from "../../lib/shopify";
 import { Menu } from "../../lib/shopify/types";
 import { Instagram } from "lucide-react";
 import NewsletterForm from "../ui/newsletter-form";
-import FooterLink from "./footer/footer-link";
+import NavActiveLink from "../ui/nav-active-link";
 
 export default async function Footer() {
   // Gọi 3 menu riêng biệt
@@ -22,11 +22,13 @@ export default async function Footer() {
       </h3>
       <ul className="space-y-2 text-sm leading-6">
         {items.map((item) => (
-          <FooterLink
-            key={item.title}
-            title={item.title}
-            href={item.path.startsWith("/") ? item.path : `/${item.path}`}
-          />
+          <li key={item.title}>
+            <NavActiveLink
+              title={item.title}
+              href={item.path.startsWith("/") ? item.path : `/${item.path}`}
+              variant="footer" //  kiểu footer, không phụ thuộc scrolled
+            />
+          </li>
         ))}
       </ul>
     </div>
