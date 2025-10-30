@@ -12,7 +12,7 @@ const envSchema = z.object({
   EMAIL_PASS: z.string(),
   SHOPIFY_DEFAULT_PASS: z.string(),
   NEXT_PUBLIC_BASE_URL: z.string(),
-
+  SHOPIFY_ADMIN_API_ACCESS_TOKEN: z.string(),
 });
 
 envSchema.parse(process.env);

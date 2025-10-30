@@ -49,3 +49,4 @@ export const sorting: SortFilterItem[] = [
 export const HIDDEN_PRODUCT_TAG = "main-menu";
 export const DEFAULT_OPTION = "Default Title";
 export const SHOPIFY_GRAPHQL_API_ENDPOINT = "/api/2025-07/graphql.json";
+export const SHOPIFY_GRAPHQL_API_ADMIN_CUSTOMERS_ENDPOINT = "/admin/api/2025-10/graphql.json";

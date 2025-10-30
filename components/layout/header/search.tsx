@@ -27,7 +27,7 @@ export default function Search() {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-max-[550px] relative w-80 lg:w-80 xl:w-70 bord "
+      className="w-max-[300px] relative w-45 md:w-60 bord "
     >
       <input
         ref={inputRef}

@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { getMenu } from "../../lib/shopify";
 import { Menu } from "../../lib/shopify/types";
-import { ArrowRight, Instagram } from "lucide-react";
+import { Instagram } from "lucide-react";
+import NewsletterForm from "../ui/newsletter-form";
 
 export default async function Footer() {
   // Gọi 3 menu riêng biệt
@@ -35,7 +37,7 @@ export default async function Footer() {
 
   return (
     <footer className="w-full border-t border-neutral-300 bg-white text-black">
-      <div className="mx-auto max-w-8xl grid sm:grid-cols-2 md:grid-cols-4 gap-12 px-6 py-16">
+      <div className="mx-auto max-w-8xl grid sm:grid-cols-2 md:grid-cols-5 gap-12 px-6 py-14">
         {/* Newsletter */}
         <div>
           <h3 className="uppercase text-xs tracking-widest mb-4 font-medium text-neutral-700">
@@ -45,21 +47,7 @@ export default async function Footer() {
             Join our newsletter to get monthly updates about our tea masters and artists.
           </p>
 
-          <form className="mb-6">
-            <div className="relative w-full">
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full border-b border-neutral-400 focus:outline-none py-1 pr-8 text-sm placeholder-neutral-600 bg-transparent"
-              />
-              <button
-                type="submit"
-                className="absolute right-0 top-0 text-neutral-600 hover:text-black"
-              >
-                <ArrowRight size={16} strokeWidth={1.5} />
-              </button>
-            </div>
-          </form>
+          <NewsletterForm/>
 
           <div>
             <h4 className="uppercase text-xs tracking-widest mb-3 font-medium text-neutral-700">
@@ -81,8 +69,25 @@ export default async function Footer() {
         {renderColumn("Tea", teaMenu)}
         {renderColumn("Teaware", teawareMenu)}
         {renderColumn("About", aboutMenu)}
-      </div>
 
+        <div className="flex justify-start items-start min-h-[100] bg-white">
+          <div className="relative px-3 py-8">
+            {/* Viền ngoài */}
+            <div className="absolute inset-0 border border-gray-400 [clip-path:polygon(0_6%,6%_0,94%_0,100%_6%,100%_94%,94%_100%,6%_100%,0_94%)]"></div>
+            {/* Viền trong */}
+            <div className="absolute inset-[3px] border border-gray-400 [clip-path:polygon(0_6%,6%_0,94%_0,100%_6%,100%_94%,94%_100%,6%_100%,0_94%)]"></div>
+
+            {/* Nội dung dọc */}
+            <p className="relative text-gray-700 text-sm tracking-[0.2em] [writing-mode:vertical-rl] font-serif">
+              KAI MATCHA the art of tea
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <div className="m-auto w-full flex justify-center">
+          <img className="h-12 mb-2" src="/logo-kaimatcha-new.svg" alt="logo kaimatcha" />
+      </div>
       {/* Bottom Line */}
       <div className="border-t border-neutral-300 text-xs text-center py-4 tracking-wide text-neutral-700 space-x-3">
         <span>© KAI MATCHA {new Date().getFullYear()}</span>
