@@ -3,10 +3,10 @@ import clsx from "clsx";
 
 export default function CloseCart({ className }: { className?: string }) {
   return (
-    <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors ">
+    <div className="relative cursor-pointer flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors ">
       <XMarkIcon
         className={clsx(
-          "h-6 transition-all ease-in-out hover:scale-110",
+          "h-6 transition-all ease-in-out hover:scale-110 hover:text-red-600",
           className
         )}
       />

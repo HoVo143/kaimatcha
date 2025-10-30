@@ -77,16 +77,16 @@ export default function CartModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white p-6 text-black backdrop-blur-xl md:w-[390px] ">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">My Cart</p>
+                <p className="text-lg font-medium">My Cart</p>
                 <button aria-label="Close cart" onClick={closeCart}>
                   <CloseCart />
                 </button>
               </div>
 
               {!cart || cart.lines.length === 0 ? (
-                <div>
-                  <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">
+                <div className="flex items-center gap-2 mt-24 justify-center">
+                  <ShoppingCartIcon className="h-7" />
+                  <p className="text-center text-lg font-medium">
                     Your Cart is Empty.
                   </p>
                 </div>
