@@ -48,7 +48,7 @@ export default function Search() {
       onSubmit={onSubmit}
       className={clsx(
         "search-wrapper relative flex items-center transition-all duration-300",
-        open ? "w-30 md:w-52" : "w-8 md:w-8"
+        open ? "w-full md:w-52" : "w-8 md:w-8"
       )}
     >
       <input
@@ -60,7 +60,7 @@ export default function Search() {
         autoComplete="off"
         defaultValue={searchParams?.get("q") || ""}
         className={clsx(
-          "border-b border-gray-400 bg-transparent text-sm text-black placeholder:text-gray-400 transition-all duration-300 md:text-white md:placeholder:text-neutral-300",
+          "border-b border-gray-400 bg-transparent text-sm  placeholder:text-gray-400 transition-all duration-300  md:placeholder:text-neutral-300",
           open
             ? "w-full opacity-100 px-2 py-1"
             : "w-0 opacity-0 px-0 py-0 pointer-events-none"
@@ -74,9 +74,9 @@ export default function Search() {
             setTimeout(() => inputRef.current?.focus(), 100);
           }
         }}
-        className="cursor-pointer absolute right-0 flex h-full items-center justify-center text-black md:text-white"
+        className="cursor-pointer absolute right-0 flex h-full items-center justify-center"
       >
-        <MagnifyingGlassIcon className="h-6 w-6" />
+        <MagnifyingGlassIcon className="h-6 w-6 hover:text-emerald-600 hover:scale-110" />
       </button>
     </form>
   );
