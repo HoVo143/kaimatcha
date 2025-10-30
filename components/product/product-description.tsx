@@ -36,7 +36,7 @@ export function ProductDescription({ product }: { product: Product }) {
               {product.collections.map((c) => (
                 <Link
                   key={c.id}
-                  href={`/search/${c.handle}`}
+                  href={`/collections/${c.handle}`}
                   className="text-emerald-700 hover:underline"
                 >
                   {c.title}
