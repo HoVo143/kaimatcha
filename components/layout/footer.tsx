@@ -37,7 +37,7 @@ export default async function Footer() {
 
   return (
     <footer className="w-full border-t border-neutral-300 bg-white text-black">
-      <div className="mx-auto max-w-8xl grid sm:grid-cols-2 md:grid-cols-5 gap-12 px-6 py-14">
+      <div className="mx-auto max-w-8xl flex flex-wrap justify-between gap-12 px-7 py-14">
         {/* Newsletter */}
         <div>
           <h3 className="uppercase text-xs tracking-widest mb-4 font-medium text-neutral-700">
@@ -70,7 +70,7 @@ export default async function Footer() {
         {renderColumn("Teaware", teawareMenu)}
         {renderColumn("About", aboutMenu)}
 
-        <div className="flex justify-start items-start min-h-[100] bg-white">
+        <div className="flex justify-start max-w-[80] items-start min-h-[100] bg-white">
           <div className="relative px-3 py-8">
             {/* Viền ngoài */}
             <div className="absolute inset-0 border border-gray-400 [clip-path:polygon(0_6%,6%_0,94%_0,100%_6%,100%_94%,94%_100%,6%_100%,0_94%)]"></div>
