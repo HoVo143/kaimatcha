@@ -87,7 +87,7 @@ export function AddToCart({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          className="w-full px-4 py-3 cursor-pointer 
+          className="px-4 py-3 cursor-pointer 
           transition duration-500 ease-in-out hover:bg-black hover:text-white rounded-l-md"
         >
           <MinusIcon className="h-4 w-4" />
@@ -110,7 +110,7 @@ export function AddToCart({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => setQuantity(quantity + 1)}
-          className="w-full px-4 py-3 cursor-pointer 
+          className="px-4 py-3 cursor-pointer 
                                           transition duration-500 ease-in-out hover:bg-black hover:text-white rounded-r-md"
         >
           <PlusIcon className="h-4 w-4" />
