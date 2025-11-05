@@ -55,25 +55,25 @@ export default async function HomeSection() {
       <section className="w-full flex flex-col items-center justify-start text-center mt-5 md:mt-20 my-14">
         <div className="text-xl md:text-3xl text-home leading-relaxed mx-5 max-w-[300px] md:max-w-[520px]">
           <p>
-            We are the{" "}
+            We craft premium matcha{" "}
             <img
               className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
-              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
+              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/matcha.png?v=1761193966"
               alt="tea"
             />{" "}
-            premier tea brand specializing in artisanal teas{" "}
+            from Uji, Japan, and handmade teaware{" "}
             <img
               className="cursor-pointer inline rounded-full align-middle h-8 w-h-8 md:h-12 md:w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
-              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
+              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/1-1.png?v=1762248464"
               alt="tea"
             />{" "}
-            sourced directly from Korean estates and curating{" "}
+            by Japanese{" "}
             <img
               className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
               src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
               alt="tea"
             />{" "}
-            handcrafted teaware by Korean artists.
+            artisans—each piece a quiet expression of ritual, purity, and calm.
           </p>
         </div>
       </section>
