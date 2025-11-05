@@ -43,6 +43,10 @@ ul li {
     serif !important;
 } */
 
+footer .bottom-line {
+  font-family: "HarmonyOS Sans", Arial, sans-serif !important;
+}
+
 .products-price p,
 .products-price span,
 h2.swal2-title {

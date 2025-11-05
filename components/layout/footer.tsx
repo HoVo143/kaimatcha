@@ -16,11 +16,11 @@ export default async function Footer() {
 
   // Helper render cột menu
   const renderColumn = (title: string, items: Menu[]) => (
-    <div>
-      <h3 className="uppercase text-xs tracking-widest mb-4 font-medium text-neutral-700">
+    <div className="text-sm md:text-lg">
+      <h3 className="uppercase tracking-widest mb-4 text-neutral-700">
         {title}
       </h3>
-      <ul className="space-y-2 text-sm leading-6">
+      <ul className="space-y-2 leading-6 font-semibold">
         {items.map((item) => (
           <li key={item.title}>
             <NavActiveLink
@@ -38,11 +38,11 @@ export default async function Footer() {
     <footer className="w-full border-t border-neutral-300 bg-white text-black">
       <div className="mx-auto max-w-8xl flex flex-wrap justify-between gap-12 px-7 py-14">
         {/* Newsletter */}
-        <div>
-          <h3 className="uppercase text-xs tracking-widest mb-4 font-medium text-neutral-700">
+        <div className="text-sm md:text-lg max-w-[400px]">
+          <h3 className="uppercase tracking-widest mb-4 text-neutral-700">
             Keep in touch
           </h3>
-          <p className="text-sm mb-6 leading-6">
+          <p className="mb-6 leading-6">
             Join our newsletter to get monthly updates about our tea masters and
             artists.
           </p>
@@ -50,7 +50,7 @@ export default async function Footer() {
           <NewsletterForm />
 
           <div>
-            <h4 className="uppercase text-xs tracking-widest mb-3 font-medium text-neutral-700">
+            <h4 className="uppercase tracking-widest mb-3 text-neutral-700">
               Social
             </h4>
             <div className="flex gap-3">
@@ -92,7 +92,7 @@ export default async function Footer() {
         />
       </div>
       {/* Bottom Line */}
-      <div className="border-t border-neutral-300 text-xs text-center py-4 tracking-wide text-neutral-700 space-x-3">
+      <div className="bottom-line border-t border-neutral-300 text-xs text-center py-4 tracking-wide text-neutral-700 space-x-3 ">
         <span>© KAI MATCHA {new Date().getFullYear()}</span>
         <Link href="/terms-of-service" className="hover:underline">
           TERMS

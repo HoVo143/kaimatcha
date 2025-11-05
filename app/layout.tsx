@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description: "Kai Matcha",
   icons: {
     icon: [
-      { url: "/logo_matcha_old.png" }, // favicon chính
-      { url: "/logo_matcha_old.png", type: "image/x-icon" },
+      { url: "/Logo_kaimatcha_White.png" }, // favicon chính
+      { url: "/Logo_kaimatcha_White.png", type: "image/x-icon" },
     ],
   },
 };

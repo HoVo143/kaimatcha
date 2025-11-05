@@ -25,17 +25,17 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
   return (
     <section className="w-full py-6 md:py-24 relative">
       <div className="container mx-auto px-4 md:px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-medium mb-4">
+        <h2 className="text-3xl md:text-4xl font-medium mb-4 uppercase">
           Featured Tea Blends
         </h2>
-        <p className="text-muted-foreground max-w-[300px] md:max-w-[500px] mx-auto mb-2">
+        <p className="text-muted-foreground max-w-[300px] text-sm md:text-xl md:max-w-[500px] mx-auto mb-2">
           Carefully curated selections from our master tea blenders, each
           crafted with love and respect for nature
         </p>
         <p>
           <Link
             href="/collections"
-            className="text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12 inline-block"
+            className="text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12 inline-block uppercase"
           >
             View all
           </Link>
@@ -89,11 +89,11 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className=" text-black text-base md:text-lg font-medium tracking-wide">
+                <h3 className=" text-black text-base md:text-lg font-medium tracking-wide uppercase">
                   {product.title}
                 </h3>
                 <Price
-                  className="text-black text-sm font-medium tracking-wide"
+                  className="text-black text-sm font-medium tracking-wide mt-2"
                   amount={product.priceRange?.minVariantPrice?.amount}
                   currencyCode={
                     product.priceRange?.minVariantPrice?.currencyCode

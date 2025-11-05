@@ -11,13 +11,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-
 export async function generateMetadata({
   params,
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const { handle } = await Promise.resolve(params); 
+  const { handle } = await Promise.resolve(params);
   if (!handle) return notFound();
 
   const product = await getProduct(handle);
@@ -58,7 +57,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string };
 }) {
-  const { handle } = await Promise.resolve(params); 
+  const { handle } = await Promise.resolve(params);
   if (!handle) return notFound();
 
   const product = await getProduct(handle);
@@ -125,7 +124,7 @@ async function RelatedPRoducts({ id }: { id: string }) {
               />
             </Link>
             <div
-                className="
+              className="
                 absolute bottom-15 md:bottom-18 left-6 md:left-1/2 -translate-x-1/2
                 md:opacity-0 md:translate-y-6
                 md:group-hover:opacity-100 md:group-hover:translate-y-0

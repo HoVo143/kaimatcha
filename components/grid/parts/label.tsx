@@ -12,7 +12,9 @@ export default function Label({
 }) {
   return (
     <div className="products-price w-full mt-2 flex flex-col items-center text-center">
-      <h3 className="text-sm md:text-xl font-medium text-black line-clamp-2 capitalize">{title}</h3>
+      <h3 className="text-sm md:text-xl font-medium text-black line-clamp-2 uppercase">
+        {title}
+      </h3>
       <Price
         className="text-black font-medium text-sm mt-1"
         amount={amount}
@@ -21,8 +23,6 @@ export default function Label({
     </div>
   );
 }
-
-
 
 // export default function Label({
 //   title,

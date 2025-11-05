@@ -38,14 +38,14 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
         prefetch={true}
         className="md:hidden absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center justify-center"
       >
-        <LogoSquare />
+        <LogoSquare scrolled={scrolled} />
       </Link>
 
       {/* Main items */}
       <div className="flex w-full items-center justify-center mx-auto">
         <div className="flex w-full md:w-1/3">
           {menu.length > 0 ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
+            <ul className="hidden gap-6 text-sm md:flex md:items-center uppercase">
               {menu.map((item) => (
                 <li key={item.title}>
                   <NavActiveLink
@@ -80,7 +80,7 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
             prefetch={true}
             className="flex w-full items-center justify-center md:w-auto"
           >
-            <LogoSquare />
+            <LogoSquare scrolled={scrolled} />
           </Link>
         </div>
 
