@@ -28,14 +28,22 @@ export default async function RootLayout({
   const cartId = (await cookies()).get("cartId")?.value;
   const cart = getCart(cartId);
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <CartProvider cartPromise={cart}>
-          <Navbar />
-          {children}
-          <Footer />
-        </CartProvider>
-      </body>
-    </html>
+    <>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <html lang="en">
+        <body className={inter.className}>
+          <CartProvider cartPromise={cart}>
+            <Navbar />
+            {children}
+            <Footer />
+          </CartProvider>
+        </body>
+      </html>
+    </>
   );
 }

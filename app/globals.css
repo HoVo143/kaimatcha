@@ -22,18 +22,29 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "HarmonyOS Sans", Arial, sans-serif !important;
+  /* font-family: "HarmonyOS Sans", Arial, sans-serif !important; */
+  font-family:
+    "Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+    serif !important;
 }
 
 /* H3 titles font */
-h3,
+/* h1,
 h2,
-h1 {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
-}
+h3,
+.main-home p,
+footer p,
+footer ul li,
+footer input,
+h4,
+ul li {
+  font-family:
+    "Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+    serif !important;
+} */
 
 .products-price p,
-.text-home p,
+.products-price span,
 h2.swal2-title {
   font-family: "Canela Text Web", serif !important;
 }

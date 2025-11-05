@@ -12,7 +12,10 @@ export default function ProductGridItems({
   return (
     <>
       {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn relative group mb-8 md:mb-10">
+        <Grid.Item
+          key={product.handle}
+          className="animate-fadeIn relative group mb-8 md:mb-10"
+        >
           <Link
             href={`/product/${product.handle}`}
             className="relative inline-block h-full w-full"

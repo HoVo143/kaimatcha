@@ -63,7 +63,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                         key={item.title}
                       >
                         <Link
-                          href={item.path}
+                          href={`/${item.path}`}
                           prefetch={true}
                           onClick={closeMobileMenu}
                         >

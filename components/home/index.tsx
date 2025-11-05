@@ -10,8 +10,8 @@ export default async function HomeSection() {
   // Lấy 5 collection đầu tiên
   // const topCollections = collections.slice(0, 5);
   const topCollections = collections
-  .filter((c) => c.handle && c.handle.trim() !== "")
-  .slice(0, 5);
+    .filter((c) => c.handle && c.handle.trim() !== "")
+    .slice(0, 5);
 
   // const products = await getProducts({ sortKey: "CREATED_AT", reverse: true });
   const products = await getProducts({
@@ -22,72 +22,71 @@ export default async function HomeSection() {
   const topProducts = products.slice(0, 6);
 
   return (
-    <main className="flex-1 bg-[#f9f5ea] text-[#2c2c2c]">      
+    <main className="main-home flex-1 bg-[#F6F6F6] text-[#2c2c2c]">
       {/* Hero Banner */}
       <section className="relative w-full">
         <Image
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761554661"
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System.jpg?v=1762316911"
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[70vh] object-cover md:h-[95vh]"
+          className="w-full h-[50vh] object-cover md:h-[95vh]"
         />
-        <div className="absolute inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-end text-center text-white px-6 py-40">
-          <h1 className="text-3xl md:text-6xl font-medium tracking-tight">
-            Pure Nature,
-            <br />
-            Perfect Harmony
+        <div className="absolute inset-0 flex flex-col items-center md:justify-center justify-center text-center text-white px-6">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Full_Logo_Horizontal_White_d8930ed5-d908-473f-906d-bffc347a58b4.png?v=1762318374"
+            alt=""
+          />
+          <h1 className="mt-2 md:mt-14 text-md md:text-5xl font-medium tracking-tight">
+            BRAND IDENTITY SYSTEM
           </h1>
-          <p className="mt-4 max-w-[260px] text-sm md:text-xl md:max-w-[700px]">
-            Discover our collection of ethically sourced, organic teas 
-            <br />
-             that nurture both body and soul
+          <p className="mt-2 md:mt-6 text-md md:text-4xl font-medium ">
+            Ceremonial‑Grade Matcha · Uji, Japan
           </p>
-          <Link
+          {/* <Link
             href="/collections/matcha"
             className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
           >
             Explore matcha
-          </Link>
+          </Link> */}
         </div>
       </section>
       {/* Text */}
       <section className="w-full flex flex-col items-center justify-start text-center mt-5 md:mt-20 my-14">
         <div className="text-xl md:text-3xl text-home leading-relaxed mx-5 max-w-[300px] md:max-w-[520px]">
-            <p>
-              We are the{" "}
-              <img
-                className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
-                alt="tea"
-              />{" "}
-              premier tea brand specializing 
-              in artisanal teas {" "}
-              <img
-                className="cursor-pointer inline rounded-full align-middle h-8 w-h-8 md:h-12 md:w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
-                alt="tea"
-              />{" "} sourced directly from 
-              Korean estates and curating {" "}
-              <img
-                className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
-                alt="tea"
-              />{" "} handcrafted 
-              teaware by Korean artists.
-            </p>
-          </div>
+          <p>
+            We are the{" "}
+            <img
+              className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/yellow.png?v=1761193966"
+              alt="tea"
+            />{" "}
+            premier tea brand specializing in artisanal teas{" "}
+            <img
+              className="cursor-pointer inline rounded-full align-middle h-8 w-h-8 md:h-12 md:w-h-12 mx-1 transition-transform duration-300 hover:scale-110"
+              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/7.png?v=1761022127"
+              alt="tea"
+            />{" "}
+            sourced directly from Korean estates and curating{" "}
+            <img
+              className="cursor-pointer inline align-middle h-11 w-h-11 md:h-16 md:w-h-16 mx-1 transition-transform duration-300 hover:scale-110"
+              src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/removebg.png?v=1761280097"
+              alt="tea"
+            />{" "}
+            handcrafted teaware by Korean artists.
+          </p>
+        </div>
       </section>
 
       {/* hr */}
       <div className="flex max-w-[250] m-auto items-center justify-center mt-1 md:mt-20 my-5">
         <div className="grow border-t border-gray-500"></div>
         {/* <SparklesIcon className="w-6 h-6 mx-4 text-gray-500" /> */}
-        <img 
-          className="w-12 h-12 mx-1" 
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683" 
-          alt="Hr" 
-          />
+        <img
+          className="w-12 h-12 mx-1"
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
+          alt="Hr"
+        />
         <div className="grow border-t border-gray-500"></div>
       </div>
 
@@ -136,69 +135,73 @@ export default async function HomeSection() {
       {/* hr */}
       <div className="flex max-w-[250] m-auto items-center justify-center my-8">
         <div className="grow border-t border-gray-500"></div>
-        <img 
-          className="w-12 h-12 mx-1" 
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683" 
-          alt="Hr" 
-          />
+        <img
+          className="w-12 h-12 mx-1"
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
+          alt="Hr"
+        />
         <div className="grow border-t border-gray-500"></div>
       </div>
-      
-      {/* Our Collection */}
-     <section className="w-full py-6 md:py-24">
-      <div className="container mx-auto px-4 md:px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-medium mb-8">Our Collection</h2>
 
-        <div className="grid gap-2 md:gap-8 grid-cols-2 lg:grid-cols-5 max-w-8xl mx-auto">
-          {topCollections.map((collection) => (
-            <div
-              key={collection.id}
-              className="group relative overflow-hidden"
-            >
-              <Link href={`/collections/${collection.handle}`}>
-                <Image
-                  src={collection.image?.url || ""}
-                  alt={collection.title}
-                  width={400}
-                  height={400}
-                  className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 transition-colors" />
+      {/* Our Collection */}
+      <section className="w-full py-6 md:py-24">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-medium mb-8">
+            Our Collection
+          </h2>
+
+          <div className="grid gap-2 md:gap-8 grid-cols-2 lg:grid-cols-5 max-w-8xl mx-auto">
+            {topCollections.map((collection) => (
+              <div
+                key={collection.id}
+                className="group relative overflow-hidden"
+              >
+                <Link href={`/collections/${collection.handle}`}>
+                  <Image
+                    src={collection.image?.url || ""}
+                    alt={collection.title}
+                    width={400}
+                    height={400}
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 transition-colors" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg">
                       {collection.title}
                     </h3>
                   </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Sale / CTA Section */}
       <section className="relative w-full">
         <Image
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/13.png?v=1761022128"
+          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System_1.jpg?v=1762323474"
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[50vh] object-cover md:h-[80vh]"
+          className="w-full h-[50vh] object-cover md:h-[60vh]"
         />
-        <div className="absolute pt-4 md:pt-24 inset-0 bg-black/40 flex flex-col items-center justify-center text-center md:items-start md:justify-start md:text-start text-white px-10 md:px-22">
+        <div className="absolute pb-4 md:pb-24 inset-0 bg-black/40 flex flex-col items-center justify-center text-center md:items-end md:justify-end md:text-end text-white px-10 md:px-22">
           <h1 className="text-2xl md:text-2xl font-medium tracking-tight">
             Signature Tea Collection
           </h1>
-          <p className="mt-4 max-w-[600px] text-xxl md:text-xxl">
+          <p className="mt-4 max-w-[400px] text-xxl md:text-xxl">
             Discover our master blender’s exclusive creations, available only at
             Herbal Haven. Limited quantities, infinite possibilities.
           </p>
-          <Link
-            href="/collections/matcha"
-            className="mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
-          >
-            Explore matcha
-          </Link>
+          <p>
+            <Link
+              href="/collections/matcha"
+              className="text-link mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
+            >
+              Explore matcha
+            </Link>
+          </p>
         </div>
       </section>
     </main>

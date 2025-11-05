@@ -14,7 +14,10 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
     const { scrollLeft, clientWidth } = scrollRef.current;
     const scrollAmount = clientWidth * 0.8;
     scrollRef.current.scrollTo({
-      left: direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+      left:
+        direction === "left"
+          ? scrollLeft - scrollAmount
+          : scrollLeft + scrollAmount,
       behavior: "smooth",
     });
   };
@@ -22,17 +25,21 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
   return (
     <section className="w-full py-6 md:py-24 relative">
       <div className="container mx-auto px-4 md:px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-medium mb-4">Featured Tea Blends</h2>
+        <h2 className="text-3xl md:text-4xl font-medium mb-4">
+          Featured Tea Blends
+        </h2>
         <p className="text-muted-foreground max-w-[300px] md:max-w-[500px] mx-auto mb-2">
           Carefully curated selections from our master tea blenders, each
           crafted with love and respect for nature
         </p>
-        <Link
-          href="/collections"
-          className="text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12 inline-block"
-        >
-          View all
-        </Link>
+        <p>
+          <Link
+            href="/collections"
+            className="text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12 inline-block"
+          >
+            View all
+          </Link>
+        </p>
 
         {/* Nút scroll */}
         <button
@@ -54,35 +61,31 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
           className="flex gap-6 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
         >
           {topProducts.map((product) => (
-
             <div
               // className="products-price group relative max-w-[250] md:max-w-[450] shrink-0 overflow-hidden rounded-2xl shadow-md bg-white"
               key={product.id}
               className="products-price max-w-[250] md:max-w-[450] shrink-0 "
             >
-              <div 
-              className="group relative overflow-hidden rounded-2xl shadow-md"
-              >
+              <div className="group relative overflow-hidden rounded-2xl shadow-md">
                 <Link href={`/product/${product.handle}`}>
-                <Image
-                  src={product.featuredImage?.url || ""}
-                  alt={product.title}
-                  width={400}
-                  height={400}
-                  className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  <Image
+                    src={product.featuredImage?.url || ""}
+                    alt={product.title}
+                    width={400}
+                    height={400}
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-
                 </Link>
                 <div
-                    className="
+                  className="
                       absolute bottom-2 md:bottom-4 left-1/9 md:left-1/2 -translate-x-1/2
                       md:opacity-0 md:translate-y-6
                       md:group-hover:opacity-100 md:group-hover:translate-y-0
                       md:transition-all md:duration-500 md:ease-out
                     "
                 >
-                  <QuickAddToCart  product={product} />
+                  <QuickAddToCart product={product} />
                 </div>
               </div>
               <div className="mt-4">
@@ -92,7 +95,9 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
                 <Price
                   className="text-black text-sm font-medium tracking-wide"
                   amount={product.priceRange?.minVariantPrice?.amount}
-                  currencyCode={product.priceRange?.minVariantPrice?.currencyCode}
+                  currencyCode={
+                    product.priceRange?.minVariantPrice?.currencyCode
+                  }
                   currencyCodeClassName="hidden src[275px]/label:inline"
                 />
               </div>
