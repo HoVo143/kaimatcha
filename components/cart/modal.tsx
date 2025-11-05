@@ -160,7 +160,7 @@ export default function CartModal() {
                                 />
                               </div>
                             </div>
-                            <div className="flex h-16 justify-between items-center">
+                            <div className="products-price flex h-16 justify-between items-center">
                               <Price
                                 className="flex justify-end space-y-2 text-right text-sm"
                                 amount={item.cost.totalAmount.amount}
@@ -190,7 +190,7 @@ export default function CartModal() {
                         );
                       })}
                   </ul>
-                  <div className="py-4 text-sm text-neutral-500 ">
+                  <div className="products-price py-4 text-sm text-neutral-500 ">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 ">
                       <p>Taxes</p>
                       <Price

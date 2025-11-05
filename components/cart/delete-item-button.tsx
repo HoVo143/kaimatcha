@@ -2,7 +2,7 @@
 import { CartItem } from "../../lib/shopify/types";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { removeItem } from "./actions";
-import { useActionState } from "react";
+import { useActionState, useTransition } from "react";
 import Swal from "sweetalert2";
 
 export function DeleteItemButton({
@@ -16,8 +16,8 @@ export function DeleteItemButton({
   const [message, formAction] = useActionState(removeItem, null);
   const merchandiseId = item.merchandise.id;
   const actionWithVariant = formAction.bind(null, merchandiseId);
+  const [isPending, startTransition] = useTransition();
 
-  
   async function handleDelete() {
     const result = await Swal.fire({
       title: "Remove item?",
@@ -42,7 +42,11 @@ export function DeleteItemButton({
     if (!result.isConfirmed) return;
 
     optimisticUpdate(merchandiseId, "delete");
-    await actionWithVariant();
+    // await actionWithVariant();
+
+    startTransition(() => {
+      actionWithVariant();
+    });
 
     Swal.fire({
       background: `
@@ -59,12 +63,11 @@ export function DeleteItemButton({
   }
 
   return (
-    <form
-     action={handleDelete}
-    >
+    <form action={handleDelete}>
       <button
         type="submit"
         aria-label="Remove cart item"
+        disabled={isPending}
         className="flex h-6 w-6 items-center justify-center rounded-full bg-red-600 cursor-pointer"
       >
         <XMarkIcon className="mx-px h-4 w-4 text-white " />
