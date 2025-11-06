@@ -49,23 +49,34 @@ export default function SearchLayout({
       <div className="mx-auto flex flex-col pb-4 text-black md:mt-0 overflow-hidden">
         {/* --- COLLECTION TITLE --- */}
         {pathname === "/collections/matcha" ? (
-          <div className="relative w-full h-[200px] md:h-[350px] overflow-hidden">
-            <img
-              src="/Matcha_Web_Banner.png"
-              alt="Matcha Banner"
-              className="w-full h-full object-cover "
-            />
-            {/* Overlay đen mờ */}
-            <div className="absolute inset-0 bg-black/50"></div>
+          <>
+            <div className="relative w-full h-[200px] md:h-[350px] overflow-hidden">
+              <img
+                src="/Matcha_Web_Banner.png"
+                alt="Matcha Banner"
+                className="w-full h-full object-cover "
+              />
+              {/* Overlay đen mờ */}
+              <div className="absolute inset-0 bg-black/50"></div>
 
-            <div className="absolute inset-0 flex items-end pb-6 md:pb-16 justify-center">
-              <h1 className="text-white text-2xl md:text-4xl uppercase tracking-wide drop-shadow-lg">
-                {currentCollection}
-              </h1>
+              <div className="absolute inset-0 flex items-end pb-6 md:pb-16 justify-center">
+                <h1 className="text-white text-2xl md:text-4xl uppercase tracking-wide drop-shadow-lg">
+                  {currentCollection}
+                </h1>
+              </div>
             </div>
-          </div>
+            <div className="text-collections p-8 md:p-12 text-center tracking-wide text-black">
+              <h1 className="text-sm md:text-3xl uppercase">
+                Ceremonial-Grade Matcha
+              </h1>
+              <p className="mt-2 text-sm md:text-lg font-extralight">
+                Single-origin matcha from Uji, Japan—crafted for calm and
+                ritual.
+              </p>
+            </div>
+          </>
         ) : (
-          <div className="p-10 md:p-20 text-2xl md:text-4xl text-center tracking-wide text-gray-800 uppercase ">
+          <div className="p-8 md:p-12 text-2xl md:text-4xl text-center tracking-wide text-gray-800 uppercase ">
             {currentCollection}
           </div>
         )}
@@ -74,7 +85,7 @@ export default function SearchLayout({
         <div className="flex justify-between gap-3 px-5 md:px-10 border border-gray-100">
           <button
             onClick={() => setShowCollections((prev) => !prev)}
-            className="text-sm text-start cursor-pointer md:border-r border-r-gray-100 w-[150px] h-full py-6"
+            className="text-sm md:text-base text-start cursor-pointer md:border-r border-r-gray-100 w-[200px] h-full py-6"
           >
             <span className="flex items-center justify-start gap-2">
               <Funnel className="h-4 w-4 text-gray-500" />
@@ -88,7 +99,7 @@ export default function SearchLayout({
           </button>
           <button
             onClick={() => setShowSort((prev) => !prev)}
-            className="text-sm text-end cursor-pointer md:border-l border-l-gray-100 w-[150px] h-full py-6"
+            className="text-sm md:text-base text-end cursor-pointer md:border-l border-l-gray-100 w-[200px] h-full py-6"
           >
             <span className="flex items-center justify-end gap-2">
               {showSort ? "Hide Sort" : "Show Sort"}

@@ -73,7 +73,7 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
       <div className="flex w-full items-center justify-center mx-auto">
         <div className="flex w-full md:w-1/3">
           {menu.length > 0 ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center uppercase">
+            <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
               {menu.map((item) => (
                 <li key={item.title}>
                   <NavActiveLink

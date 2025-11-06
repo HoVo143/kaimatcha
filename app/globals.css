@@ -46,7 +46,10 @@ ul li {
 .products-price p,
 .products-price span,
 h2.swal2-title,
-footer .bottom-line {
+footer .bottom-line,
+.text-collections h1,
+.text-collections p,
+.text-collections li {
   font-family: "Canela Text Web", serif !important;
 }
 
