@@ -78,7 +78,7 @@ export default function FilterPriceStockClient() {
         <h3 className="mb-2 text-xs text-neutral-500 uppercase tracking-wide">
           Stock status
         </h3>
-        <div className="flex flex-col gap-2">
+        <div className="flex md:flex-col gap-6 md:gap-2">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="radio"

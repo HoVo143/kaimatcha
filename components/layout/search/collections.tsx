@@ -36,7 +36,7 @@ export default function Collections() {
       {/* <CollectionList /> */}
 
       {/* Client component xử lý price + stock filters */}
-      <div className="col-span-2 hidden w-full flex-none py-4 lg:block">
+      <div className="col-span-2  w-full flex-none py-4 lg:block">
         <FilterPriceStockClient />
       </div>
     </Suspense>

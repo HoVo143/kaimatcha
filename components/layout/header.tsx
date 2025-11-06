@@ -2,7 +2,7 @@ import { getMenu } from "../../lib/shopify";
 import HeaderClient from "./header/navbar-client-wrapper";
 
 export async function Navbar() {
-  const menu = await getMenu("main-menu");
+  const menu = await getMenu("menu-tea");
   return <HeaderClient menu={menu} />;
 }
 
