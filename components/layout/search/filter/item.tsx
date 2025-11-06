@@ -36,13 +36,21 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
   const active = searchParams.get("sort") === item.slug;
   const q = searchParams.get("q");
 
-  const href = createUrl(
-    pathname,
-    new URLSearchParams({
-      ...(q && { q }),
-      ...(item.slug && item.slug.length && { sort: item.slug }),
-    })
-  );
+  // const href = createUrl(
+  //   pathname,
+  //   new URLSearchParams({
+  //     ...(q && { q }),
+  //     ...(item.slug && item.slug.length && { sort: item.slug }),
+  //   })
+  // );
+  // Lấy toàn bộ query hiện có, rồi chỉ thay sort
+  const newParams = new URLSearchParams(searchParams.toString());
+
+  // Giữ lại tất cả param khác (price_min, price_max, stock, q)
+  if (item.slug && item.slug.length) newParams.set("sort", item.slug);
+  else newParams.delete("sort");
+
+  const href = createUrl(pathname, newParams);
   const DynamicTag = active ? "p" : Link;
 
   return (

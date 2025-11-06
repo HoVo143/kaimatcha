@@ -1,13 +1,15 @@
-import { getCollections } from "../../../lib/shopify";
-import FilterList from "./filter";
+// /components/layout/search/collections.tsx
 import { Suspense } from "react";
 import clsx from "clsx";
+import FilterPriceStockClient from "./filter/price-stock";
+// import { getCollections } from "../../../lib/shopify";
+// import FilterList from "./filter";
 
-async function CollectionList() {
-  const collections = await getCollections();
+// async function CollectionList() {
+//   const collections = await getCollections();
 
-  return <FilterList list={collections} title="Collections" />;
-}
+//   return <FilterList list={collections} title="Collections" />;
+// }
 
 const skeleton = "mb-3 h-4 w-5/6 animate-pulse rounded";
 const activeAndTitles = "bg-neutral-800 ";
@@ -31,7 +33,12 @@ export default function Collections() {
         </div>
       }
     >
-      <CollectionList />
+      {/* <CollectionList /> */}
+
+      {/* Client component xử lý price + stock filters */}
+      <div className="col-span-2 hidden w-full flex-none py-4 lg:block">
+        <FilterPriceStockClient />
+      </div>
     </Suspense>
   );
 }

@@ -43,13 +43,10 @@ ul li {
     serif !important;
 } */
 
-footer .bottom-line {
-  font-family: "HarmonyOS Sans", Arial, sans-serif !important;
-}
-
 .products-price p,
 .products-price span,
-h2.swal2-title {
+h2.swal2-title,
+footer .bottom-line {
   font-family: "Canela Text Web", serif !important;
 }
 
@@ -62,7 +59,7 @@ h2.swal2-title,
 .swal2-html-container {
 }
 
-input:focus {
+.search-wrapper input:focus {
   outline: none !important;
   box-shadow: none !important;
   border-color: transparent !important;
