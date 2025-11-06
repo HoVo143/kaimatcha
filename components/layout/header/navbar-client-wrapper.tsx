@@ -10,21 +10,49 @@ import Search from "./search";
 import NavbarClient from "./account-client";
 import CartModal from "../../cart/modal";
 import NavActiveLink from "../../ui/nav-active-link";
+import { usePathname } from "next/navigation";
 
 export default function HeaderClient({ menu }: { menu: Menu[] }) {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
+  //  Logic scroll + kiểm tra trang matcha
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      // Nếu đang ở /collections/matcha → chỉ đổi khi scroll > 50
+      if (pathname === "/collections/matcha") {
+        setScrolled(window.scrollY > 50);
+      }
+      // Nếu ở các trang collections khác → luôn trắng
+      else if (pathname.startsWith("/collections")) {
+        setScrolled(true);
+      }
+      // Các trang còn lại → bình thường (đen → trắng)
+      else {
+        setScrolled(window.scrollY > 50);
+      }
+    };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
+
+  //  Xác định trạng thái để đổi className
+  const isMatchaPage = pathname === "/collections/matcha";
 
   return (
     <nav
       className={clsx(
-        "sticky top-0 z-999 flex items-center justify-between p-4 lg:px-10 backdrop-blur-sm transition-all duration-500",
-        scrolled ? "bg-white text-black shadow-md" : "bg-black text-white"
+        isMatchaPage && !scrolled
+          ? "absolute top-0 left-0 w-full z-999"
+          : "sticky top-0 z-999",
+        "flex items-center justify-between p-4 lg:px-10 backdrop-blur-sm transition-all duration-500",
+        scrolled
+          ? "bg-white text-black"
+          : isMatchaPage
+            ? "bg-transparent! backdrop-blur-none! text-white shadow-none"
+            : "bg-black text-white"
       )}
     >
       {/* Mobile menu */}

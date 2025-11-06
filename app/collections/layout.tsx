@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Collections from "../../components/layout/search/collections";
 import FilterList from "../../components/layout/search/filter";
 import { sorting } from "../../lib/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Funnel, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -26,36 +27,68 @@ export default function SearchLayout({
     return () => clearTimeout(timer);
   }, [pathname, searchParams.toString()]);
 
-  // // Khi URL đổi -> sản phẩm render xong -> tắt loading
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     const timer = setTimeout(() => setIsLoading(false), 300);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [pathname, searchParams]);
-
   // Callback bật loading khi click filter
   const handleFilterStart = () => {
     setIsLoading(true);
   };
 
+  // Lấy segment cuối cùng của pathname
+  const currentCollection = useMemo(() => {
+    const segments = pathname.split("/").filter(Boolean);
+    const lastSegment = segments[segments.length - 1];
+    if (!lastSegment || lastSegment === "collections") return "All Products";
+
+    // Chuyển slug sang chữ có dấu cách + viết hoa đầu
+    return lastSegment
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  }, [pathname]);
+
   return (
     <>
-      <div className="mx-auto flex flex-col pb-4 text-black mt-5 md:mt-0 overflow-hidden">
+      <div className="mx-auto flex flex-col pb-4 text-black md:mt-0 overflow-hidden">
+        {/* --- COLLECTION TITLE --- */}
+        {pathname === "/collections/matcha" ? (
+          <div className="relative w-full h-[200px] md:h-[350px] overflow-hidden">
+            <img
+              src="/Matcha_Web_Banner.png"
+              alt="Matcha Banner"
+              className="w-full h-full object-cover "
+            />
+            {/* Overlay đen mờ */}
+            <div className="absolute inset-0 bg-black/50"></div>
+
+            <div className="absolute inset-0 flex items-end pb-6 md:pb-16 justify-center">
+              <h1 className="text-white text-2xl md:text-4xl uppercase tracking-wide drop-shadow-lg">
+                {currentCollection}
+              </h1>
+            </div>
+          </div>
+        ) : (
+          <div className="p-10 md:p-20 text-2xl md:text-4xl text-center tracking-wide text-gray-800 uppercase ">
+            {currentCollection}
+          </div>
+        )}
+
         {/* --- BUTTONS --- */}
         <div className="flex justify-between gap-3 px-5 md:px-10 border border-gray-100">
           <button
             onClick={() => setShowCollections((prev) => !prev)}
-            className="text-sm text-start cursor-pointer border-r border-r-gray-100 w-[120px] md:w-[150px] h-full pr-6 py-6"
+            className="text-sm text-start cursor-pointer md:border-r border-r-gray-100 w-[150px] h-full py-6"
           >
             <span className="flex items-center justify-start gap-2">
               <Funnel className="h-4 w-4 text-gray-500" />
               {showCollections ? "Hide Filters" : "Show Filters"}
+              <ChevronDown
+                className={`w-4 h-4 text-gray-500 transition-transform duration-300 ease-in-out ${
+                  showCollections ? "rotate-180" : "rotate-0"
+                }`}
+              />
             </span>
           </button>
           <button
             onClick={() => setShowSort((prev) => !prev)}
-            className="text-sm text-end cursor-pointer border-l border-l-gray-100 w-[120px] md:w-[150px] h-full py-6"
+            className="text-sm text-end cursor-pointer md:border-l border-l-gray-100 w-[150px] h-full py-6"
           >
             <span className="flex items-center justify-end gap-2">
               {showSort ? "Hide Sort" : "Show Sort"}
