@@ -5,7 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { FilterItem } from "./item";
 
-export default function FilterItemDropDown({ list }: { list: ListItem[] }) {
+export default function FilterItemDropDown({
+  list,
+  onFilterStart,
+}: {
+  list: ListItem[];
+  onFilterStart?: () => void;
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [active, setActive] = useState("");
@@ -51,7 +57,7 @@ export default function FilterItemDropDown({ list }: { list: ListItem[] }) {
           className="absolute z-40 w-full rounded-b-md bg-white p-4 shadow-md "
         >
           {list.map((item: ListItem, i) => (
-            <FilterItem item={item} key={i} />
+            <FilterItem key={i} item={item} onFilterStart={onFilterStart} />
           ))}
         </div>
       )}

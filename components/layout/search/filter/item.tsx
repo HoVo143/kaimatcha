@@ -30,7 +30,13 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
   );
 }
 
-function SortFilterItem({ item }: { item: SortFilterItem }) {
+function SortFilterItem({
+  item,
+  onFilterStart,
+}: {
+  item: SortFilterItem;
+  onFilterStart?: () => void;
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const active = searchParams.get("sort") === item.slug;
@@ -58,6 +64,9 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
       <DynamicTag
         prefetch={!active ? false : undefined}
         href={href}
+        onClick={() => {
+          if (onFilterStart) onFilterStart(); //  bật loading ngay khi click
+        }}
         className={clsx("w-full hover:underline hover:underline-offset-4", {
           "underline underline-offset-4": active,
         })}
@@ -68,10 +77,16 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
   );
 }
 
-export function FilterItem({ item }: { item: ListItem }) {
+export function FilterItem({
+  item,
+  onFilterStart,
+}: {
+  item: ListItem;
+  onFilterStart?: () => void;
+}) {
   return "path" in item ? (
     <PathFilterItem item={item} />
   ) : (
-    <SortFilterItem item={item} />
+    <SortFilterItem item={item} onFilterStart={onFilterStart} />
   );
 }

@@ -62,13 +62,11 @@ export default function SearchLayout({
         </div>
 
         {/* --- LOADING BAR --- */}
-        <div className="h-[3px] w-full relative overflow-hidden bg-gray-100">
-          <div
-            className={`absolute top-0 left-0 h-full bg-emerald-950 transition-all duration-700 ease-out ${
-              isLoading ? "w-full" : "w-0"
-            }`}
-          ></div>
-        </div>
+        {isLoading && (
+          <div className="h-[5px] w-full relative overflow-hidden bg-gray-100">
+            <div className="loading-bar" />
+          </div>
+        )}
 
         {/* --- MAIN AREA --- */}
         <div className="flex justify-between relative overflow-hidden">
@@ -90,7 +88,11 @@ export default function SearchLayout({
             ${showSort ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}
             w-full`}
           >
-            <FilterList list={sorting} title="Sort by" />
+            <FilterList
+              list={sorting}
+              onFilterStart={handleFilterStart}
+              title="Sort by"
+            />
           </div>
 
           {/* --- DESKTOP SORT (slide từ phải sang trái) --- */}
@@ -99,7 +101,11 @@ export default function SearchLayout({
             duration-500 ease-in-out transform md:w-[225px]
             ${showSort ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
           >
-            <FilterList list={sorting} title="Sort by" />
+            <FilterList
+              list={sorting}
+              onFilterStart={handleFilterStart}
+              title="Sort by"
+            />
           </div>
 
           {/* --- DESKTOP COLLECTIONS (slide mượt, không chiếm chỗ khi ẩn) --- */}

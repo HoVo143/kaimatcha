@@ -5,11 +5,17 @@ import FilterItemDropDown from "./dropdown";
 export type PathFilterItem = { title: string; path: string };
 export type ListItem = SortFilterItem | PathFilterItem;
 
-function FilterItemList({ list }: { list: ListItem[] }) {
+function FilterItemList({
+  list,
+  onFilterStart,
+}: {
+  list: ListItem[];
+  onFilterStart?: () => void;
+}) {
   return (
     <>
       {list.map((item: ListItem, i) => (
-        <FilterItem key={i} item={item} />
+        <FilterItem key={i} item={item} onFilterStart={onFilterStart} />
       ))}
     </>
   );
@@ -18,9 +24,11 @@ function FilterItemList({ list }: { list: ListItem[] }) {
 export default function FilterList({
   list,
   title,
+  onFilterStart,
 }: {
   list: ListItem[];
   title?: string;
+  onFilterStart?: () => void;
 }) {
   return (
     <>
@@ -29,10 +37,10 @@ export default function FilterList({
           <h3 className="hidden text-xs text-neutral-500 md:block ">{title}</h3>
         ) : null}
         <ul className="hidden md:block">
-          <FilterItemList list={list} />
+          <FilterItemList list={list} onFilterStart={onFilterStart} />
         </ul>
         <ul className="md:hidden">
-          <FilterItemDropDown list={list} />
+          <FilterItemDropDown list={list} onFilterStart={onFilterStart} />
         </ul>
       </nav>
     </>
