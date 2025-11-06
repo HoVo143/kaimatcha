@@ -20,9 +20,9 @@ export default async function HomeSection() {
   });
 
   const topProducts = products.slice(0, 6);
-
+  // bg-[#F6F6F6]
   return (
-    <main className="main-home flex-1 bg-[#F6F6F6] text-[#2c2c2c]">
+    <main className="main-home flex-1 bg-white text-[#2c2c2c]">
       {/* Hero Banner */}
       <section className="relative w-full">
         <Image
@@ -187,7 +187,7 @@ export default async function HomeSection() {
           className="w-full h-[50vh] object-cover md:h-[60vh]"
         />
         <div className="absolute pb-4 md:pb-24 inset-0 bg-black/40 flex flex-col items-center justify-center text-center md:items-end md:justify-end md:text-end text-white px-10 md:px-22">
-          <h1 className="text-2xl md:text-4xl font-medium tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-medium tracking-normal">
             Signature Tea Collection
           </h1>
           <p className="mt-4 max-w-[500px] text-sm md:text-lg">
@@ -197,7 +197,7 @@ export default async function HomeSection() {
           <p>
             <Link
               href="/collections/matcha"
-              className="uppercase text-link mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
+              className="tracking-wider uppercase text-link mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
             >
               Explore matcha
             </Link>
