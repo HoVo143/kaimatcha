@@ -76,7 +76,7 @@ export default async function SearchPage(props: {
           <ProductGridItems products={filteredProducts} />
         </Grid>
       ) : (
-        <p className="py-3 text-lg">{`No products found`}</p>
+        <p className="py-3 text-lg h-100 md:h-full">{`No products found`}</p>
       )}
       {/* {searchValue ? (
         <p className="mb-4">

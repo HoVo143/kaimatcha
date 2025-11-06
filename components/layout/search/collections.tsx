@@ -15,7 +15,11 @@ const skeleton = "mb-3 h-4 w-5/6 animate-pulse rounded";
 const activeAndTitles = "bg-neutral-800 ";
 const items = "bg-neutral-400 ";
 
-export default function Collections() {
+export default function Collections({
+  onFilterStart,
+}: {
+  onFilterStart?: () => void;
+}) {
   return (
     <Suspense
       fallback={
@@ -37,7 +41,7 @@ export default function Collections() {
 
       {/* Client component xử lý price + stock filters */}
       <div className="col-span-2  w-full flex-none py-4 lg:block">
-        <FilterPriceStockClient />
+        <FilterPriceStockClient onFilterStart={onFilterStart} />
       </div>
     </Suspense>
   );

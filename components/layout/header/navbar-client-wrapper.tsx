@@ -23,7 +23,7 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
   return (
     <nav
       className={clsx(
-        "sticky top-0 z-999 flex items-center justify-between p-4 lg:px-6 backdrop-blur-sm transition-all duration-500",
+        "sticky top-0 z-999 flex items-center justify-between p-4 lg:px-10 backdrop-blur-sm transition-all duration-500",
         scrolled ? "bg-white text-black shadow-md" : "bg-black text-white"
       )}
     >

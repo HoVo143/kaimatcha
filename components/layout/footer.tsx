@@ -36,7 +36,7 @@ export default async function Footer() {
 
   return (
     <footer className="w-full border-t border-neutral-300 bg-white text-black">
-      <div className="mx-auto max-w-8xl flex flex-wrap justify-between gap-12 px-7 py-14">
+      <div className="mx-auto max-w-8xl flex flex-wrap justify-between gap-12 px-5 md:px-10 py-14">
         {/* Newsletter */}
         <div className="text-sm md:text-lg max-w-[400px]">
           <h3 className="uppercase tracking-widest mb-4 text-neutral-700">

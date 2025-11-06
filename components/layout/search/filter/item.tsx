@@ -54,7 +54,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
   const DynamicTag = active ? "p" : Link;
 
   return (
-    <li className="mt-2 flex text-sm text-black " key={item.title}>
+    <li className="mt-2 flex text-sm md:text-lg text-black " key={item.title}>
       <DynamicTag
         prefetch={!active ? false : undefined}
         href={href}
