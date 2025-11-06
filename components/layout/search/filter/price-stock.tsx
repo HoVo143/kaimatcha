@@ -159,6 +159,7 @@ export default function FilterPriceStockClient({
             step={1}
             value={minPrice || 0}
             onChange={(e) => {
+              onFilterStart?.();
               const val = Math.min(
                 Number(e.target.value),
                 Number(maxPrice) - 1
@@ -178,6 +179,7 @@ export default function FilterPriceStockClient({
             step={1}
             value={maxPrice || 500}
             onChange={(e) => {
+              onFilterStart?.();
               const val = Math.max(
                 Number(e.target.value),
                 Number(minPrice) + 1

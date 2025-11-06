@@ -19,13 +19,20 @@ export default function SearchLayout({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Khi URL đổi -> sản phẩm render xong -> tắt loading
+  // Auto loading khi mở page
   useEffect(() => {
-    if (isLoading) {
-      const timer = setTimeout(() => setIsLoading(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [pathname, searchParams]);
+    setIsLoading(true);
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, [pathname, searchParams.toString()]);
+
+  // // Khi URL đổi -> sản phẩm render xong -> tắt loading
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     const timer = setTimeout(() => setIsLoading(false), 300);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [pathname, searchParams]);
 
   // Callback bật loading khi click filter
   const handleFilterStart = () => {
@@ -62,11 +69,13 @@ export default function SearchLayout({
         </div>
 
         {/* --- LOADING BAR --- */}
-        {isLoading && (
-          <div className="h-[5px] w-full relative overflow-hidden bg-gray-100">
-            <div className="loading-bar" />
-          </div>
-        )}
+        <div
+          className={`transition-all duration-300 ${
+            isLoading ? "h-[5px] opacity-100" : "h-0 opacity-0"
+          } w-full relative overflow-hidden bg-gray-100`}
+        >
+          {isLoading && <div className="loading-bar" />}
+        </div>
 
         {/* --- MAIN AREA --- */}
         <div className="flex justify-between relative overflow-hidden">
