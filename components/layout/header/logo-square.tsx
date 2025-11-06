@@ -13,7 +13,7 @@ export default function LogoSquare({
     <div
       className={clsx(
         "flex flex-none items-center justify-center transition-all duration-300",
-        "h-[50px] w-[100px] md:h-[50px] md:w-[140px] rounded-xl"
+        "h-[50px] w-20 md:w-[120px] rounded-xl"
       )}
     >
       {scrolled ? (

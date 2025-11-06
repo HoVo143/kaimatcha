@@ -76,7 +76,7 @@ export default function SearchLayout({
             </div>
           </>
         ) : (
-          <div className="p-8 md:p-12 text-2xl md:text-4xl text-center tracking-wide text-gray-800 uppercase ">
+          <div className="p-6 md:p-9 text-2xl md:text-4xl text-center tracking-wide text-gray-800 uppercase ">
             {currentCollection}
           </div>
         )}
