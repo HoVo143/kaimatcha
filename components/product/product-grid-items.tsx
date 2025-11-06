@@ -35,7 +35,7 @@ export default function ProductGridItems({
           </Link>
           <div
             className="
-            absolute bottom-9 md:bottom-14 left-1/7 md:left-1/2 -translate-x-1/2
+            absolute bottom-9 md:bottom-12 left-1/7 md:left-1/2 -translate-x-1/2
             md:opacity-0 md:translate-y-6
             md:group-hover:opacity-100 md:group-hover:translate-y-0
             md:transition-all md:duration-500 md:ease-out"

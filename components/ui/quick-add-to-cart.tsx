@@ -20,7 +20,7 @@ export function QuickAddToCart({ product }: { product: Product }) {
   const selectedVariantId = firstVariant?.id;
 
   const buttonClasses =
-    "cursor-pointer relative flex w-full items-center justify-center rounded-full bg-white p-2 md:p-3 tracking-wide text-black text-sm";
+    "cursor-pointer relative flex w-full items-center justify-center rounded-full p-2 tracking-wide text-white text-sm";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!product.availableForSale) {
@@ -47,9 +47,8 @@ export function QuickAddToCart({ product }: { product: Product }) {
         })}
         disabled={!selectedVariantId}
       >
-
         {/* Text cho desktop */}
-        <span className="hidden md:inline">Quick Add</span>
+        <span className="hidden md:inline uppercase">Quick Add</span>
 
         {/* Icon cho mobile */}
         <ShoppingCart className="block md:hidden h-5 w-5" />
