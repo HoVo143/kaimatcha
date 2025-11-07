@@ -7,6 +7,7 @@ import { sorting } from "../../lib/constants";
 import { useEffect, useMemo, useState } from "react";
 import { Funnel, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export default function SearchLayout({
   children,
@@ -183,6 +184,54 @@ export default function SearchLayout({
             </div>
           </div>
         </div>
+
+        {/* --- THE DIFFERENCE --- */}
+        {pathname === "/collections/matcha" ? (
+          <>
+            <section className="relative w-full">
+              <Image
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/13.png?v=1762511439"
+                alt="Matcha Banner"
+                width={1600}
+                height={600}
+                className="w-full h-[30vh] object-cover md:h-[95vh]"
+              />
+              <div className="absolute inset-0 bg-black/40 flex flex-col items-center md:justify-center justify-center text-center text-white px-6">
+                <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
+                  The Difference
+                </h1>
+                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium ">
+                  Experience the depth of our Matcha—deeper color, finer
+                  texture, unmatched purity.
+                </p>
+                {/* <Link
+                  href="/collections/matcha"
+                  className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
+                >
+                  Explore matcha
+                </Link> */}
+              </div>
+            </section>
+            <section className="relative w-full">
+              <Image
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System.jpg?v=1762316911"
+                alt="Matcha Banner"
+                width={1600}
+                height={600}
+                className="w-full h-[30vh] object-cover md:h-[75vh]"
+              />
+              <div className="absolute inset-0  flex flex-col items-center md:justify-center justify-center text-center text-white px-6">
+                <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
+                  The Difference
+                </h1>
+                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium ">
+                  Experience the depth of our Matcha—deeper color, finer
+                  texture, unmatched purity.
+                </p>
+              </div>
+            </section>
+          </>
+        ) : null}
       </div>
       {/* <div className="mx-auto flex justify-between gap-3 md:gap-8 px-5 md:px-10 pb-4 text-black md:flex-row mt-5 md:mt-0">
         <div className="order-first w-full flex-none md:max-w-[125px] md:sticky md:top-28 self-start">
