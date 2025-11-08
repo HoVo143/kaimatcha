@@ -190,13 +190,13 @@ export default function SearchLayout({
           <>
             <section className="relative w-full">
               <Image
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/13.png?v=1762511439"
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/kai_matcha_6_1.jpg?v=1762530011"
                 alt="Matcha Banner"
                 width={1600}
                 height={600}
-                className="w-full h-[30vh] object-cover md:h-[95vh]"
+                className="w-full h-[30vh] object-cover md:h-[90vh] object-[center_20%]"
               />
-              <div className="absolute inset-0 bg-black/40 flex flex-col items-center md:justify-center justify-center text-center text-white px-6">
+              <div className="absolute md:pt-20 inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
                 <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
                   The Difference
                 </h1>
@@ -204,23 +204,17 @@ export default function SearchLayout({
                   Experience the depth of our Matcha—deeper color, finer
                   texture, unmatched purity.
                 </p>
-                {/* <Link
-                  href="/collections/matcha"
-                  className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
-                >
-                  Explore matcha
-                </Link> */}
               </div>
             </section>
             <section className="relative w-full">
               <Image
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System.jpg?v=1762316911"
                 alt="Matcha Banner"
+                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
                 width={1600}
                 height={600}
-                className="w-full h-[30vh] object-cover md:h-[75vh]"
+                className="w-full h-[30vh] object-cover md:h-[95vh]"
               />
-              <div className="absolute inset-0  flex flex-col items-center md:justify-center justify-center text-center text-white px-6">
+              <div className="absolute md:pt-20 inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
                 <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
                   The Difference
                 </h1>
