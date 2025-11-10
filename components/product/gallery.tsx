@@ -1,4 +1,110 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+
+"use client";
+
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+
+export default function Gallery({
+  images,
+}: {
+  images: { src: string; altText: string }[];
+}) {
+  // const scrollRef = useRef<HTMLDivElement>(null);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // sliderRef là DOM ref, sliderInstance là MutableRefObject
+  const [sliderRef, sliderInstance] = useKeenSlider<HTMLDivElement>({
+    slides: { perView: 1, spacing: 0 }, // ảnh chiếm hết, dính liền
+    loop: false,
+    slideChanged(s) {
+      setCurrentSlide(s.track?.details?.rel ?? 0);
+    },
+    breakpoints: {
+      "(min-width: 768px)": { slides: { perView: 1.5, spacing: 0 } },
+      "(min-width: 1280px)": { slides: { perView: 2.5, spacing: 0 } },
+    },
+  });
+
+  const handleScroll = (direction: "next" | "prev") => {
+    if (!sliderInstance?.current) return;
+    direction === "next"
+      ? sliderInstance.current.next()
+      : sliderInstance.current.prev();
+  };
+
+  const buttonClassName =
+    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black";
+
+  const totalSlides =
+    sliderInstance?.current?.track?.details?.slides.length ?? images.length;
+
+  return (
+    <div className="relative w-full select-none">
+      {/* Slider */}
+      <div ref={sliderRef} className="keen-slider">
+        {images.map((image, index) => (
+          <div
+            key={image.src}
+            className={`
+              keen-slider__slide relative aspect-4/3 w-full md:w-auto
+              ${images.length === 1 ? "mx-auto max-w-[500px]" : ""}
+            `}
+          >
+            <Image
+              src={image.src}
+              alt={image.altText || "Product image"}
+              fill
+              className="object-cover select-none pointer-events-none"
+              priority={index === 0}
+              draggable={false}
+              onDragStart={(e) => e.preventDefault()}
+              onLoadingComplete={() => setIsLoading(false)}
+            />
+          </div>
+        ))}
+      </div>
+      {/* --- LOADING BAR --- */}
+      <div
+        className={`transition-all duration-300 ${
+          isLoading ? "h-[5px] opacity-100" : "h-0 opacity-0"
+        } w-full relative overflow-hidden bg-gray-100`}
+      >
+        {isLoading && <div className="loading-bar" />}
+      </div>
+      {/* Nút next / prev */}
+      {images.length > 1 && (
+        <div className="absolute bottom-[5%] flex w-full justify-center">
+          <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur">
+            <button
+              onClick={() => handleScroll("prev")}
+              aria-label="Previous image"
+              className={buttonClassName}
+              disabled={currentSlide === 0}
+            >
+              <ArrowLeftIcon className="h-5" />
+            </button>
+            <div className="mx-1 h-6 w-px bg-neutral-500"></div>
+            <button
+              onClick={() => handleScroll("next")}
+              aria-label="Next image"
+              className={buttonClassName}
+              disabled={currentSlide >= totalSlides - 1}
+            >
+              <ArrowRightIcon className="h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // "use client";
 
 // import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -118,96 +224,3 @@
 //     </form>
 //   );
 // }
-
-"use client";
-
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
-
-export default function Gallery({
-  images,
-}: {
-  images: { src: string; altText: string }[];
-}) {
-  // const scrollRef = useRef<HTMLDivElement>(null);
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // sliderRef là DOM ref, sliderInstance là MutableRefObject
-  const [sliderRef, sliderInstance] = useKeenSlider<HTMLDivElement>({
-    slides: { perView: 1, spacing: 0 }, // ảnh chiếm hết, dính liền
-    loop: false,
-    slideChanged(s) {
-      setCurrentSlide(s.track?.details?.rel ?? 0);
-    },
-    breakpoints: {
-      "(min-width: 768px)": { slides: { perView: 1.5, spacing: 0 } },
-      "(min-width: 1280px)": { slides: { perView: 2.5, spacing: 0 } },
-    },
-  });
-
-  const handleScroll = (direction: "next" | "prev") => {
-    if (!sliderInstance?.current) return;
-    direction === "next"
-      ? sliderInstance.current.next()
-      : sliderInstance.current.prev();
-  };
-
-  const buttonClassName =
-    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black";
-
-  const totalSlides =
-    sliderInstance?.current?.track?.details?.slides.length ?? images.length;
-
-  return (
-    <div className="relative w-full select-none">
-      {/* Slider */}
-      <div ref={sliderRef} className="keen-slider">
-        {images.map((image, index) => (
-          <div
-            key={image.src}
-            className="keen-slider__slide relative aspect-4/3 w-full md:w-auto"
-          >
-            <Image
-              src={image.src}
-              alt={image.altText || "Product image"}
-              fill
-              className="object-cover select-none pointer-events-none"
-              priority={index === 0}
-              draggable={false}
-              onDragStart={(e) => e.preventDefault()}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Nút next / prev */}
-      {images.length > 1 && (
-        <div className="absolute bottom-[5%] flex w-full justify-center">
-          <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur">
-            <button
-              onClick={() => handleScroll("prev")}
-              aria-label="Previous image"
-              className={buttonClassName}
-              disabled={currentSlide === 0}
-            >
-              <ArrowLeftIcon className="h-5" />
-            </button>
-            <div className="mx-1 h-6 w-px bg-neutral-500"></div>
-            <button
-              onClick={() => handleScroll("next")}
-              aria-label="Next image"
-              className={buttonClassName}
-              disabled={currentSlide >= totalSlides - 1}
-            >
-              <ArrowRightIcon className="h-5" />
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}

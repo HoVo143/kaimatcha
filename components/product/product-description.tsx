@@ -9,7 +9,7 @@ export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
   // const sku = firstVariant?.sku;
   const firstVariant = product.variants?.[0];
-  const netWeight = firstVariant.weight
+  const netWeight = firstVariant?.weight
     ? `${firstVariant.weight} ${firstVariant.weightUnit}`
     : "";
 
@@ -22,17 +22,20 @@ export function ProductDescription({ product }: { product: Product }) {
   const notes = getMetafieldValue("notes");
   const appellation = getMetafieldValue("appellation");
 
+  const showTopRow = ceremonial || origin || netWeight;
+
   return (
     <div className="font-text-product-detail">
-      <div
-        className="flex justify-between text-md text-neutral-700 border-b border-b-neutral-300 py-3
-      border-t border-t-neutral-300 uppercase
-      "
-      >
-        <p>{ceremonial}</p>
-        <p>{origin}</p>
-        <p> {netWeight}</p>
-      </div>
+      {showTopRow && (
+        <div
+          className="flex justify-between text-md text-neutral-700 border-b border-b-neutral-300 py-3
+      border-t border-t-neutral-300 uppercase"
+        >
+          <p>{ceremonial}</p>
+          <p>{origin}</p>
+          <p>{netWeight}</p>
+        </div>
+      )}
       <div className="flex flex-col items-center py-6 ">
         <h1 className="text-2xl md:text-4xl font-medium uppercase">
           {product.title}
