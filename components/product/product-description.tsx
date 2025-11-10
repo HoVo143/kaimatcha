@@ -9,10 +9,12 @@ export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
   // const sku = firstVariant?.sku;
   const firstVariant = product.variants?.[0];
-  const netWeight = `${firstVariant.weight} ${firstVariant.weightUnit}`;
+  const netWeight = firstVariant.weight
+    ? `${firstVariant.weight} ${firstVariant.weightUnit}`
+    : "";
 
   const getMetafieldValue = (key: string) => {
-    return product.metafields?.find((m) => m.key === key)?.value || "";
+    return product.metafields?.find((m) => m?.key === key)?.value || "";
   };
 
   const ceremonial = getMetafieldValue("ceremonial_type");
