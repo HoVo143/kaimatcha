@@ -36,8 +36,8 @@ export function QuickAddToCart({ product }: { product: Product }) {
     <form
       action={async () => {
         if (!selectedVariantId || !firstVariant) return;
-        addCartItem(firstVariant, product);
-        await formAction(selectedVariantId);
+        addCartItem(firstVariant, product, 1);
+        await formAction({ selectedVariantId: selectedVariantId, quantity: 1 });
       }}
     >
       <button
