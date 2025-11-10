@@ -5,7 +5,7 @@ import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
 import Link from "next/link";
 import { GridTileImage } from "../grid/tile";
-import { getProductRecommendations, getProducts } from "../../lib/shopify";
+import { getProducts } from "../../lib/shopify";
 
 export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
@@ -57,30 +57,38 @@ export function ProductDescription({ product }: { product: Product }) {
                   />
                 ) : null}
               </div>
-              {showTopRow && (
-                <div className="text-md text-neutral-700 basis-2/6">
+              <div className="text-md text-neutral-700 basis-2/6">
+                {medium && (
                   <p className="showTopRow-wrapper">
-                    <span className="uppercase text-sm">medium:</span>
+                    <span className="uppercase text-sm">Medium:</span>
                     <span className="italic">{medium}</span>
                   </p>
+                )}
+                {origin && (
                   <p className="showTopRow-wrapper">
-                    <span className="uppercase text-sm">origin:</span>
+                    <span className="uppercase text-sm">Origin:</span>
                     <span className="italic">{origin}</span>
                   </p>
+                )}
+                {size && (
                   <p className="showTopRow-wrapper">
                     <span className="uppercase text-sm">Size:</span>
                     <span className="italic">{size}</span>
                   </p>
+                )}
+                {capacity && (
                   <p className="showTopRow-wrapper">
-                    <span className="uppercase text-sm">capacity:</span>
-                    <span className="italic"> {capacity}</span>
+                    <span className="uppercase text-sm">Capacity:</span>
+                    <span className="italic">{capacity}</span>
                   </p>
+                )}
+                {netWeight && (
                   <p className="showTopRow-wrapper">
                     <span className="uppercase text-sm">Weight:</span>
                     <span className="italic">{netWeight}</span>
                   </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
             <div>
               <RelatedPRoducts
@@ -225,7 +233,7 @@ async function RelatedPRoducts({
     return sameCollection && sameMedium && sameOrigin;
   });
 
-  if (filteredProducts.length === 0) return null; // ✅ ẩn luôn nếu không có related product
+  if (filteredProducts.length === 0) return null; //  ẩn luôn nếu không có related product
 
   return (
     <div className="md:px-0">
