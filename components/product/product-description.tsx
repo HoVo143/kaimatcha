@@ -284,7 +284,7 @@ async function RelatedPRoducts({
 
                 {/* Text hover: Thứ tự + size */}
                 <div
-                  className="absolute top-20 left-1 right-1 
+                  className="absolute top-20 left-1 right-1 italic
                 text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 py-1 rounded"
                 >
                   {alphabet[index] || index + 1} {size}

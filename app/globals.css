@@ -55,6 +55,12 @@ footer .bottom-line,
   font-family: "Canela Text Web", serif !important;
 }
 
+.hover-size-related p {
+  font-family:
+    "Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+    serif !important;
+}
+
 /* confirm swal2 */
 h2.swal2-title,
 .swal2-html-container {
