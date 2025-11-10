@@ -4,6 +4,9 @@ import VariantSelector from "./variant-selector";
 import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
 import Link from "next/link";
+import { GridTileImage } from "../grid/tile";
+import { QuickAddToCart } from "../ui/quick-add-to-cart";
+import { getProductRecommendations } from "../../lib/shopify";
 
 export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
@@ -75,7 +78,13 @@ export function ProductDescription({ product }: { product: Product }) {
                 </div>
               )}
             </div>
-
+            <div>
+              <RelatedPRoducts
+                id={product.id}
+                currentCollectionHandle={product.collections?.[0]?.handle}
+                currentMedium={medium}
+              />
+            </div>
             <VariantSelector
               options={product.options}
               variants={product.variants}
@@ -143,6 +152,13 @@ export function ProductDescription({ product }: { product: Product }) {
           html={product.descriptionHtml}
         />
       ) : null} */}
+          <div>
+            <RelatedPRoducts
+              id={product.id}
+              currentCollectionHandle={product.collections?.[0]?.handle}
+              currentMedium={medium}
+            />
+          </div>
           <div className="products-price flex items-center justify-center gap-5 py-6 font-medium text-lg text-black">
             <Price
               amount={product.priceRange.maxVariantPrice.amount}
@@ -160,5 +176,58 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
       )}
     </>
+  );
+}
+
+async function RelatedPRoducts({
+  id,
+  currentCollectionHandle,
+  currentMedium,
+}: {
+  id: string;
+  currentCollectionHandle?: string;
+  currentMedium?: string;
+}) {
+  const relatedProducts = await getProductRecommendations(id);
+
+  if (!relatedProducts || !currentCollectionHandle || !currentMedium)
+    return null;
+
+  // Lọc theo collection và medium
+  const filteredProducts = relatedProducts.filter(
+    (p) =>
+      p.collections?.some((c) => c.handle === currentCollectionHandle) &&
+      p.metafields?.some(
+        (m) => m && m.key === "medium" && m.value === currentMedium
+      )
+  );
+
+  if (filteredProducts.length === 0) return null;
+
+  return (
+    <div className="py-6">
+      <ul className="flex w-full gap-4 pt-1">
+        {filteredProducts.map((product) => (
+          <li
+            key={product.handle}
+            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 relative group mb-8 md:mb-10"
+          >
+            <Link
+              className="relative h-full w-full"
+              href={`/product/${product.handle}`}
+              prefetch={true}
+            >
+              <GridTileImage
+                alt={product.title}
+                src={product.featuredImage?.url}
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                hideLabel={true}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
