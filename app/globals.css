@@ -50,7 +50,8 @@ h2.swal2-title,
 footer .bottom-line,
 .text-collections h1,
 .text-collections p,
-.text-collections li {
+.text-collections li,
+.font-text-product-detail {
   font-family: "Canela Text Web", serif !important;
 }
 

@@ -41,6 +41,8 @@ export type ProductVariant = {
   title: string;
   availableForSale: boolean;
   sku?: string;
+  weight?: string;
+  weightUnit?: string;
   selectedOptions: {
     name: string;
     value: string;
@@ -82,6 +84,13 @@ export type ShopifyProduct = {
     handle: string;
     title: string;
   }[];
+  metafields?: {
+    id: string;
+    key: string;
+    value: string;
+    type: string;
+  }[];
+
 };
 
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {

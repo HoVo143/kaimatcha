@@ -30,7 +30,9 @@ export const productFragment = /* GraphQl */ `
           id
           title
           availableForSale
-          sku           
+          sku         
+          weight  
+          weightUnit
           selectedOptions {
             name
             value
@@ -65,6 +67,17 @@ export const productFragment = /* GraphQl */ `
           title
         }
       }
+    }
+    metafields(identifiers: [
+      {namespace: "custom", key: "ceremonial_type"},
+      {namespace: "custom", key: "origin"},
+      {namespace: "custom", key: "notes"},
+      {namespace: "custom", key: "appellation"}
+    ]) {
+      id
+      key
+      value
+      type
     }
     }
     ${imageFragment}
