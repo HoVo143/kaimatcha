@@ -196,7 +196,7 @@ export default function SearchLayout({
                 height={600}
                 className="w-full h-[30vh] object-cover md:h-[90vh] object-[center_18%]"
               />
-              <div className="absolute inset-0 bg-black/40 flex flex-col items-end md:justify-start justify-center text-end text-white px-6">
+              <div className="absolute inset-0 flex flex-col bg-black/40 md:bg-black/0 items-center md:items-start md:justify-start justify-center text-center md:text-start text-white px-6">
                 <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
                   The Difference
                 </h1>
@@ -214,13 +214,15 @@ export default function SearchLayout({
                 height={600}
                 className="w-full h-[30vh] object-cover md:h-[95vh]"
               />
-              <div className="absolute md:pt-20 inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
+              <div className="absolute md:pt-20 inset-0 bg-black/40 md:bg-black/0 md:bg-none flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
                 <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
-                  The Difference
+                  BREWING GUIDE
                 </h1>
                 <p className="mt-2 md:mt-6 text-md md:text-xl font-medium ">
-                  Experience the depth of our Matcha—deeper color, finer
-                  texture, unmatched purity.
+                  Learn how to make the perfect matcha.
+                </p>
+                <p className="mt-2 md:mt-6 text-md md:text-md font-medium uppercase underline ">
+                  <a href="#">coming soon</a>
                 </p>
               </div>
             </section>

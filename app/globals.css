@@ -44,6 +44,7 @@ ul li {
 } */
 
 .products-price p,
+.products-price input,
 .products-price span,
 h2.swal2-title,
 footer .bottom-line,
@@ -62,7 +63,8 @@ h2.swal2-title,
 .swal2-html-container {
 }
 
-.search-wrapper input:focus {
+.search-wrapper input:focus,
+.products-price input:focus {
   outline: none !important;
   box-shadow: none !important;
   border-color: transparent !important;

@@ -40,6 +40,8 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
 
   //  Xác định trạng thái để đổi className
   const isMatchaPage = pathname === "/collections/matcha";
+  // const isMatchaPage =
+  //   pathname === "/collections/matcha" || pathname.startsWith("/product/");
 
   return (
     <nav

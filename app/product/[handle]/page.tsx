@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { QuickAddToCart } from "../../../components/ui/quick-add-to-cart";
 import { GridTileImage } from "../../../components/grid/tile";
 import Gallery from "../../../components/product/gallery";
@@ -64,9 +65,11 @@ export default async function ProductPage({
   if (!product) return notFound();
   return (
     <ProductProvider>
-      <div className="mx-auto max-w-screen-2xl px-4">
-        <div className="flex flex-col pt-8 md:p-12 lg:flex-row lg:gap-8 ">
-          <div className="h-full w-full basis-full lg:basis-4/6">
+      <div className="mx-auto">
+        {/* <div className="mx-auto max-w-screen-2xl px-4"> */}
+        <div className="flex flex-col items-center lg:gap-8 ">
+          {/* <div className="h-full w-full basis-full lg:basis-4/6"> */}
+          <div className="h-full w-full">
             <Suspense
               fallback={
                 <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
@@ -80,13 +83,24 @@ export default async function ProductPage({
               />
             </Suspense>
           </div>
-          <div className="basis-full lg:basis-2/6">
+          {/* <div className="basis-full lg:basis-2/6"> */}
+          <div className="w-full max-w-[550px]">
             <Suspense fallback={null}>
               <ProductDescription product={product} />
             </Suspense>
           </div>
         </div>
-        <RelatedPRoducts id={product.id} />
+        {/* <RelatedPRoducts id={product.id} /> */}
+        {/* hr */}
+        <div className="flex max-w-[250] m-auto items-center justify-center my-8">
+          <div className="grow border-t border-gray-500"></div>
+          <img
+            className="w-12 h-12 mx-1"
+            src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
+            alt="Hr"
+          />
+          <div className="grow border-t border-gray-500"></div>
+        </div>
       </div>
     </ProductProvider>
   );

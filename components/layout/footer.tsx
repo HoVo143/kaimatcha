@@ -9,8 +9,8 @@ import NavActiveLink from "../ui/nav-active-link";
 export default async function Footer() {
   // Gọi 3 menu riêng biệt
   const [teaMenu, teawareMenu, aboutMenu] = await Promise.all([
-    getMenu("menu-tea"),
-    getMenu("menu-tea"),
+    getMenu("menu-header"),
+    getMenu("menu-teaware"),
     getMenu("footer"),
   ]);
 

@@ -14,23 +14,43 @@ import { redirect } from "next/navigation";
 
 export async function addItem(
   prevState: any,
-  selectedVariantId: string | undefined
+  payload: { selectedVariantId: string; quantity: number }
 ) {
   const cartId = (await cookies()).get("cartId")?.value;
+  const { selectedVariantId, quantity } = payload;
 
   if (!cartId || !selectedVariantId) {
     return "Error adding item to cart";
   }
 
   try {
-    await addToCart(cartId, [
-      { merchandiseId: selectedVariantId, quantity: 1 },
-    ]);
+    await addToCart(cartId, [{ merchandiseId: selectedVariantId, quantity }]);
     revalidateTag(TAGS.cart);
   } catch (error) {
+    console.error(error);
     return "Error adding item to cart";
   }
 }
+
+// export async function addItem(
+//   prevState: any,
+//   selectedVariantId: string | undefined
+// ) {
+//   const cartId = (await cookies()).get("cartId")?.value;
+
+//   if (!cartId || !selectedVariantId) {
+//     return "Error adding item to cart";
+//   }
+
+//   try {
+//     await addToCart(cartId, [
+//       { merchandiseId: selectedVariantId, quantity: 1 },
+//     ]);
+//     revalidateTag(TAGS.cart);
+//   } catch (error) {
+//     return "Error adding item to cart";
+//   }
+// }
 
 export async function updateItemQuantity(
   prevState: any,
