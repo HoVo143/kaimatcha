@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Funnel, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import BannerSection from "../../components/ui/banner-section";
 
 export default function SearchLayout({
   children,
@@ -186,48 +187,26 @@ export default function SearchLayout({
         </div>
 
         {/* --- THE DIFFERENCE --- */}
-        {pathname === "/collections/matcha" ? (
+        {pathname === "/collections/matcha" && (
           <>
-            <section className="relative w-full">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/kai_matcha_6_1.jpg?v=1762530011"
-                alt="Matcha Banner"
-                width={1600}
-                height={600}
-                className="w-full h-[30vh] object-cover md:h-[90vh] object-[center_18%]"
-              />
-              <div className="absolute inset-0 flex flex-col bg-black/40 md:bg-black/0 items-center md:items-start md:justify-start justify-center text-center md:text-start text-white px-6">
-                <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
-                  The Difference
-                </h1>
-                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium md:max-w-[390px]">
-                  Experience the depth of our Matcha—deeper color, finer
-                  texture, unmatched purity.
-                </p>
-              </div>
-            </section>
-            <section className="relative w-full">
-              <Image
-                alt="Matcha Banner"
-                src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
-                width={1600}
-                height={600}
-                className="w-full h-[30vh] object-cover md:h-[95vh]"
-              />
-              <div className="absolute md:pt-20 inset-0 bg-black/40 md:bg-black/0 md:bg-none flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
-                <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
-                  BREWING GUIDE
-                </h1>
-                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium ">
-                  Learn how to make the perfect matcha.
-                </p>
-                <p className="mt-2 md:mt-6 text-md md:text-md font-medium uppercase underline ">
-                  <a href="#">coming soon</a>
-                </p>
-              </div>
-            </section>
+            <BannerSection
+              image="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/kai_matcha_7_1.jpg?v=1762530011"
+              title="The Difference"
+              text="Experience the depth of our Matcha—deeper color, finer texture, unmatched purity."
+              gradientBottom
+              objectPosition="center 18%"
+              centerContent={false} // căn trái như hiện tại
+            />
+
+            <BannerSection
+              image="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
+              title="Brewing Guide"
+              text="Learn how to make the perfect matcha."
+              linkLabel="Coming soon"
+              centerContent={true} // căn giữa toàn bộ
+            />
           </>
-        ) : null}
+        )}
       </div>
       {/* <div className="mx-auto flex justify-between gap-3 md:gap-8 px-5 md:px-10 pb-4 text-black md:flex-row mt-5 md:mt-0">
         <div className="order-first w-full flex-none md:max-w-[125px] md:sticky md:top-28 self-start">

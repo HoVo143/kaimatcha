@@ -30,9 +30,9 @@ export default async function HomeSection() {
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[50vh] object-cover md:h-[95vh]"
+          className="w-full h-[50vh] object-cover md:h-screen"
         />
-        <div className="absolute md:top-36 inset-0 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
+        <div className="absolute md:top-48 inset-0 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
           {/* <img
             src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Full_Logo_Horizontal_White_d8930ed5-d908-473f-906d-bffc347a58b4.png?v=1762318374"
             alt=""
@@ -93,45 +93,7 @@ export default async function HomeSection() {
 
       {/* products */}
       <ProductSlider topProducts={topProducts} />
-      {/* <section className="w-full py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-medium mb-4">Our Products</h2>
-          <p className="text-muted-foreground max-w-[700px] mx-auto mb-2">
-            Carefully curated selections from our master tea blenders, each
-            <br />
-            crafted with love and respect for nature
-          </p>
-          <Link
-              href="/collections"
-              className=" text-sm underline font-medium hover:text-emerald-700 transition-colors mb-12"
-            >
-              View all
-          </Link>
-          <p className="mb-12"></p>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-            {topProducts.map((product) => (
-              <div
-                key={product.id}
-                className="group relative overflow-hidden rounded-2xl shadow-md bg-white"
-              >
-                <Link href={`/product/${product.handle}`}>
-                  <Image
-                    src={product.featuredImage?.url || ""}
-                    alt={product.title}
-                    width={400}
-                    height={400}
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                  <h3 className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-xxl font-medium tracking-wide">
-                    {product.title}
-                  </h3>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      {/*  */}
 
       {/* hr */}
       <div className="flex max-w-[250] m-auto items-center justify-center my-8">

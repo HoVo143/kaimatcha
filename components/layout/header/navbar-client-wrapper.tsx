@@ -39,23 +39,34 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
   }, [pathname]);
 
   //  Xác định trạng thái để đổi className
-  const isMatchaPage = pathname === "/collections/matcha";
+  const isMatchaPage = pathname === "/collections/matcha" || pathname === "/";
   // const isMatchaPage =
   //   pathname === "/collections/matcha" || pathname.startsWith("/product/");
 
   return (
     <nav
       className={clsx(
-        isMatchaPage && !scrolled
-          ? "absolute top-0 left-0 w-full z-999"
-          : "sticky top-0 z-999",
-        "flex items-center justify-between p-4 lg:px-10 backdrop-blur-sm transition-all duration-500",
-        scrolled
-          ? "bg-white text-black"
-          : isMatchaPage
-            ? "bg-transparent! backdrop-blur-none! text-white shadow-none"
-            : "bg-black text-white"
+        isMatchaPage
+          ? "fixed top-0 left-0 w-full z-999" // Matcha: overlay cố định trên
+          : "sticky top-0 z-999", // Các trang khác: giữ layout chuẩn
+        // Layout & animation
+        "flex items-center justify-between p-4 lg:px-10 transition-all duration-500 ease-in-out",
+        // Màu chữ
+        isMatchaPage ? "text-white" : "text-white",
+        // Hiệu ứng blur
+        scrolled || !isMatchaPage ? "backdrop-blur-sm" : "backdrop-blur-none!"
       )}
+      style={{
+        backgroundColor: scrolled
+          ? "rgba(255, 255, 255, 0.95)" // nền trắng mờ khi scroll
+          : isMatchaPage
+            ? "transparent" // Matcha chưa scroll → trong suốt
+            : "rgba(0, 0, 0, 0.9)", // Trang khác → đen mờ
+        color: scrolled ? "black" : isMatchaPage ? "white" : "white",
+        // boxShadow: scrolled ? "0 2px 10px rgba(0,0,0,0.08)" : "none",
+        transition:
+          "background-color 0.6s ease, color 0.6s ease, box-shadow 0.6s ease, backdrop-filter 0.6s ease",
+      }}
     >
       {/* Mobile menu */}
       <div className="block flex-none md:hidden">
@@ -129,4 +140,20 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
       </div>
     </nav>
   );
+}
+
+{
+  /* <nav
+  className={clsx(
+    isMatchaPage && !scrolled
+      ? "absolute top-0 left-0 w-full z-999"
+      : "sticky top-0 z-999",
+    "flex items-center justify-between p-4 lg:px-10 backdrop-blur-sm transition-all duration-500",
+    scrolled
+      ? "bg-white text-black"
+      : isMatchaPage
+        ? "bg-transparent! backdrop-blur-none! text-white shadow-none"
+        : "bg-black text-white"
+  )}
+></nav>; */
 }
