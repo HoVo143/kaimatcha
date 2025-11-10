@@ -9,6 +9,7 @@ import { Funnel, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import BannerSection from "../../components/ui/banner-section";
+import SectionDivider from "../../components/ui/divider-section";
 
 export default function SearchLayout({
   children,
@@ -220,6 +221,7 @@ export default function SearchLayout({
           <FilterList list={sorting} title="Sort by" />
         </div>
       </div> */}
+      <SectionDivider />
     </>
   );
 }

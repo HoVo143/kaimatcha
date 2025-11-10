@@ -40,11 +40,11 @@ export default function BannerSection({
 
         {/* Gradient ở đầu */}
         {gradientTop && (
-          <div className="absolute top-0 left-0 w-full h-1/4 bg-linear-to-b from-black/90 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-0 w-full h-1/4 bg-linear-to-b from-black/88 to-transparent pointer-events-none" />
         )}
         {/* Viền mờ đen ở đáy nếu bật */}
         {gradientBottom && (
-          <div className="absolute bottom-0 left-0 w-full h-1/12 bg-linear-to-t from-black/90 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-1/9 bg-linear-to-t from-black/88 to-transparent pointer-events-none" />
         )}
       </div>
 

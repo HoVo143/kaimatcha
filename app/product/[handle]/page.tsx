@@ -11,6 +11,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import SectionDivider from "../../../components/ui/divider-section";
 
 export async function generateMetadata({
   params,
@@ -98,15 +99,7 @@ export default async function ProductPage({
         </div>
         {/* <RelatedPRoducts id={product.id} /> */}
         {/* hr */}
-        <div className="flex max-w-[250] m-auto items-center justify-center my-8">
-          <div className="grow border-t border-gray-500"></div>
-          <img
-            className="w-12 h-12 mx-1"
-            src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
-            alt="Hr"
-          />
-          <div className="grow border-t border-gray-500"></div>
-        </div>
+        <SectionDivider />
       </div>
     </ProductProvider>
   );

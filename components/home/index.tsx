@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ProductSlider from "./ProductSlider";
 import { getCollections, getProducts } from "../../lib/shopify";
+import SectionDivider from "../ui/divider-section";
 
 export default async function HomeSection() {
   const collections = await getCollections();
@@ -30,9 +31,9 @@ export default async function HomeSection() {
           alt="Matcha Banner"
           width={1600}
           height={600}
-          className="w-full h-[50vh] object-cover md:h-screen"
+          className="w-full h-[60vh] object-cover md:h-full"
         />
-        <div className="absolute md:top-48 inset-0 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
+        <div className="absolute top-26 md:top-48 inset-0 flex flex-col items-center justify-start text-center text-white px-6">
           {/* <img
             src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Full_Logo_Horizontal_White_d8930ed5-d908-473f-906d-bffc347a58b4.png?v=1762318374"
             alt=""
@@ -80,31 +81,14 @@ export default async function HomeSection() {
       </section>
 
       {/* hr */}
-      <div className="flex max-w-[250] m-auto items-center justify-center mt-1 md:mt-20 my-5">
-        <div className="grow border-t border-gray-500"></div>
-        {/* <SparklesIcon className="w-6 h-6 mx-4 text-gray-500" /> */}
-        <img
-          className="w-12 h-12 mx-1"
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
-          alt="Hr"
-        />
-        <div className="grow border-t border-gray-500"></div>
-      </div>
+      <SectionDivider />
 
       {/* products */}
       <ProductSlider topProducts={topProducts} />
       {/*  */}
 
       {/* hr */}
-      <div className="flex max-w-[250] m-auto items-center justify-center my-8">
-        <div className="grow border-t border-gray-500"></div>
-        <img
-          className="w-12 h-12 mx-1"
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Symbol-Logo-Hr.png?v=1761278683"
-          alt="Hr"
-        />
-        <div className="grow border-t border-gray-500"></div>
-      </div>
+      <SectionDivider />
 
       {/* Our Collection */}
       <section className="w-full py-6 md:py-24">
