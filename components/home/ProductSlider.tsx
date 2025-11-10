@@ -58,7 +58,7 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
         {/* Container scroll */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+          className="flex gap-2 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
         >
           {topProducts.map((product) => (
             <div
@@ -66,7 +66,7 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
               key={product.id}
               className="products-price max-w-[250] md:max-w-[450] shrink-0 "
             >
-              <div className="group relative overflow-hidden rounded-2xl shadow-md">
+              <div className="group relative overflow-hidden rounded-sm shadow-md">
                 <Link href={`/product/${product.handle}`}>
                   <Image
                     src={product.featuredImage?.url || ""}

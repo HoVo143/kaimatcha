@@ -104,7 +104,7 @@ export function ProductDescription({ product }: { product: Product }) {
               variants={product.variants}
             />
           </div>
-          <div className="basis-2/6">
+          <div className="basis-2/6 py-6">
             <AddToCart product={product} />
           </div>
         </div>
