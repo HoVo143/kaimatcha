@@ -5,7 +5,7 @@ import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
 import Link from "next/link";
 import { GridTileImage } from "../grid/tile";
-import { getProductRecommendations } from "../../lib/shopify";
+import { getProductRecommendations, getProducts } from "../../lib/shopify";
 
 export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
@@ -88,7 +88,7 @@ export function ProductDescription({ product }: { product: Product }) {
                 currentCollectionHandle={product.collections?.[0]?.handle}
                 currentMedium={medium}
                 currentOrigin={origin}
-                currentSize={size}
+                // currentSize={size}
               />
             </div>
             <VariantSelector
@@ -177,7 +177,7 @@ export function ProductDescription({ product }: { product: Product }) {
               currentCollectionHandle={product.collections?.[0]?.handle}
               currentMedium={medium}
               currentOrigin={origin}
-              currentSize={size}
+              // currentSize={size}
             />
           </div>
           <AddToCart product={product} />
@@ -192,17 +192,22 @@ async function RelatedPRoducts({
   currentCollectionHandle,
   currentMedium,
   currentOrigin,
-  currentSize,
 }: {
   currentProduct: Product;
   currentCollectionHandle?: string;
   currentMedium?: string;
   currentOrigin?: string;
-  currentSize?: string;
 }) {
-  const relatedProducts = await getProductRecommendations(currentProduct.id);
+  if (!currentCollectionHandle) return null;
 
-  if (!relatedProducts || !currentCollectionHandle) return null;
+  const query = `
+    collection_handle:${currentCollectionHandle}
+    medium:${currentMedium}
+    origin:${currentOrigin}
+  `;
+
+  const relatedProducts = await getProducts({ query });
+  if (!relatedProducts) return null;
 
   // Lọc sản phẩm liên quan đúng điều kiện
   const filteredProducts = relatedProducts.filter((p) => {
@@ -210,67 +215,64 @@ async function RelatedPRoducts({
       (c) => c.handle === currentCollectionHandle
     );
     const metafields = p.metafields || [];
-
     const sameMedium =
       currentMedium &&
       metafields.some((m) => m?.key === "medium" && m.value === currentMedium);
     const sameOrigin =
       currentOrigin &&
       metafields.some((m) => m?.key === "origin" && m.value === currentOrigin);
-    const sameSize =
-      currentSize &&
-      metafields.some((m) => m?.key === "size" && m.value === currentSize);
 
-    return sameCollection && sameMedium && sameOrigin && sameSize;
+    return sameCollection && sameMedium && sameOrigin;
   });
-  // .slice(0, 4); // Lấy tối đa 4 sản phẩm liên quan
 
-  // Thêm luôn sản phẩm hiện tại vào đầu danh sách
-  const finalProducts = [currentProduct, ...filteredProducts];
-
-  // const colClasses: Record<number, string> = {
-  //   6: "grid-cols-6",
-  //   7: "grid-cols-7",
-  //   8: "grid-cols-8",
-  //   9: "grid-cols-9",
-  //   10: "grid-cols-10",
-  // };
-
-  // const cols = finalProducts.length;
-  // const gridClass = colClasses[cols] || "grid-cols-6";
+  if (filteredProducts.length === 0) return null; // ✅ ẩn luôn nếu không có related product
 
   return (
     <div className="md:px-0">
       <ul
-        className="grid grid-cols-6 max-w-[450px]"
+        className="grid grid-cols-6 max-w-[550px]"
         style={
-          finalProducts.length > 6
+          filteredProducts.length > 6
             ? {
-                gridTemplateColumns: `repeat(${finalProducts.length}, minmax(0, 1fr))`,
+                gridTemplateColumns: `repeat(${filteredProducts.length}, minmax(0, 1fr))`,
               }
             : undefined
         }
       >
-        {finalProducts.map((product) => (
-          <li
-            key={product.handle}
-            className="aspect-square flex-1 relative group mb-2"
-          >
-            <Link
-              className="relative h-full w-full"
-              href={`/product/${product.handle}`}
-              prefetch={true}
+        {filteredProducts.map((product) => {
+          const isActive = product.id === currentProduct.id;
+          const isOutOfStock = !product.availableForSale;
+
+          return (
+            <li
+              key={product.id}
+              className={`aspect-square flex-1 relative group mb-2 ${isActive ? "border" : ""}`}
             >
-              <GridTileImage
-                alt={product.title}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                hideLabel={true}
-              />
-            </Link>
-          </li>
-        ))}
+              <Link
+                className={`relative h-full w-full block ${
+                  isActive ? "opacity-100" : "opacity-80 hover:opacity-100"
+                }`}
+                href={`/product/${product.handle}`}
+                prefetch={true}
+              >
+                <GridTileImage
+                  alt={product.title}
+                  src={product.featuredImage?.url}
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                  hideLabel={true}
+                />
+                {/* Overlay đường chéo nếu out of stock */}
+                {isOutOfStock && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="absolute w-full h-full bg-black/20"></div>
+                    <div className="absolute w-0.5 h-full bg-gray-300 rotate-45"></div>
+                  </div>
+                )}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

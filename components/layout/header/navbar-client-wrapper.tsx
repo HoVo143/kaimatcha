@@ -24,7 +24,10 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
         setScrolled(window.scrollY > 50);
       }
       // Nếu ở các trang collections khác → luôn trắng
-      else if (pathname.startsWith("/collections")) {
+      else if (
+        pathname.startsWith("/collections") ||
+        pathname.startsWith("/product")
+      ) {
         setScrolled(true);
       }
       // Các trang còn lại → bình thường (đen → trắng)
