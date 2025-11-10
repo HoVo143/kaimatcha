@@ -51,7 +51,7 @@ export default function SearchLayout({
         {/* --- COLLECTION TITLE --- */}
         {pathname === "/collections/matcha" ? (
           <>
-            <div className="relative w-full h-[200px] md:h-[350px] overflow-hidden">
+            <div className="relative w-full h-[130px] md:h-[220px] overflow-hidden">
               <img
                 src="/Matcha_Web_Banner.png"
                 alt="Matcha Banner"
@@ -60,8 +60,8 @@ export default function SearchLayout({
               {/* Overlay đen mờ */}
               <div className="absolute inset-0 bg-black/50"></div>
 
-              <div className="absolute inset-0 flex items-end pb-6 md:pb-16 justify-center">
-                <h1 className="text-white text-2xl md:text-4xl uppercase tracking-wide drop-shadow-lg">
+              <div className="absolute inset-0 flex items-end pb-3  md:pb-6 justify-center">
+                <h1 className="text-white text-xl md:text-4xl uppercase tracking-wide drop-shadow-lg">
                   {currentCollection}
                 </h1>
               </div>
@@ -194,13 +194,13 @@ export default function SearchLayout({
                 alt="Matcha Banner"
                 width={1600}
                 height={600}
-                className="w-full h-[30vh] object-cover md:h-[90vh] object-[center_20%]"
+                className="w-full h-[30vh] object-cover md:h-[90vh] object-[center_18%]"
               />
-              <div className="absolute md:pt-20 inset-0 bg-black/40 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
+              <div className="absolute inset-0 bg-black/40 flex flex-col items-end md:justify-start justify-center text-end text-white px-6">
                 <h1 className="mt-2 md:mt-14 text-md md:text-4xl font-medium tracking-tight uppercase">
                   The Difference
                 </h1>
-                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium ">
+                <p className="mt-2 md:mt-6 text-md md:text-xl font-medium md:max-w-[390px]">
                   Experience the depth of our Matcha—deeper color, finer
                   texture, unmatched purity.
                 </p>

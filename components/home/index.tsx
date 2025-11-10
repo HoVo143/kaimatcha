@@ -32,17 +32,17 @@ export default async function HomeSection() {
           height={600}
           className="w-full h-[50vh] object-cover md:h-[95vh]"
         />
-        <div className="absolute md:top-12 inset-0 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
-          <img
+        <div className="absolute md:top-36 inset-0 flex flex-col items-center md:justify-start justify-center text-center text-white px-6">
+          {/* <img
             src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Full_Logo_Horizontal_White_d8930ed5-d908-473f-906d-bffc347a58b4.png?v=1762318374"
             alt=""
             className="md:h-[120px]"
-          />
-          <h1 className="mt-2 md:mt-0 text-md md:text-4xl font-medium tracking-tight">
+          /> */}
+          <h1 className="mt-2 text-md md:text-4xl font-medium tracking-tight">
             BRAND IDENTITY SYSTEM
           </h1>
           <p className="mt-2 text-md md:text-3xl font-medium ">
-            Ceremonial‑Grade Matcha · Uji, Japan
+            Single-Origin Ceremonial Matcha
           </p>
           {/* <Link
             href="/collections/matcha"
