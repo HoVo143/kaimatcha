@@ -5,7 +5,6 @@ import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
 import Link from "next/link";
 import { GridTileImage } from "../grid/tile";
-import { QuickAddToCart } from "../ui/quick-add-to-cart";
 import { getProductRecommendations } from "../../lib/shopify";
 
 export function ProductDescription({ product }: { product: Product }) {
@@ -26,6 +25,7 @@ export function ProductDescription({ product }: { product: Product }) {
   const appellation = getMetafieldValue("appellation");
   const capacity = getMetafieldValue("capacity");
   const medium = getMetafieldValue("medium");
+  const size = getMetafieldValue("size");
 
   const showTopRow = ceremonial || origin || netWeight;
   // --- Kiểm tra sản phẩm có thuộc collection "teaware" ---
@@ -64,12 +64,16 @@ export function ProductDescription({ product }: { product: Product }) {
                     <span className="italic">{medium}</span>
                   </p>
                   <p className="showTopRow-wrapper">
-                    <span className="uppercase text-sm">capacity:</span>
-                    <span className="italic"> {capacity}</span>
-                  </p>
-                  <p className="showTopRow-wrapper">
                     <span className="uppercase text-sm">origin:</span>
                     <span className="italic">{origin}</span>
+                  </p>
+                  <p className="showTopRow-wrapper">
+                    <span className="uppercase text-sm">Size:</span>
+                    <span className="italic">{size}</span>
+                  </p>
+                  <p className="showTopRow-wrapper">
+                    <span className="uppercase text-sm">capacity:</span>
+                    <span className="italic"> {capacity}</span>
                   </p>
                   <p className="showTopRow-wrapper">
                     <span className="uppercase text-sm">Weight:</span>
@@ -80,9 +84,11 @@ export function ProductDescription({ product }: { product: Product }) {
             </div>
             <div>
               <RelatedPRoducts
-                id={product.id}
+                currentProduct={product} // sản phẩm hiện tại đang xem
                 currentCollectionHandle={product.collections?.[0]?.handle}
                 currentMedium={medium}
+                currentOrigin={origin}
+                currentSize={size}
               />
             </div>
             <VariantSelector
@@ -152,13 +158,6 @@ export function ProductDescription({ product }: { product: Product }) {
           html={product.descriptionHtml}
         />
       ) : null} */}
-          <div>
-            <RelatedPRoducts
-              id={product.id}
-              currentCollectionHandle={product.collections?.[0]?.handle}
-              currentMedium={medium}
-            />
-          </div>
           <div className="products-price flex items-center justify-center gap-5 py-6 font-medium text-lg text-black">
             <Price
               amount={product.priceRange.maxVariantPrice.amount}
@@ -172,6 +171,15 @@ export function ProductDescription({ product }: { product: Product }) {
             )}
           </div> */}
           </div>
+          <div className="mb-6">
+            <RelatedPRoducts
+              currentProduct={product} // sản phẩm hiện tại đang xem
+              currentCollectionHandle={product.collections?.[0]?.handle}
+              currentMedium={medium}
+              currentOrigin={origin}
+              currentSize={size}
+            />
+          </div>
           <AddToCart product={product} />
         </div>
       )}
@@ -180,37 +188,55 @@ export function ProductDescription({ product }: { product: Product }) {
 }
 
 async function RelatedPRoducts({
-  id,
+  currentProduct,
   currentCollectionHandle,
   currentMedium,
+  currentOrigin,
+  currentSize,
 }: {
-  id: string;
+  currentProduct: Product;
   currentCollectionHandle?: string;
   currentMedium?: string;
+  currentOrigin?: string;
+  currentSize?: string;
 }) {
-  const relatedProducts = await getProductRecommendations(id);
+  const relatedProducts = await getProductRecommendations(currentProduct.id);
 
-  if (!relatedProducts || !currentCollectionHandle || !currentMedium)
-    return null;
+  if (!relatedProducts || !currentCollectionHandle) return null;
 
-  // Lọc theo collection và medium
-  const filteredProducts = relatedProducts.filter(
-    (p) =>
-      p.collections?.some((c) => c.handle === currentCollectionHandle) &&
-      p.metafields?.some(
-        (m) => m && m.key === "medium" && m.value === currentMedium
-      )
-  );
+  // Lọc sản phẩm liên quan đúng điều kiện
+  const filteredProducts = relatedProducts.filter((p) => {
+    const sameCollection = p.collections?.some(
+      (c) => c.handle === currentCollectionHandle
+    );
+    const metafields = p.metafields || [];
 
-  if (filteredProducts.length === 0) return null;
+    const sameMedium =
+      currentMedium &&
+      metafields.some((m) => m?.key === "medium" && m.value === currentMedium);
+    const sameOrigin =
+      currentOrigin &&
+      metafields.some((m) => m?.key === "origin" && m.value === currentOrigin);
+    const sameSize =
+      currentSize &&
+      metafields.some((m) => m?.key === "size" && m.value === currentSize);
+
+    return sameCollection && sameMedium && sameOrigin && sameSize;
+  });
+  // .slice(0, 4); // Lấy tối đa 4 sản phẩm liên quan
+
+  // Thêm luôn sản phẩm hiện tại vào đầu danh sách
+  const finalProducts = [currentProduct, ...filteredProducts];
+
+  const cols = finalProducts.length >= 6 ? finalProducts.length : 6;
 
   return (
-    <div className="py-6">
-      <ul className="flex w-full gap-4 pt-1">
-        {filteredProducts.map((product) => (
+    <div className="px-6 md:px-0">
+      <ul className={`grid grid-cols-${cols} max-w-[550px]`}>
+        {finalProducts.map((product) => (
           <li
             key={product.handle}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 relative group mb-8 md:mb-10"
+            className="aspect-square flex-1 relative group mb-2"
           >
             <Link
               className="relative h-full w-full"
