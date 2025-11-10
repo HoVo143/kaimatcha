@@ -35,9 +35,9 @@ export function ProductDescription({ product }: { product: Product }) {
   return (
     <>
       {isTeaware && product.descriptionHtml ? (
-        <div className="font-text-product-detail flex flex-col md:flex-row items-center md:items-start justify-between md:gap-10">
+        <div className="px-6 font-text-product-detail flex flex-col md:flex-row items-center md:items-start justify-between md:gap-10">
           <div className="basis-4/6">
-            <div className="flex justify-between px-6 py-6 md:px-0 border-b border-b-neutral-300">
+            <div className="flex justify-between py-6 md:px-0 border-b border-b-neutral-300">
               <h1 className="text-2xl md:text-4xl font-medium uppercase">
                 {product.title}
               </h1>
@@ -48,7 +48,7 @@ export function ProductDescription({ product }: { product: Product }) {
                 />
               </div>
             </div>
-            <div className="px-6 py-6 md:px-0 flex justify-between gap-2 md:gap-16 flex-col md:flex-row">
+            <div className="py-6 md:px-0 flex justify-between gap-2 md:gap-16 flex-col md:flex-row">
               <div className="basis-4/6">
                 {product.descriptionHtml ? (
                   <Prose
@@ -228,11 +228,29 @@ async function RelatedPRoducts({
   // Thêm luôn sản phẩm hiện tại vào đầu danh sách
   const finalProducts = [currentProduct, ...filteredProducts];
 
-  const cols = finalProducts.length >= 6 ? finalProducts.length : 6;
+  // const colClasses: Record<number, string> = {
+  //   6: "grid-cols-6",
+  //   7: "grid-cols-7",
+  //   8: "grid-cols-8",
+  //   9: "grid-cols-9",
+  //   10: "grid-cols-10",
+  // };
+
+  // const cols = finalProducts.length;
+  // const gridClass = colClasses[cols] || "grid-cols-6";
 
   return (
-    <div className="px-6 md:px-0">
-      <ul className={`grid grid-cols-${cols} max-w-[550px]`}>
+    <div className="md:px-0">
+      <ul
+        className="grid grid-cols-6 max-w-[450px]"
+        style={
+          finalProducts.length > 6
+            ? {
+                gridTemplateColumns: `repeat(${finalProducts.length}, minmax(0, 1fr))`,
+              }
+            : undefined
+        }
+      >
         {finalProducts.map((product) => (
           <li
             key={product.handle}

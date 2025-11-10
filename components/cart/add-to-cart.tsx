@@ -17,7 +17,7 @@ export function SubmitButton({
   selectedVariantId: string | undefined;
 }) {
   const baseClasses =
-    "relative flex w-full items-center justify-center rounded-xs cursor-pointer p-4 tracking-wide font-medium overflow-hidden transition-all duration-500";
+    "relative text-nowrap flex w-full items-center justify-center rounded-xs cursor-pointer p-4 tracking-wide font-medium overflow-hidden transition-all duration-500";
   const normalClasses =
     "bg-white text-black hover:text-black border border-neutral-200";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
