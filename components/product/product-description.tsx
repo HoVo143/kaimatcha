@@ -235,6 +235,8 @@ async function RelatedPRoducts({
 
   if (filteredProducts.length === 0) return null; //  ẩn luôn nếu không có related product
 
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
   return (
     <div className="md:px-0">
       <ul
@@ -247,9 +249,11 @@ async function RelatedPRoducts({
             : undefined
         }
       >
-        {filteredProducts.map((product) => {
+        {filteredProducts.map((product, index) => {
           const isActive = product.id === currentProduct.id;
           const isOutOfStock = !product.availableForSale;
+          const size =
+            product.metafields?.find((m) => m?.key === "size")?.value || "";
 
           return (
             <li
@@ -277,6 +281,14 @@ async function RelatedPRoducts({
                     <div className="absolute w-0.5 h-full bg-gray-300 rotate-45"></div>
                   </div>
                 )}
+
+                {/* Text hover: Thứ tự + size */}
+                <div
+                  className="absolute top-20 left-1 right-1 
+                text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 py-1 rounded"
+                >
+                  {alphabet[index] || index + 1} {size}
+                </div>
               </Link>
             </li>
           );
