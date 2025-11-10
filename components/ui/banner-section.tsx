@@ -9,7 +9,8 @@ interface BannerSectionProps {
   title: string;
   text: string;
   linkLabel?: string;
-  gradientBottom?: boolean; // bật/tắt gradient đen ở đáy ảnh
+  gradientBottom?: boolean; // mờ ở đáy
+  gradientTop?: boolean; // mờ ở đầu
   objectPosition?: string; // điều chỉnh vị trí hiển thị ảnh
   centerContent?: boolean; // nếu true → text nằm giữa
 }
@@ -20,6 +21,7 @@ export default function BannerSection({
   text,
   linkLabel,
   gradientBottom = false,
+  gradientTop = false,
   objectPosition = "center",
   centerContent = false,
 }: BannerSectionProps) {
@@ -36,9 +38,13 @@ export default function BannerSection({
           style={{ objectPosition }}
         />
 
+        {/* Gradient ở đầu */}
+        {gradientTop && (
+          <div className="absolute top-0 left-0 w-full h-1/4 bg-linear-to-b from-black/90 to-transparent pointer-events-none" />
+        )}
         {/* Viền mờ đen ở đáy nếu bật */}
         {gradientBottom && (
-          <div className="absolute bottom-0 left-0 w-full h-1/9 bg-linear-to-t from-black/90 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-1/12 bg-linear-to-t from-black/90 to-transparent pointer-events-none" />
         )}
       </div>
 

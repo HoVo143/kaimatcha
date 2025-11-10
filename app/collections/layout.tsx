@@ -204,6 +204,7 @@ export default function SearchLayout({
               text="Learn how to make the perfect matcha."
               linkLabel="Coming soon"
               centerContent={true} // căn giữa toàn bộ
+              gradientTop
             />
           </>
         )}
