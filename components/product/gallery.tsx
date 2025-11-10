@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { XIcon } from "lucide-react";
 
 export default function Gallery({
   images,
@@ -17,6 +18,13 @@ export default function Gallery({
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  // modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState<{
+    src: string;
+    altText?: string;
+  } | null>(null);
 
   // sliderRef là DOM ref, sliderInstance là MutableRefObject
   const [sliderRef, sliderInstance] = useKeenSlider<HTMLDivElement>({
@@ -44,6 +52,16 @@ export default function Gallery({
   const totalSlides =
     sliderInstance?.current?.track?.details?.slides.length ?? images.length;
 
+  const openModal = (image: { src: string; altText?: string }) => {
+    setModalImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage(null);
+  };
+
   return (
     <div className="relative w-full select-none">
       {/* Slider */}
@@ -55,6 +73,7 @@ export default function Gallery({
               keen-slider__slide relative aspect-4/3 w-full md:w-auto
               ${images.length === 1 ? "mx-auto max-w-[500px]" : ""}
             `}
+            onClick={() => openModal(image)}
           >
             <Image
               src={image.src}
@@ -97,6 +116,33 @@ export default function Gallery({
               disabled={currentSlide >= totalSlides - 1}
             >
               <ArrowRightIcon className="h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL POPUP --- */}
+      {isModalOpen && modalImage && (
+        <div
+          className="fixed inset-0 z-999 flex items-center justify-center bg-black/70 p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full h-full max-w-[90vw] md:max-w-[70vw] max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()} // tránh click đóng khi click vào ảnh
+          >
+            <Image
+              src={modalImage.src}
+              alt={modalImage.altText || "Product image"}
+              fill
+              className="object-contain"
+              sizes="(max-width: 1024px) 90vw, 90vh"
+            />
+            <button
+              onClick={closeModal}
+              className="absolute top-20 md:top-2 right-2 p-2 bg-white rounded-full cursor-pointer"
+            >
+              <XIcon className="h-5 w-5 text-black hover:text-red-500" />
             </button>
           </div>
         </div>
