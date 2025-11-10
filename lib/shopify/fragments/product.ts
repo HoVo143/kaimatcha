@@ -73,6 +73,8 @@ export const productFragment = /* GraphQl */ `
       {namespace: "custom", key: "origin"},
       {namespace: "custom", key: "notes"},
       {namespace: "custom", key: "appellation"}
+      {namespace: "custom", key: "capacity"}
+      {namespace: "custom", key: "medium"}
     ]) {
       id
       key

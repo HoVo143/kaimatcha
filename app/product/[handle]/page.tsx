@@ -63,6 +63,10 @@ export default async function ProductPage({
 
   const product = await getProduct(handle);
   if (!product) return notFound();
+  // --- Kiểm tra sản phẩm có thuộc collection "teaware" ---
+  const isTeaware = product.collections?.some(
+    (c) => c.handle.toLowerCase() === "teaware"
+  );
   return (
     <ProductProvider>
       <div className="mx-auto">
@@ -84,7 +88,9 @@ export default async function ProductPage({
             </Suspense>
           </div>
           {/* <div className="basis-full lg:basis-2/6"> */}
-          <div className="w-full max-w-[550px]">
+          <div
+            className={`w-full ${isTeaware ? "max-w-[1100px]" : "max-w-[550px]"}`}
+          >
             <Suspense fallback={null}>
               <ProductDescription product={product} />
             </Suspense>

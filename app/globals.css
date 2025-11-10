@@ -112,3 +112,14 @@ input[type="number"] {
   background-color: rgb(4 120 87); /* emerald-800 */
   animation: loadingSlide 1.2s ease-in-out infinite;
 }
+
+.showTopRow-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.showTopRow-wrapper span:last-child {
+  text-align: end;
+  margin-bottom: 6px;
+}

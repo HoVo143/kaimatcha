@@ -93,7 +93,7 @@ export function AddToCart({ product }: { product: Product }) {
       }}
       className="space-y-3"
     >
-      <div className="flex items-center gap-2 products-price">
+      <div className="flex items-center gap-2 products-price px-6 md:px-0 flex-col md:flex-row w-full">
         <div className="flex items-center border border-neutral-200 justify-center max-w-[150] rounded-xs">
           <button
             type="button"
