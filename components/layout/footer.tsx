@@ -99,7 +99,7 @@ export default async function Footer() {
         <Link href="/terms-of-service" className="hover:underline">
           TERMS
         </Link>
-        <Link href="/data-sharing-opt-out" className="hover:underline">
+        <Link href="/privacy-policy" className="hover:underline">
           PRIVACY POLICY
         </Link>
       </div>

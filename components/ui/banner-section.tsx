@@ -53,7 +53,7 @@ export default function BannerSection({
         className={clsx(
           "absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 transition-all",
           centerContent
-            ? "md:pt-10 md:justify-start"
+            ? "md:pt-0 md:justify-start"
             : "md:items-start md:justify-start md:text-start ",
           "bg-black/40 md:bg-transparent"
         )}

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { XIcon } from "lucide-react";
+import LoadingBar from "../ui/loading-bar-pages";
 
 export default function Gallery({
   images,
@@ -89,13 +90,8 @@ export default function Gallery({
         ))}
       </div>
       {/* --- LOADING BAR --- */}
-      <div
-        className={`transition-all duration-300 ${
-          isLoading ? "h-[5px] opacity-100" : "h-0 opacity-0"
-        } w-full relative overflow-hidden bg-gray-100`}
-      >
-        {isLoading && <div className="loading-bar" />}
-      </div>
+      <LoadingBar isLoading={isLoading} />
+
       {/* Nút next / prev */}
       {images.length > 1 && (
         <div className="absolute bottom-[5%] flex w-full justify-center">

@@ -10,6 +10,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import BannerSection from "../../components/ui/banner-section";
 import SectionDivider from "../../components/ui/divider-section";
+import LoadingBar from "../../components/ui/loading-bar-pages";
 
 export default function SearchLayout({
   children,
@@ -116,13 +117,7 @@ export default function SearchLayout({
         </div>
 
         {/* --- LOADING BAR --- */}
-        <div
-          className={`transition-all duration-300 ${
-            isLoading ? "h-[5px] opacity-100" : "h-0 opacity-0"
-          } w-full relative overflow-hidden bg-gray-100`}
-        >
-          {isLoading && <div className="loading-bar" />}
-        </div>
+        <LoadingBar isLoading={isLoading} />
 
         {/* --- MAIN AREA --- */}
         <div className="flex justify-between relative overflow-hidden">
