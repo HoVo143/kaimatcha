@@ -129,3 +129,9 @@ input[type="number"] {
   text-align: end;
   margin-bottom: 6px;
 }
+
+h1[dir="ltr"] span,
+h2[dir="ltr"] span {
+  font-size: 26px;
+  font-weight: bold;
+}

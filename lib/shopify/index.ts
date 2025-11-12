@@ -491,9 +491,7 @@ export async function getPages(): Promise<Page[]> {
   return removeEdgesAndNodes(res.body.data.pages);
 }
 
-
-
-// các link trong policies/  
+// các link trong policies/
 export async function getPolicy(handle: string) {
   const res = await shopifyFetch<{
     data: {
