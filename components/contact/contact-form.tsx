@@ -2,7 +2,9 @@
 import { useState } from "react";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -13,9 +15,9 @@ export default function ContactForm() {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       reason: (form.elements.namedItem("reason") as HTMLSelectElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
     };
-
 
     try {
       const response = await fetch("/api/contact", {
@@ -39,7 +41,9 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-white">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">Name *</label>
+        <label htmlFor="name" className="block text-sm font-medium mb-1">
+          Name *
+        </label>
         <input
           id="name"
           name="name"
@@ -49,7 +53,9 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="reason" className="block text-sm font-medium mb-1">Reason *</label>
+        <label htmlFor="reason" className="block text-sm font-medium mb-1">
+          Reason *
+        </label>
         <select
           id="reason"
           name="reason"
@@ -67,7 +73,9 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">Email *</label>
+        <label htmlFor="email" className="block text-sm font-medium mb-1">
+          Email *
+        </label>
         <input
           id="email"
           name="email"
@@ -78,7 +86,9 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium mb-1">Message *</label>
+        <label htmlFor="message" className="block text-sm font-medium mb-1">
+          Message *
+        </label>
         <textarea
           id="message"
           name="message"
@@ -97,10 +107,14 @@ export default function ContactForm() {
       </button>
 
       {status === "success" && (
-        <p className="text-green-600 mt-2 text-center">Message sent successfully!</p>
+        <p className="text-green-600 mt-2 text-center">
+          Message sent successfully!
+        </p>
       )}
       {status === "error" && (
-        <p className="text-red-600 mt-2 text-center">Something went wrong. Please try again later.</p>
+        <p className="text-red-600 mt-2 text-center">
+          Something went wrong. Please try again later.
+        </p>
       )}
     </form>
   );

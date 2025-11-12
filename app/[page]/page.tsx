@@ -1,4 +1,5 @@
 import ContactForm from "../../components/contact/contact-form";
+import ExhibitionPage from "../../components/exhibition/page";
 import Prose from "../../components/ui/prose";
 import { getPage, getPolicy } from "../../lib/shopify";
 import { Metadata } from "next";
@@ -14,7 +15,7 @@ export async function generateMetadata({
   // Ưu tiên page → policy
   let data;
 
-  data =await getPage(page);
+  data = await getPage(page);
 
   if (!data) {
     data = await getPolicy(page);
@@ -37,8 +38,8 @@ export default async function Page({ params }: { params: { page: string } }) {
   const { page } = await params; // ✅ thêm await ở đây
 
   let data;
-  
-  data =await getPage(page);
+
+  data = await getPage(page);
 
   if (!data) {
     data = await getPolicy(page);
@@ -48,12 +49,19 @@ export default async function Page({ params }: { params: { page: string } }) {
 
   return (
     <>
-      <h1 className="mb-8 text-5xl font-bold">{data.title}</h1>
+      {/* Chỉ render H1 nếu không phải exhibition */}
+      {page !== "exhibition" && (
+        <h1 className="mb-8 text-5xl font-bold">{data.title}</h1>
+      )}
       {/* <Prose className="mb-8" html={data.body as string} /> */}
-
       {/* Nếu là contact page → show form riêng */}
       {page === "contact" ? (
         <ContactForm />
+      ) : (
+        <Prose html={data.body as string} />
+      )}
+      {page === "exhibition" ? (
+        <ExhibitionPage />
       ) : (
         <Prose className="mb-8" html={data.body as string} />
       )}
@@ -66,10 +74,8 @@ export default async function Page({ params }: { params: { page: string } }) {
             month: "long",
             day: "numeric",
           }
-        ).format(new Date(data.updatedAt|| Date.now()))}.`}
+        ).format(new Date(data.updatedAt || Date.now()))}.`}
       </p>
     </>
   );
 }
-
-
