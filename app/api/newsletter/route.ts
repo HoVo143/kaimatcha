@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NextRequest, NextResponse } from "next/server";
 import { ensureStartWith } from "../../../lib/utils";
 import { SHOPIFY_GRAPHQL_API_ADMIN_CUSTOMERS_ENDPOINT } from "../../../lib/constants";
