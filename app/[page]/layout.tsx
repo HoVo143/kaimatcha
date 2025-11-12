@@ -5,8 +5,11 @@ interface PageLayoutProps {
   params: { page: string }; // dynamic segment
 }
 
-export default function PageLayout({ children, params }: PageLayoutProps) {
-  const { page } = params;
+export default async function PageLayout({
+  children,
+  params,
+}: PageLayoutProps) {
+  const { page } = await params;
 
   // Nếu là exhibition → full-width
   const isExhibition = page === "exhibition";
