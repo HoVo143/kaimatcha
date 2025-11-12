@@ -11,7 +11,7 @@ export default async function Footer() {
   const [teaMenu, teawareMenu, aboutMenu] = await Promise.all([
     getMenu("menu-header"),
     getMenu("menu-teaware"),
-    getMenu("footer"),
+    getMenu("menu-about-us"),
   ]);
 
   // Helper render cột menu
