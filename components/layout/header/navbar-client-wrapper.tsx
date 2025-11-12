@@ -101,20 +101,6 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
                   />
                 </li>
               ))}
-              {/* {menu.map((item: Menu) => (
-                <li key={item.title}>
-                  <Link
-                    href={`/${item.path}`}
-                    prefetch={true}
-                    className={clsx(
-                      "uppercase underline-offset-4 hover:text-emerald-600 hover:underline transition-colors duration-300",
-                      scrolled ? "text-black" : "text-white"
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))} */}
             </ul>
           ) : null}
         </div>

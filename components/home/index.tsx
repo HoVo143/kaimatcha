@@ -39,18 +39,18 @@ export default async function HomeSection() {
             alt=""
             className="md:h-[120px]"
           /> */}
-          <h1 className="mt-2 text-md md:text-4xl font-medium tracking-tight">
-            BRAND IDENTITY SYSTEM
-          </h1>
-          <p className="mt-2 text-md md:text-3xl font-medium ">
+          <h1 className="mt-2 text-xl md:text-4xl font-medium tracking-tight">
             Single-Origin Ceremonial Matcha
+          </h1>
+          {/* <p className="mt-2 text-md md:text-3xl font-medium "></p> */}
+          <p>
+            <Link
+              href="/collections/matcha"
+              className="tracking-wider uppercase text-link mt-2 md:mt-8 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
+            >
+              Explore matcha
+            </Link>
           </p>
-          {/* <Link
-            href="/collections/matcha"
-            className="mt-6 underline inline-flex h-10 items-center justify-center px-6 text-sm font-medium hover:text-emerald-600 transition-colors"
-          >
-            Explore matcha
-          </Link> */}
         </div>
       </section>
       {/* Text */}
@@ -97,7 +97,7 @@ export default async function HomeSection() {
             Our Collection
           </h2>
 
-          <div className="grid gap-2 md:gap-12 grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+          <div className="grid gap-2 md:gap-12 grid-cols-2 lg:grid-cols-4 max-w-8xl mx-auto">
             {topCollections.map((collection) => (
               <div
                 key={collection.id}
