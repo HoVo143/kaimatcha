@@ -8,10 +8,11 @@ import NavActiveLink from "../ui/nav-active-link";
 
 export default async function Footer() {
   // Gọi 3 menu riêng biệt
-  const [teaMenu, teawareMenu, aboutMenu] = await Promise.all([
-    getMenu("menu-header"),
+  const [teaMenu, teawareMenu, aboutMenu, customerService] = await Promise.all([
+    getMenu("menu-tea"),
     getMenu("menu-teaware"),
     getMenu("menu-about-us"),
+    getMenu("main-menu"),
   ]);
 
   // Helper render cột menu
@@ -68,6 +69,7 @@ export default async function Footer() {
         {/* Menu Columns */}
         {renderColumn("Tea", teaMenu)}
         {renderColumn("Teaware", teawareMenu)}
+        {renderColumn("Customer service", customerService)}
         {renderColumn("About", aboutMenu)}
 
         <div className="flex justify-start max-w-[80] items-start min-h-[100] bg-white">
