@@ -498,7 +498,7 @@ export async function getPolicy(handle: string) {
   const res = await shopifyFetch<{
     data: {
       shop: {
-        // privacyPolicy?: Page;
+        privacyPolicy?: Page;
         termsOfService?: Page;
         refundPolicy?: Page;
         shippingPolicy?: Page;
@@ -512,8 +512,8 @@ export async function getPolicy(handle: string) {
   const { shop } = res.body.data;
 
   switch (handle) {
-    // case "privacy-policy":
-    //   return shop.privacyPolicy || null;
+    case "privacy-policy":
+      return shop.privacyPolicy || null;
     case "terms-of-service":
       return shop.termsOfService || null;
     case "refund-policy":

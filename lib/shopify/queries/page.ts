@@ -40,11 +40,12 @@ export const getPagesQuery = /* GraphQL */ `
   ${pageFragment}
 `;
 
-
-
 export const getPolicyQuery = /* GraphQL */ `
   query getPolicy {
     shop {
+      privacyPolicy {
+        ...policy
+      }
       termsOfService {
         ...policy
       }
