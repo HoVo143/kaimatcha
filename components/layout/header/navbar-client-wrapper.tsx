@@ -12,7 +12,6 @@ import NavbarClient from "./account-client";
 import CartModal from "../../cart/modal";
 import NavActiveLink from "../../ui/nav-active-link";
 import { usePathname } from "next/navigation";
-import CollectionDropdown from "./collection-dropdown";
 
 interface HeaderClientProps {
   menu: Menu[];
@@ -211,14 +210,14 @@ export default function HeaderClient({
           className={clsx(
             "absolute left-0 top-full w-full bg-white transition-all duration-300 ease-in-out shadow-md overflow-hidden z-998",
             menuHover === "Teaware" || menuHover === "Goods"
-              ? "max-h-[500px] opacity-100 visible"
+              ? "max-h-[600px] opacity-100 visible"
               : "max-h-0 opacity-0 invisible"
           )}
           onMouseEnter={() => setMenuHover(menuHover)} // giữ state khi hover submenu
           onMouseLeave={() => setMenuHover(null)} // chỉ tắt khi rời toàn vùng
         >
           {(menuHover === "Teaware" || menuHover === "Goods") && (
-            <div className="mx-auto w-full px-10 py-6 flex flex-col md:flex-row gap-8 items-start">
+            <div className="mx-auto w-full px-10 py-12 flex flex-col md:flex-row gap-8 items-start">
               {/* Bên trái: submenu */}
               <div className="flex-1 ">
                 <h1 className="text-lg uppercase">Type</h1>
@@ -230,7 +229,7 @@ export default function HeaderClient({
                     <Link
                       key={sub.title}
                       href={`/${sub.path}`}
-                      className="hover:underline transition text-black font-medium text-xl"
+                      className="hover:underline transition text-black font-medium text-2xl"
                     >
                       {sub.title}
                     </Link>
