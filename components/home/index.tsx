@@ -97,29 +97,37 @@ export default async function HomeSection() {
             Our Collection
           </h2>
 
-          <div className="grid gap-2 md:gap-12 grid-cols-2 lg:grid-cols-4 max-w-8xl mx-auto">
-            {topCollections.map((collection) => (
-              <div
-                key={collection.id}
-                className="group relative overflow-hidden"
-              >
-                <Link href={`/collections/${collection.handle}`}>
-                  <Image
-                    src={collection.image?.url || ""}
-                    alt={collection.title}
-                    width={400}
-                    height={400}
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center uppercase ">
-                    <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg hover:underline">
-                      {collection.title}
-                    </h3>
-                  </div>
-                </Link>
-              </div>
-            ))}
+          <div className="grid gap-2 md:gap-12 grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
+            {topCollections
+              .filter((collection) =>
+                ["matcha", "goods", "teaware"].includes(
+                  collection.handle.toLowerCase()
+                )
+              )
+              .map((collection) => (
+                <div
+                  key={collection.id}
+                  className="group relative overflow-hidden"
+                >
+                  <Link href={`/collections/${collection.handle}`}>
+                    {collection.image?.url && (
+                      <Image
+                        src={collection.image.url}
+                        alt={collection.title}
+                        width={400}
+                        height={400}
+                        className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-0 transition-colors" />
+                    <div className="absolute inset-0 flex items-center justify-center uppercase ">
+                      <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg hover:underline">
+                        {collection.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </div>
+              ))}
           </div>
         </div>
       </section>
