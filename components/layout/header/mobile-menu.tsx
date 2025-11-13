@@ -2,15 +2,38 @@
 
 import { Menu } from "../../../lib/shopify/types";
 import { Dialog, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  ChevronDownIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import Search from "./search";
 
-export default function MobileMenu({ menu }: { menu: Menu[] }) {
+export default function MobileMenu({
+  menu,
+  teawareSubmenu,
+  goodsSubmenu,
+}: {
+  menu: Menu[];
+  teawareSubmenu: Menu[];
+  goodsSubmenu: Menu[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+
   const openMobileMenu = () => setIsOpen(true);
-  const closeMobileMenu = () => setIsOpen(false);
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setOpenSubmenu(null);
+  };
+
+  const toggleSubmenu = (title: string) => {
+    setOpenSubmenu((prev) => (prev === title ? null : title));
+  };
+  // const openMobileMenu = () => setIsOpen(true);
+  // const closeMobileMenu = () => setIsOpen(false);
   return (
     <>
       <button
@@ -52,25 +75,84 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                 >
                   <XMarkIcon className="h-6" />
                 </button>
-                <div className="mb-4 w-full">
+                <div className="pb-4 w-full border-b border-neutral-200">
                   <Search />
                 </div>
                 {menu.length > 0 ? (
                   <ul className="flex w-full flex-col text-collections">
-                    {menu.map((item: Menu) => (
-                      <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 "
-                        key={item.title}
-                      >
-                        <Link
-                          href={`/${item.path}`}
-                          prefetch={true}
-                          onClick={closeMobileMenu}
+                    {menu.map((item: Menu) => {
+                      const hasSubmenu =
+                        item.title === "Teaware" || item.title === "Goods";
+                      const submenu =
+                        item.title === "Teaware"
+                          ? teawareSubmenu
+                          : item.title === "Goods"
+                            ? goodsSubmenu
+                            : [];
+
+                      return (
+                        <li
+                          key={item.title}
+                          className="border-b border-neutral-200"
                         >
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
+                          {/* Mục cha */}
+                          <div
+                            className="flex justify-between items-center py-3 text-xl text-black cursor-pointer"
+                            onClick={() =>
+                              hasSubmenu
+                                ? toggleSubmenu(item.title)
+                                : closeMobileMenu()
+                            }
+                          >
+                            <Link
+                              href={`/${item.path}`}
+                              prefetch={true}
+                              onClick={() =>
+                                hasSubmenu ? null : closeMobileMenu()
+                              }
+                            >
+                              {item.title}
+                            </Link>
+
+                            {hasSubmenu && (
+                              <ChevronDownIcon
+                                className={`h-5 w-5 transition-transform ${
+                                  openSubmenu === item.title
+                                    ? "rotate-180"
+                                    : "rotate-0"
+                                }`}
+                              />
+                            )}
+                          </div>
+
+                          {/* Menu con */}
+                          {hasSubmenu && (
+                            <div
+                              className={`overflow-hidden transition-all duration-300 ${
+                                openSubmenu === item.title
+                                  ? "max-h-[500px] opacity-100"
+                                  : "max-h-0 opacity-0"
+                              }`}
+                            >
+                              <ul className="pl-4 pb-3 flex flex-col gap-3">
+                                {submenu.map((sub) => (
+                                  <li key={sub.title}>
+                                    <Link
+                                      href={`/${sub.path}`}
+                                      prefetch={true}
+                                      onClick={closeMobileMenu}
+                                      className="flex items-center gap-3 text-base text-neutral-700"
+                                    >
+                                      <span>{sub.title}</span>
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : null}
               </div>

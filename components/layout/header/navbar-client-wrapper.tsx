@@ -102,7 +102,11 @@ export default function HeaderClient({
       >
         {/* Mobile menu */}
         <div className="block flex-none md:hidden">
-          <MobileMenu menu={menu} />
+          <MobileMenu
+            menu={menu}
+            teawareSubmenu={teawareSubmenu}
+            goodsSubmenu={goodsSubmenu}
+          />
         </div>
 
         {/* Logo mobile */}
