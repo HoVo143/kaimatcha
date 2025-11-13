@@ -57,10 +57,7 @@ export default async function Page({ params }: { params: { page: string } }) {
       {/* Nếu là contact page → show form riêng */}
       {page === "contact" ? (
         <ContactForm />
-      ) : (
-        <Prose html={data.body as string} />
-      )}
-      {page === "exhibition" ? (
+      ) : page === "exhibition" ? (
         <ExhibitionPage />
       ) : (
         <Prose className="mb-8" html={data.body as string} />

@@ -34,8 +34,8 @@ export default async function ExhibitionPage() {
           className="w-full h-[60vh] object-cover md:h-full"
         />
         <div className="absolute top-26 md:top-56 inset-0 flex flex-col items-center justify-start text-center text-white px-6">
-          <h1 className="mt-2 text-xl md:text-5xl font-medium tracking-tight">
-            MOOMOOYO
+          <h1 className="mt-2 text-xl md:text-5xl font-medium tracking-tight uppercase">
+            coming soon
           </h1>
           {/* <p className="mt-2 text-md md:text-3xl font-medium "></p> */}
         </div>

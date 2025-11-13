@@ -56,12 +56,12 @@ export default function SearchLayout({
           <>
             <div className="relative w-full h-[130px] md:h-[220px] overflow-hidden">
               <img
-                src="/Matcha_Web_Banner.png"
+                src="/banner_page_matcha.png"
                 alt="Matcha Banner"
                 className="w-full h-full object-cover "
               />
               {/* Overlay đen mờ */}
-              <div className="absolute inset-0 bg-black/50"></div>
+              <div className="absolute inset-0 bg-black/20"></div>
 
               <div className="absolute inset-0 flex items-end pb-3  md:pb-6 justify-center">
                 <h1 className="text-white text-xl md:text-4xl uppercase tracking-wide drop-shadow-lg">

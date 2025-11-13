@@ -240,7 +240,7 @@ async function RelatedPRoducts({
   return (
     <div className="md:px-0">
       <ul
-        className="grid grid-cols-6 max-w-[550px]"
+        className="grid grid-cols-7 max-w-[550px]"
         style={
           filteredProducts.length > 6
             ? {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,10 +12,22 @@ import NavbarClient from "./account-client";
 import CartModal from "../../cart/modal";
 import NavActiveLink from "../../ui/nav-active-link";
 import { usePathname } from "next/navigation";
+import CollectionDropdown from "./collection-dropdown";
 
-export default function HeaderClient({ menu }: { menu: Menu[] }) {
+interface HeaderClientProps {
+  menu: Menu[];
+  teawareSubmenu: Menu[];
+  goodsSubmenu: Menu[];
+}
+
+export default function HeaderClient({
+  menu,
+  teawareSubmenu,
+  goodsSubmenu,
+}: HeaderClientProps) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const [menuHover, setMenuHover] = useState<string | null>(null);
 
   //  Logic scroll + kiểm tra trang matcha
   useEffect(() => {
@@ -50,88 +63,200 @@ export default function HeaderClient({ menu }: { menu: Menu[] }) {
   // const isMatchaPage =
   //   pathname === "/collections/matcha" || pathname.startsWith("/product/");
 
+  const navStyle = {
+    backgroundColor:
+      scrolled || menuHover
+        ? "white" // nền trắng mờ khi scroll
+        : isMatchaPage
+          ? "transparent" // Matcha chưa scroll → trong suốt
+          : "rgba(0, 0, 0, 0.9)", // Trang khác → đen mờ
+    color: scrolled || menuHover ? "black" : isMatchaPage ? "white" : "white",
+    // boxShadow: scrolled ? "0 2px 10px rgba(0,0,0,0.08)" : "none",
+    transition:
+      "background-color 0.6s ease, color 0.6s ease, box-shadow 0.6s ease, backdrop-filter 0.6s ease",
+  };
+
   return (
-    <nav
-      className={clsx(
-        isMatchaPage
-          ? "fixed top-0 left-0 w-full z-999" // Matcha: overlay cố định trên
-          : "sticky top-0 z-999", // Các trang khác: giữ layout chuẩn
-        // Layout & animation
-        "flex items-center justify-between p-4 lg:px-10 transition-all duration-500 ease-in-out",
-        // Màu chữ
-        isMatchaPage ? "text-white" : "text-white",
-        // Hiệu ứng blur
-        scrolled || !isMatchaPage ? "backdrop-blur-sm" : "backdrop-blur-none!"
-      )}
-      style={{
-        backgroundColor: scrolled
-          ? "rgba(255, 255, 255, 0.95)" // nền trắng mờ khi scroll
-          : isMatchaPage
-            ? "transparent" // Matcha chưa scroll → trong suốt
-            : "rgba(0, 0, 0, 0.9)", // Trang khác → đen mờ
-        color: scrolled ? "black" : isMatchaPage ? "white" : "white",
-        // boxShadow: scrolled ? "0 2px 10px rgba(0,0,0,0.08)" : "none",
-        transition:
-          "background-color 0.6s ease, color 0.6s ease, box-shadow 0.6s ease, backdrop-filter 0.6s ease",
-      }}
-    >
-      {/* Mobile menu */}
-      <div className="block flex-none md:hidden">
-        <MobileMenu menu={menu} />
-      </div>
-
-      {/* Logo mobile */}
-      <Link
-        href="/"
-        prefetch={true}
-        className="md:hidden absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center justify-center"
+    <>
+      <nav
+        // className={clsx(
+        //   isMatchaPage
+        //     ? "fixed top-0 left-0 w-full z-999" // Matcha: overlay cố định trên
+        //     : "sticky top-0 z-999", // Các trang khác: giữ layout chuẩn
+        //   // Layout & animation
+        //   "flex items-center justify-between p-4 lg:px-10 transition-all duration-500 ease-in-out",
+        //   // Màu chữ
+        //   isMatchaPage ? "text-white" : "text-white",
+        //   // Hiệu ứng blur
+        //   scrolled || !isMatchaPage ? "backdrop-blur-sm" : "backdrop-blur-none!"
+        // )}
+        className={clsx(
+          isMatchaPage
+            ? "fixed top-0 left-0 w-full z-999"
+            : "sticky top-0 z-999",
+          "p-4 lg:px-10 transition-all duration-500 ease-in-out",
+          isMatchaPage ? "text-white" : "text-white",
+          scrolled || !isMatchaPage ? "backdrop-blur-sm" : "backdrop-blur-none!"
+        )}
+        style={navStyle}
+        onMouseLeave={() => setMenuHover(null)}
       >
-        <LogoSquare scrolled={scrolled} />
-      </Link>
-
-      {/* Main items */}
-      <div className="flex w-full items-center justify-center mx-auto">
-        <div className="flex w-full md:w-1/3">
-          {menu.length > 0 ? (
-            <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
-              {menu.map((item) => (
-                <li key={item.title}>
-                  <NavActiveLink
-                    title={item.title}
-                    href={`/${item.path}`}
-                    scrolled={scrolled} // có ảnh hưởng màu khi scroll
-                    variant="header"
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : null}
+        {/* Mobile menu */}
+        <div className="block flex-none md:hidden">
+          <MobileMenu menu={menu} />
         </div>
 
-        <div className="hidden md:flex justify-center md:w-1/3">
-          <Link
-            href={"/"}
-            prefetch={true}
-            className="flex w-full items-center justify-center md:w-auto"
-          >
-            <LogoSquare scrolled={scrolled} />
-          </Link>
-        </div>
+        {/* Logo mobile */}
+        <Link
+          href="/"
+          prefetch={true}
+          className="md:hidden absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center justify-center"
+        >
+          <LogoSquare scrolled={scrolled} />
+        </Link>
 
-        <div className="justify-end items-center flex md:w-1/3 md:gap-5">
-          {/* Search */}
-          <div className="hidden md:flex">
-            <Search />
+        {/* Main items */}
+        <div className="flex w-full items-center justify-center mx-auto">
+          <div className="flex w-full md:w-1/3">
+            {menu.length > 0 ? (
+              // <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
+              //   {menu.map((item) => (
+              //     <li key={item.title}>
+              //       <NavActiveLink
+              //         title={item.title}
+              //         href={`/${item.path}`}
+              //         scrolled={scrolled} // có ảnh hưởng màu khi scroll
+              //         variant="header"
+              //       />
+              //     </li>
+              //   ))}
+              // </ul>
+              <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase relative">
+                {menu.map((item) => (
+                  <li
+                    key={item.title}
+                    onMouseEnter={() => setMenuHover(item.title)}
+                    className="relative"
+                  >
+                    <NavActiveLink
+                      title={item.title}
+                      href={`/${item.path}`}
+                      scrolled={scrolled || !!menuHover}
+                      variant="header"
+                    />
+
+                    {/* Mega menu full-width */}
+                    {/* {(item.title === "Teaware" || item.title === "Goods") && (
+                      <div
+                        className={clsx(
+                          "fixed left-0 top-[50px] w-screen bg-white transition-all duration-300 ease-in-out transform opacity-0 -translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto"
+                        )}
+                      >
+                        <div className="mx-auto px-10 py-6 flex flex-col items-start gap-4">
+                          {(item.title === "Teaware"
+                            ? teawareSubmenu
+                            : goodsSubmenu
+                          ).map((sub) => (
+                            <Link
+                              key={sub.title}
+                              href={`/${sub.path}`}
+                              className=" hover:underline"
+                            >
+                              {sub.image && (
+                                <img
+                                  src={sub.image} // mỗi sub menu cần có image field
+                                  alt={sub.title}
+                                  className="w-full h-32 object-cover rounded-md mb-2"
+                                />
+                              )}
+                              <span className="text-black font-medium">
+                                {sub.title}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )} */}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
 
-          {/* Account */}
-          <NavbarClient />
+          <div className="hidden md:flex justify-center md:w-1/3">
+            <Link
+              href={"/"}
+              prefetch={true}
+              className="flex w-full items-center justify-center md:w-auto"
+            >
+              <LogoSquare scrolled={scrolled || !!menuHover} />
+            </Link>
+          </div>
 
-          {/* cart */}
-          <CartModal />
+          <div className="justify-end items-center flex md:w-1/3 md:gap-5">
+            {/* Search */}
+            <div className="hidden md:flex">
+              <Search />
+            </div>
+
+            {/* Account */}
+            <NavbarClient />
+
+            {/* cart */}
+            <CartModal />
+          </div>
         </div>
-      </div>
-    </nav>
+        {/* Menu con hiển thị khi hover menu cha hoặc submenu */}
+        <div
+          className={clsx(
+            "absolute left-0 top-full w-full bg-white transition-all duration-300 ease-in-out shadow-md overflow-hidden z-998",
+            menuHover === "Teaware" || menuHover === "Goods"
+              ? "max-h-[500px] opacity-100 visible"
+              : "max-h-0 opacity-0 invisible"
+          )}
+          onMouseEnter={() => setMenuHover(menuHover)} // giữ state khi hover submenu
+          onMouseLeave={() => setMenuHover(null)} // chỉ tắt khi rời toàn vùng
+        >
+          {(menuHover === "Teaware" || menuHover === "Goods") && (
+            <div className="mx-auto w-full px-10 py-6 flex flex-col md:flex-row gap-8 items-start">
+              {/* Bên trái: submenu */}
+              <div className="flex-1 ">
+                <h1 className="text-lg uppercase">Type</h1>
+                <div className="flex flex-col gap-3 mt-3">
+                  {(menuHover === "Teaware"
+                    ? teawareSubmenu
+                    : goodsSubmenu
+                  ).map((sub) => (
+                    <Link
+                      key={sub.title}
+                      href={`/${sub.path}`}
+                      className="hover:underline transition text-black font-medium text-xl"
+                    >
+                      {sub.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bên phải: banner cố định */}
+              <div className="flex-1">
+                <img
+                  src={
+                    menuHover === "Teaware"
+                      ? "https://cdn.shopify.com/s/files/1/0682/6636/0920/files/banner-exhibition.jpg?v=1762940727"
+                      : "https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
+                  }
+                  alt={
+                    menuHover === "Teaware" ? "Teaware banner" : "Goods banner"
+                  }
+                  className="w-full h-[50vh] object-cover rounded-xs shadow-sm"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+    </>
   );
 }
 

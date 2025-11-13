@@ -9,6 +9,7 @@ export const productFragment = /* GraphQl */ `
     title
     description
     descriptionHtml
+    productType           
     options {
       id
       name
