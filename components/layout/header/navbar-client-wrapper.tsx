@@ -18,12 +18,16 @@ interface HeaderClientProps {
   menu: Menu[];
   teawareSubmenu: Menu[];
   goodsSubmenu: Menu[];
+  teawareSubmenuMedium: Menu[];
+  goodsSubmenuMedium: Menu[];
 }
 
 export default function HeaderClient({
   menu,
   teawareSubmenu,
   goodsSubmenu,
+  teawareSubmenuMedium,
+  goodsSubmenuMedium,
 }: HeaderClientProps) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -179,22 +183,42 @@ export default function HeaderClient({
           {(menuHover === "Teaware" || menuHover === "Goods") && (
             <div className="mx-auto w-full px-10 py-12 flex flex-col md:flex-row gap-8 items-start">
               {/* Bên trái: submenu */}
-              <div className="flex-1 ">
-                <h1 className="text-lg uppercase">Type</h1>
-                <div className="flex flex-col gap-3 mt-3">
-                  {(menuHover === "Teaware"
-                    ? teawareSubmenu
-                    : goodsSubmenu
-                  ).map((sub) => (
-                    <Link
-                      key={sub.title}
-                      href={`/${sub.path}`}
-                      className="hover:underline transition text-black font-medium text-2xl"
-                    >
-                      {sub.title}
-                    </Link>
-                  ))}
+              <div className="flex-1 flex justify-between gap-5">
+                <div className="flex-1">
+                  <h1 className="text-lg uppercase">Type</h1>
+                  <div className="flex flex-col gap-3 mt-3">
+                    {(menuHover === "Teaware"
+                      ? teawareSubmenu
+                      : goodsSubmenu
+                    ).map((sub) => (
+                      <Link
+                        key={sub.title}
+                        href={`/${sub.path}`}
+                        className="hover:underline transition text-black font-medium text-2xl"
+                      >
+                        {sub.title}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
+                <div className="flex-1">
+                  <h1 className="text-lg uppercase">Medium</h1>
+                  <div className="flex flex-col gap-3 mt-3">
+                    {(menuHover === "Teaware"
+                      ? teawareSubmenuMedium
+                      : goodsSubmenuMedium
+                    ).map((sub) => (
+                      <Link
+                        key={sub.title}
+                        href={`/${sub.path}`}
+                        className="hover:underline transition text-black font-medium text-2xl"
+                      >
+                        {sub.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex-1"></div>
               </div>
 
               {/* Bên phải: banner cố định */}
