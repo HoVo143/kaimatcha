@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -122,19 +123,7 @@ export default function HeaderClient({
         <div className="flex w-full items-center justify-center mx-auto">
           <div className="flex w-full md:w-1/3">
             {menu.length > 0 ? (
-              // <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
-              //   {menu.map((item) => (
-              //     <li key={item.title}>
-              //       <NavActiveLink
-              //         title={item.title}
-              //         href={`/${item.path}`}
-              //         scrolled={scrolled} // có ảnh hưởng màu khi scroll
-              //         variant="header"
-              //       />
-              //     </li>
-              //   ))}
-              // </ul>
-              <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase relative">
+              <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
                 {menu.map((item) => (
                   <li
                     key={item.title}
@@ -147,39 +136,6 @@ export default function HeaderClient({
                       scrolled={scrolled || !!menuHover}
                       variant="header"
                     />
-
-                    {/* Mega menu full-width */}
-                    {/* {(item.title === "Teaware" || item.title === "Goods") && (
-                      <div
-                        className={clsx(
-                          "fixed left-0 top-[50px] w-screen bg-white transition-all duration-300 ease-in-out transform opacity-0 -translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto"
-                        )}
-                      >
-                        <div className="mx-auto px-10 py-6 flex flex-col items-start gap-4">
-                          {(item.title === "Teaware"
-                            ? teawareSubmenu
-                            : goodsSubmenu
-                          ).map((sub) => (
-                            <Link
-                              key={sub.title}
-                              href={`/${sub.path}`}
-                              className=" hover:underline"
-                            >
-                              {sub.image && (
-                                <img
-                                  src={sub.image} // mỗi sub menu cần có image field
-                                  alt={sub.title}
-                                  className="w-full h-32 object-cover rounded-md mb-2"
-                                />
-                              )}
-                              <span className="text-black font-medium">
-                                {sub.title}
-                              </span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )} */}
                   </li>
                 ))}
               </ul>
