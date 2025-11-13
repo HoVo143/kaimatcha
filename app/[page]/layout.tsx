@@ -7,19 +7,18 @@
 //     </>
 //   );
 // }
-// app/[page]/layout.tsx
 import { ReactNode } from "react";
 
 interface PageLayoutProps {
   children: ReactNode;
-  params: { page: string };
+  params: { page: string } | Promise<{ page: string }>;
 }
 
 export default async function PageLayout({
   children,
   params,
 }: PageLayoutProps) {
-  const { page } = await params; // ⚠ phải await
+  const { page } = await params;
 
   const isExhibition = page === "exhibition";
 
