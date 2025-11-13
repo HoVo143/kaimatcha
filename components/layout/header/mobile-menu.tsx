@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Menu } from "../../../lib/shopify/types";
@@ -15,10 +16,14 @@ export default function MobileMenu({
   menu,
   teawareSubmenu,
   goodsSubmenu,
+  teawareSubmenuMedium,
+  goodsSubmenuMedium,
 }: {
   menu: Menu[];
   teawareSubmenu: Menu[];
   goodsSubmenu: Menu[];
+  teawareSubmenuMedium: Menu[];
+  goodsSubmenuMedium: Menu[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -83,12 +88,6 @@ export default function MobileMenu({
                     {menu.map((item: Menu) => {
                       const hasSubmenu =
                         item.title === "Teaware" || item.title === "Goods";
-                      const submenu =
-                        item.title === "Teaware"
-                          ? teawareSubmenu
-                          : item.title === "Goods"
-                            ? goodsSubmenu
-                            : [];
 
                       return (
                         <li
@@ -97,7 +96,7 @@ export default function MobileMenu({
                         >
                           {/* Mục cha */}
                           <div
-                            className="flex justify-between items-center py-3 text-xl text-black cursor-pointer"
+                            className="flex justify-between items-center py-3 text-lg text-black cursor-pointer"
                             onClick={() =>
                               hasSubmenu
                                 ? toggleSubmenu(item.title)
@@ -107,6 +106,7 @@ export default function MobileMenu({
                             <Link
                               href={`/${item.path}`}
                               prefetch={true}
+                              className="uppercase"
                               onClick={() =>
                                 hasSubmenu ? null : closeMobileMenu()
                               }
@@ -130,24 +130,57 @@ export default function MobileMenu({
                             <div
                               className={`overflow-hidden transition-all duration-300 ${
                                 openSubmenu === item.title
-                                  ? "max-h-[500px] opacity-100"
+                                  ? "max-h-[600px] opacity-100"
                                   : "max-h-0 opacity-0"
                               }`}
                             >
-                              <ul className="pl-4 pb-3 flex flex-col gap-3">
-                                {submenu.map((sub) => (
-                                  <li key={sub.title}>
-                                    <Link
-                                      href={`/${sub.path}`}
-                                      prefetch={true}
-                                      onClick={closeMobileMenu}
-                                      className="flex items-center gap-3 text-base text-neutral-700"
-                                    >
-                                      <span>{sub.title}</span>
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
+                              {/* Type submenu */}
+                              <div className="pl-4 pb-3">
+                                <h4 className="text-xs font-medium mb-2 uppercase text-neutral-400">
+                                  Type
+                                </h4>
+                                <ul className="flex flex-col gap-3">
+                                  {(item.title === "Teaware"
+                                    ? teawareSubmenu
+                                    : goodsSubmenu
+                                  ).map((sub) => (
+                                    <li key={sub.title}>
+                                      <Link
+                                        href={`/${sub.path}`}
+                                        prefetch={true}
+                                        onClick={closeMobileMenu}
+                                        className="flex items-center gap-3 text-base text-neutral-700"
+                                      >
+                                        {sub.title}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+
+                              {/* Medium submenu */}
+                              <div className="pl-4 pb-4 border-t border-neutral-100 mt-2">
+                                <h4 className="text-xs font-medium mb-2 uppercase text-neutral-400">
+                                  Medium
+                                </h4>
+                                <ul className="flex flex-col gap-3">
+                                  {(item.title === "Teaware"
+                                    ? teawareSubmenuMedium
+                                    : goodsSubmenuMedium
+                                  ).map((sub) => (
+                                    <li key={sub.title}>
+                                      <Link
+                                        href={`/${sub.path}`}
+                                        prefetch={true}
+                                        onClick={closeMobileMenu}
+                                        className="flex items-center gap-3 text-base text-neutral-700"
+                                      >
+                                        {sub.title}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             </div>
                           )}
                         </li>
@@ -155,6 +188,13 @@ export default function MobileMenu({
                     })}
                   </ul>
                 ) : null}
+              </div>
+              <div className="flex justify-center absolute bottom-10 w-full">
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/logo-kaimatcha-new.png?v=1761207325"
+                  alt="kaimatcha"
+                  className="h-16 "
+                />
               </div>
             </Dialog.Panel>
           </Transition.Child>

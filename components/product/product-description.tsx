@@ -109,11 +109,11 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>
         </div>
       ) : (
-        <div className="font-text-product-detail">
+        <div className="px-6 font-text-product-detail">
           {showTopRow && (
             <div
-              className="flex justify-between text-md text-neutral-700 border-b border-b-neutral-300 py-3
-      border-t border-t-neutral-300 uppercase"
+              className="flex justify-between gap-4 text-xs md:text-md text-neutral-700 border-b border-b-neutral-300 py-3
+      border-t border-t-neutral-300 uppercase "
             >
               <p>{ceremonial}</p>
               <p>{origin}</p>
@@ -143,7 +143,7 @@ export function ProductDescription({ product }: { product: Product }) {
         </div> */}
           </div>
           <div
-            className="flex justify-between text-md text-neutral-700 border-b border-b-neutral-300 py-3
+            className="flex justify-between text-xs md:text-md text-neutral-700 border-b border-b-neutral-300 py-3
       border-t border-t-neutral-300
       "
           >
