@@ -112,7 +112,7 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="px-6 font-text-product-detail">
           {showTopRow && (
             <div
-              className="flex justify-between gap-4 text-xs md:text-md text-neutral-700 border-b border-b-neutral-300 py-3
+              className="flex justify-between gap-4 text-md text-neutral-700 border-b border-b-neutral-300 py-3
       border-t border-t-neutral-300 uppercase "
             >
               <p>{ceremonial}</p>
@@ -124,26 +124,9 @@ export function ProductDescription({ product }: { product: Product }) {
             <h1 className="text-2xl md:text-4xl font-medium uppercase">
               {product.title}
             </h1>
-
-            {/* <div className="border-t border-t-neutral-300 mt-3 pt-3">
-          {product.collections && product.collections?.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-2 text-sm text-neutral-600">
-              <span className="font-medium text-neutral-700">Collections:</span>
-              {product.collections.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/collections/${c.handle}`}
-                  className="text-emerald-700 hover:underline"
-                >
-                  {c.title}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div> */}
           </div>
           <div
-            className="flex justify-between text-xs md:text-md text-neutral-700 border-b border-b-neutral-300 py-3
+            className="flex justify-between text-md text-neutral-700 border-b border-b-neutral-300 py-3
       border-t border-t-neutral-300
       "
           >
@@ -160,24 +143,12 @@ export function ProductDescription({ product }: { product: Product }) {
             options={product.options}
             variants={product.variants}
           />
-          {/* {product.descriptionHtml ? (
-        <Prose
-          className="mb-6 text-sm leading-light "
-          html={product.descriptionHtml}
-        />
-      ) : null} */}
+
           <div className="products-price flex items-center justify-center gap-5 py-6 font-medium text-lg text-black">
             <Price
               amount={product.priceRange.maxVariantPrice.amount}
               currencyCode={product.priceRange.maxVariantPrice.currencyCode}
             />
-            {/* <div>
-            {sku && (
-              <span className="text-lg font-normal text-neutral-500">
-                SKU: {sku}
-              </span>
-            )}
-          </div> */}
           </div>
           <div className="mb-6">
             <RelatedPRoducts

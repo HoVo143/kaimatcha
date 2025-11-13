@@ -135,3 +135,27 @@ h2[dir="ltr"] span {
   font-size: 26px;
   font-weight: bold;
 }
+
+/* // underline hiệu ứng lan từ giữa ra */
+.underline-center {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+  width: fit-content; /* chỉ ôm text, không kéo dài */
+}
+/* // underline hiệu ứng lan từ giữa ra */
+.underline-center::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2;
+  height: 1px;
+  width: 0;
+  background-color: currentColor;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.underline-center:hover::after {
+  width: 100%;
+}

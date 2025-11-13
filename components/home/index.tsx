@@ -121,7 +121,7 @@ export default async function HomeSection() {
                     )}
                     <div className="absolute inset-0 transition-colors" />
                     <div className="absolute inset-0 flex items-center justify-center uppercase ">
-                      <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg hover:underline">
+                      <h3 className="text-white text-xxl font-medium tracking-wide text-center drop-shadow-lg underline-center">
                         {collection.title}
                       </h3>
                     </div>

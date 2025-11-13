@@ -96,10 +96,10 @@ export default async function Footer() {
       {/* Bottom Line */}
       <div className="bottom-line border-t border-neutral-300 text-xs text-center py-4 tracking-wide text-neutral-700 space-x-3 ">
         <span>© KAI MATCHA {new Date().getFullYear()}</span>
-        <Link href="/terms-of-service" className="hover:underline">
+        <Link href="/terms-of-service" className="underline-center">
           TERMS
         </Link>
-        <Link href="/privacy-policy" className="hover:underline">
+        <Link href="/privacy-policy" className="underline-center">
           PRIVACY POLICY
         </Link>
       </div>

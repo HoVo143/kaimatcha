@@ -198,7 +198,7 @@ export default function HeaderClient({
                       <Link
                         key={sub.title}
                         href={`/${sub.path}`}
-                        className="hover:underline transition text-black font-medium text-2xl"
+                        className="underline-center transition text-black font-medium text-2xl"
                       >
                         {sub.title}
                       </Link>
@@ -215,7 +215,7 @@ export default function HeaderClient({
                       <Link
                         key={sub.title}
                         href={`/${sub.path}`}
-                        className="hover:underline transition text-black font-medium text-2xl"
+                        className="underline-center transition text-black font-medium text-2xl"
                       >
                         {sub.title}
                       </Link>

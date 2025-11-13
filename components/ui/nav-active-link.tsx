@@ -35,9 +35,8 @@ export default function NavActiveLink({
 
   const isActive = isExactActive(pathname, href);
 
-  // style base chung
-  const baseStyle =
-    "underline-offset-4 hover:underline transition-colors duration-300";
+  // style base chung // class css ở globals.css
+  const baseStyle = clsx("underline-center");
 
   // style riêng từng loại
   const variantStyle =
@@ -45,14 +44,14 @@ export default function NavActiveLink({
       ? clsx(
           isActive &&
             (scrolled
-              ? "underline text-emerald-700"
-              : "underline text-emerald-300"),
+              ? "underline underline-offset-5 text-emerald-700"
+              : "underline underline-offset-5 text-emerald-300"),
           scrolled
             ? "text-black hover:text-emerald-600"
             : "text-white hover:text-emerald-400"
         )
       : clsx(
-          isActive && "underline text-emerald-700",
+          isActive && "underline underline-offset-7 text-emerald-700",
           "text-black hover:text-emerald-600"
         );
 

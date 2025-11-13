@@ -20,7 +20,7 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
     <li className="mt-2 flex text-black " key={item.title}>
       <DynamicTag
         href={createUrl(item.path, newParams)}
-        className={clsx("w-full text-sm underline-offset-4 hover:underline ", {
+        className={clsx("w-full text-sm underline-offset-4 underline-center ", {
           "underline underline-offset-4": active,
         })}
       >
@@ -67,8 +67,8 @@ function SortFilterItem({
         onClick={() => {
           if (onFilterStart) onFilterStart(); //  bật loading ngay khi click
         }}
-        className={clsx("w-full hover:underline hover:underline-offset-4", {
-          "underline underline-offset-4": active,
+        className={clsx("w-full underline-center ", {
+          "underline underline-offset-9": active,
         })}
       >
         {item.title}
