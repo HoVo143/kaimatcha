@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { getMenu } from "../../lib/shopify";

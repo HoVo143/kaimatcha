@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Product } from "../../lib/shopify/types";
 import Price from "../grid/parts/price";
 import VariantSelector from "./variant-selector";
@@ -152,7 +153,7 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>
           <div className="mb-6">
             <RelatedPRoducts
-              currentProduct={product} // sản phẩm hiện tại đang xem
+              currentProduct={product}
               currentCollectionHandle={product.collections?.[0]?.handle}
               currentMedium={medium}
               currentOrigin={origin}
@@ -179,31 +180,46 @@ async function RelatedPRoducts({
 }) {
   if (!currentCollectionHandle) return null;
 
-  const query = `
-    collection_handle:${currentCollectionHandle}
-    medium:${currentMedium}
-    origin:${currentOrigin}
-  `;
+  const isMatcha = currentCollectionHandle.toLowerCase() === "matcha";
+
+  const query = isMatcha
+    ? `collection_handle:${currentCollectionHandle}`
+    : `
+      collection_handle:${currentCollectionHandle}
+      medium:${currentMedium}
+      origin:${currentOrigin}
+    `;
 
   const relatedProducts = await getProducts({ query });
   if (!relatedProducts) return null;
 
-  // Lọc sản phẩm liên quan đúng điều kiện
-  const filteredProducts = relatedProducts.filter((p) => {
-    const sameCollection = p.collections?.some(
-      (c) => c.handle === currentCollectionHandle
+  let filteredProducts = [];
+
+  if (isMatcha) {
+    filteredProducts = relatedProducts.filter((p) =>
+      p.collections?.some((c) => c.handle.toLowerCase() === "matcha")
     );
-    const metafields = p.metafields || [];
-    const sameMedium =
-      currentMedium &&
-      metafields.some((m) => m?.key === "medium" && m.value === currentMedium);
-    const sameOrigin =
-      currentOrigin &&
-      metafields.some((m) => m?.key === "origin" && m.value === currentOrigin);
+  } else {
+    // Lọc sản phẩm liên quan đúng điều kiện
+    filteredProducts = relatedProducts.filter((p) => {
+      const sameCollection = p.collections?.some(
+        (c) => c.handle === currentCollectionHandle
+      );
+      const metafields = p.metafields || [];
+      const sameMedium =
+        currentMedium &&
+        metafields.some(
+          (m) => m?.key === "medium" && m.value === currentMedium
+        );
+      const sameOrigin =
+        currentOrigin &&
+        metafields.some(
+          (m) => m?.key === "origin" && m.value === currentOrigin
+        );
 
-    return sameCollection && sameMedium && sameOrigin;
-  });
-
+      return sameCollection && sameMedium && sameOrigin;
+    });
+  }
   if (filteredProducts.length === 0) return null; //  ẩn luôn nếu không có related product
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -255,8 +271,9 @@ async function RelatedPRoducts({
 
                 {/* Text hover: Thứ tự + size */}
                 <div
-                  className="absolute top-20 left-1 right-1 italic
-                text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 py-1 rounded"
+                  className={`absolute ${
+                    isMatcha ? "top-18" : "top-20"
+                  } text-nowrap left-1 right-1 italic text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 py-1 rounded`}
                 >
                   {alphabet[index] || index + 1} {size}
                 </div>

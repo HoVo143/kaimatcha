@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -84,11 +85,11 @@ export default function MobileMenu({
                   <Search />
                 </div>
                 {menu.length > 0 ? (
-                  <ul className="flex w-full flex-col text-collections">
+                  <ul className="flex w-full flex-col font-family-text-canela">
                     {menu.map((item: Menu) => {
-                      const hasSubmenu =
-                        item.title === "Teaware" || item.title === "Goods";
-
+                      const hasSubmenu = item.title === "Teaware";
+                      // const hasSubmenu =
+                      //   item.title === "Teaware" || item.title === "Goods";
                       return (
                         <li
                           key={item.title}

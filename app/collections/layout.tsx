@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -69,7 +70,7 @@ export default function SearchLayout({
                 </h1>
               </div>
             </div>
-            <div className="text-collections p-8 md:p-12 text-center tracking-wide text-black">
+            <div className="font-family-text-canela p-8 md:p-12 text-center tracking-wide text-black">
               <h1 className="text-sm md:text-3xl uppercase">
                 Ceremonial-Grade Matcha
               </h1>

@@ -82,6 +82,14 @@ export default function HeaderClient({
 
   return (
     <>
+      <div
+        className={clsx(
+          "font-family-text-canela w-full text-center text-[13px] py-2 transition-all duration-300 uppercase tracking-wider",
+          scrolled ? "bg-neutral-200 text-neutral-500" : "bg-black text-white"
+        )}
+      >
+        Free US shipping over $200
+      </div>
       <nav
         // className={clsx(
         //   isMatchaPage
@@ -98,6 +106,7 @@ export default function HeaderClient({
           isMatchaPage
             ? "fixed top-0 left-0 w-full z-999"
             : "sticky top-0 z-999",
+          isMatchaPage && !scrolled ? "mt-9" : "mt-0",
           // chỉ áp dụng flex layout ở mobile, bỏ ở desktop
           "flex items-center justify-between lg:block",
           "p-4 lg:px-10 transition-all duration-500 ease-in-out",
@@ -131,7 +140,7 @@ export default function HeaderClient({
         <div className="flex w-full items-center justify-center mx-auto">
           <div className="flex w-full md:w-1/3">
             {menu.length > 0 ? (
-              <ul className="text-collections hidden gap-6 text-xs md:flex md:items-center uppercase">
+              <ul className="font-family-text-canela hidden gap-6 text-xs md:flex md:items-center uppercase">
                 {menu.map((item) => (
                   <li
                     key={item.title}
@@ -184,7 +193,7 @@ export default function HeaderClient({
           onMouseEnter={() => setMenuHover(menuHover)} // giữ state khi hover submenu
           onMouseLeave={() => setMenuHover(null)} // chỉ tắt khi rời toàn vùng
         >
-          {(menuHover === "Teaware" || menuHover === "Goods") && (
+          {menuHover === "Teaware" && (
             <div className="mx-auto w-full px-10 py-12 flex flex-col md:flex-row gap-8 items-start">
               {/* Bên trái: submenu */}
               <div className="flex-1 flex justify-between gap-5">

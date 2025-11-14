@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
@@ -10,9 +11,10 @@ export default async function HomeSection() {
 
   // Lấy 5 collection đầu tiên
   // const topCollections = collections.slice(0, 5);
-  const topCollections = collections
-    .filter((c) => c.handle && c.handle.trim() !== "")
-    .slice(0, 5);
+  const topCollections = collections.filter(
+    (c) => c.handle && c.handle.trim() !== ""
+  );
+  // .slice(0, 5);
 
   // const products = await getProducts({ sortKey: "CREATED_AT", reverse: true });
   const products = await getProducts({
