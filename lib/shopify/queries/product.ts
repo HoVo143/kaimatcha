@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { productFragment } from "../fragments/product";
 
 export const getProductQuery = /* GraphQL */ `

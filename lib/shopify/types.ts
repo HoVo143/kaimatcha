@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export type Menu = {
   title: string;
   path: string;
@@ -91,7 +92,41 @@ export type ShopifyProduct = {
     value: string;
     type: string;
   }[];
-
+  sellingPlanGroups?: {
+    edges: {
+      node: {
+        name: string;
+        sellingPlans: {
+          edges: {
+            node: {
+              id: string;
+              name: string;
+              recurringDeliveries: boolean;
+              options: {
+                name: string;
+                value: string;
+              }[];
+              priceAdjustments?: {
+                orderCount: number;
+                adjustmentValue: {
+                  __typename: "SellingPlanPercentagePriceAdjustment" | "SellingPlanFixedAmountPriceAdjustment";
+                  adjustmentPercentage?: number;
+                  adjustmentAmount?: Money;
+                };
+              }[];
+              pricingPolicy?: {
+                basePrice?: Money;
+              };
+              billingPolicy?: {
+                interval: string;
+                intervalCount: number;
+              };
+            };
+          }[];
+        };
+      };
+    }[];
+  };
 };
 
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
@@ -175,6 +210,7 @@ export type CartItem = {
     }[];
     product: CartProduct;
   };
+  sellingPlanId?: string;
 };
 
 export type ShopifyCart = {
@@ -245,6 +281,7 @@ export type ShopifyAddToCartOperation = {
     lines: {
       merchandiseId: string;
       quantity: number;
+      sellingPlanId?: string; 
     }[];
   };
 };

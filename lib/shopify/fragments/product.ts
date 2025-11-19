@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import imageFragment from "./image";
 import seoFragment from "./seo";
 
@@ -45,6 +46,56 @@ export const productFragment = /* GraphQl */ `
         }
       }
     }
+
+    sellingPlanGroups(first: 10) {
+      edges {
+        node {
+          name
+          sellingPlans(first: 10) {
+            edges {
+              node {
+                id
+                name
+                recurringDeliveries
+                options {
+                  name
+                  value
+                }
+                priceAdjustments {
+                  orderCount
+                  adjustmentValue {
+                    __typename
+                    ... on SellingPlanPercentagePriceAdjustment {
+                      adjustmentPercentage
+                    }
+                    ... on SellingPlanFixedAmountPriceAdjustment {
+                      adjustmentAmount {
+                        amount
+                        currencyCode
+                      }
+                    }
+                    ... on SellingPlanFixedPriceAdjustment {
+                      price {
+                        amount
+                        currencyCode
+                      }
+                    }
+                  }
+                }
+                billingPolicy {
+                  ... on SellingPlanRecurringBillingPolicy {
+                    interval
+                    intervalCount
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
     featuredImage {
       ...image
     }

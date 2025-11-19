@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 "use client";
 
 import { Product, ProductVariant } from "../../lib/shopify/types";
@@ -48,8 +49,8 @@ export function SubmitButton({
         className={clsx(baseClasses, normalClasses, disabledClasses)}
       >
         <div className={textLayer}>
-          <ShoppingCart className="h-5" />
-          Add To Cart
+          <ShoppingCart className="h-6 md:h-5" />
+          <span className="hidden md:inline">Add To Cart</span>
         </div>
       </button>
     );
@@ -61,14 +62,22 @@ export function SubmitButton({
       className={clsx(baseClasses, normalClasses, hoverEffect)}
     >
       <div className={textLayer}>
-        <ShoppingCart className="h-5" />
-        Add To Cart
+        <ShoppingCart className="h-6 md:h-5" />
+        <span className="hidden md:inline">Add To Cart</span>
       </div>
     </button>
   );
 }
 
-export function AddToCart({ product }: { product: Product }) {
+export function AddToCart({
+  product,
+  purchaseType,
+  purchasePrice,
+}: {
+  product: Product;
+  purchaseType?: string;
+  purchasePrice?: number;
+}) {
   const { variants, availableForSale } = product;
   const { addCartItem } = useCart();
   const { state } = useProduct();
@@ -84,20 +93,35 @@ export function AddToCart({ product }: { product: Product }) {
     variant?.id || (variants.length === 1 ? variants[0]?.id : undefined);
   const finalVariant = variants.find((v) => v.id === selectedVariantId);
 
+  // Determine sellingPlanId - if purchaseType is not "oneTime", it's a plan ID
+  const sellingPlanId =
+    purchaseType && purchaseType !== "oneTime" ? purchaseType : undefined;
+
   return (
     <form
       action={async () => {
         if (!finalVariant) return;
-        addCartItem(finalVariant, product, quantity);
-        await formAction({ selectedVariantId: selectedVariantId!, quantity });
+        addCartItem(
+          finalVariant,
+          product,
+          quantity,
+          sellingPlanId,
+          purchasePrice
+        );
+        await formAction({
+          selectedVariantId: selectedVariantId!,
+          quantity,
+          sellingPlanId,
+        });
       }}
       className="space-y-3"
     >
-      <div className="flex items-center gap-2 products-price px-6 md:px-0 flex-col md:flex-row w-full">
+      <div className="flex items-center gap-1 md:gap-2 products-price md:px-0 w-full">
         <div className="flex items-center border border-neutral-200 justify-center max-w-[150] rounded-xs">
           <button
             type="button"
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            aria-label="Decrease quantity"
             className="px-4 py-5 cursor-pointer 
             transition duration-500 ease-in-out hover:bg-gray-200 hover:text-white rounded-l-xs"
           >
@@ -107,6 +131,7 @@ export function AddToCart({ product }: { product: Product }) {
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+            aria-label="Quantity"
             // onWheel={(e) => {
             //   if (document.activeElement === e.currentTarget) e.preventDefault();
             // }}
@@ -121,6 +146,7 @@ export function AddToCart({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQuantity(quantity + 1)}
+            aria-label="Increase quantity"
             className="px-4 py-5 cursor-pointer 
             transition duration-500 ease-in-out hover:bg-gray-200 hover:text-white rounded-r-xs"
           >

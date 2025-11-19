@@ -160,3 +160,36 @@ h2[dir="ltr"] span {
 .underline-center:hover::after {
   width: 100%;
 }
+
+/* Custom radio button styling - emerald green when checked */
+.products-description-wrapper-page input[type="radio"][name="purchaseOption"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid rgb(212 212 212); /* neutral-300 */
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.products-description-wrapper-page
+  input[type="radio"][name="purchaseOption"]:checked {
+  background-color: rgb(0 0 0) !important; /* black */
+  border-color: rgb(0 0 0) !important; /* black */
+}
+
+.products-description-wrapper-page
+  input[type="radio"][name="purchaseOption"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: white;
+}

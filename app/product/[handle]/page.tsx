@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @next/next/no-img-element */
 import { QuickAddToCart } from "../../../components/ui/quick-add-to-cart";
 import { GridTileImage } from "../../../components/grid/tile";
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import SectionDivider from "../../../components/ui/divider-section";
+import { RelatedProducts } from "../../../components/product/related-products";
 
 export async function generateMetadata({
   params,
@@ -68,9 +70,17 @@ export default async function ProductPage({
   const isTeaware = product.collections?.some(
     (c) => c.handle.toLowerCase() === "teaware"
   );
+
+  const getMetafieldValue = (key: string) =>
+    product.metafields?.find((m) => m?.key === key)?.value || "";
+
+  const origin = getMetafieldValue("origin");
+  const medium = getMetafieldValue("medium");
+  const size = getMetafieldValue("size");
+
   return (
     <ProductProvider>
-      <div className="mx-auto">
+      <div className="mx-auto products-description-wrapper-page">
         {/* <div className="mx-auto max-w-screen-2xl px-4"> */}
         <div className="flex flex-col items-center lg:gap-8 ">
           {/* <div className="h-full w-full basis-full lg:basis-4/6"> */}
@@ -95,6 +105,15 @@ export default async function ProductPage({
             <Suspense fallback={null}>
               <ProductDescription product={product} />
             </Suspense>
+            {/* ======================
+              Related Products (Server-side)
+          ====================== */}
+            <RelatedProducts
+              currentProduct={product}
+              currentCollectionHandle={product.collections?.[0]?.handle}
+              currentMedium={medium}
+              currentOrigin={origin}
+            />
           </div>
         </div>
         {/* <RelatedPRoducts id={product.id} /> */}

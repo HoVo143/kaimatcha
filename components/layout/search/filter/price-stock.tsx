@@ -166,6 +166,7 @@ export default function FilterPriceStockClient({
               );
               setMinPrice(val.toString());
             }}
+            aria-label="Minimum price"
             className="absolute w-full h-5 appearance-none bg-transparent pointer-events-none
              [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none
               [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full
@@ -186,6 +187,7 @@ export default function FilterPriceStockClient({
               );
               setMaxPrice(val.toString());
             }}
+            aria-label="Maximum price"
             className="absolute w-full h-5 appearance-none bg-transparent pointer-events-none
              [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none
               [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full

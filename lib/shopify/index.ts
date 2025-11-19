@@ -278,7 +278,7 @@ export async function getCollections(): Promise<Collection[]> {
       },
       path: "/collections",
       updatedAt: new Date().toISOString(),
-      image: null, 
+      image: null,
     },
     // Filter out the hidden products
     ...reshapeCollections(shopifyCollections).filter(
@@ -403,7 +403,12 @@ export async function removeFromCart(
 
 export async function updateCart(
   cartId: string,
-  lines: { id: string; merchandiseId: string; quantity: number }[]
+  lines: {
+    id: string;
+    merchandiseId: string;
+    quantity: number;
+    sellingPlanId?: string;
+  }[]
 ): Promise<Cart> {
   const res = await shopifyFetch<ShopifyUpdateCartOperation>({
     query: editCartItemsMutation,
@@ -419,7 +424,11 @@ export async function updateCart(
 
 export async function addToCart(
   cartId: string,
-  lines: { merchandiseId: string; quantity: number }[]
+  lines: {
+    merchandiseId: string;
+    quantity: number;
+    sellingPlanId?: string;
+  }[]
 ): Promise<Cart> {
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
     query: addToCartMutation,

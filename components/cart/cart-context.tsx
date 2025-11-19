@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
@@ -16,7 +17,9 @@ type CartContextType = {
   addCartItem: (
     variant: ProductVariant,
     product: Product,
-    quantity?: number
+    quantity?: number,
+    sellingPlanId?: string,
+    priceOverride?: number
   ) => void;
 };
 type CartAction =
@@ -26,7 +29,13 @@ type CartAction =
     }
   | {
       type: "ADD_ITEM";
-      payload: { variant: ProductVariant; product: Product; quantity?: number };
+      payload: {
+        variant: ProductVariant;
+        product: Product;
+        quantity?: number;
+        sellingPlanId?: string;
+        priceOverride?: number;
+      };
     };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -47,6 +56,23 @@ function createEmptyCart(): Cart {
 
 function calculateItemCost(quantity: number, price: string): string {
   return (Number(price) * quantity).toString();
+}
+
+// Helper function to compare selectedOptions regardless of order
+function areSelectedOptionsEqual(
+  options1: { name: string; value: string }[],
+  options2: { name: string; value: string }[]
+): boolean {
+  if (options1.length !== options2.length) return false;
+
+  // Sort both arrays by name for consistent comparison
+  const sorted1 = [...options1].sort((a, b) => a.name.localeCompare(b.name));
+  const sorted2 = [...options2].sort((a, b) => a.name.localeCompare(b.name));
+
+  return sorted1.every(
+    (opt, index) =>
+      opt.name === sorted2[index].name && opt.value === sorted2[index].value
+  );
 }
 
 function updateCartItem(
@@ -100,18 +126,73 @@ function updateCartTotals(
   };
 }
 
+function getPriceForVariant(
+  variant: ProductVariant,
+  product: Product,
+  sellingPlanId?: string
+): number {
+  let price = parseFloat(variant.price.amount);
+  if (!sellingPlanId) return price;
+
+  for (const groupEdge of product.sellingPlanGroups?.edges || []) {
+    const group = groupEdge.node;
+    const planEdge = group.sellingPlans.edges.find(
+      (p) => p.node.id === sellingPlanId
+    );
+    if (!planEdge) continue;
+    const plan = planEdge.node;
+
+    // Check for fixed price in pricingPolicy first
+    if (plan.pricingPolicy?.basePrice) {
+      // Fixed price: use the price directly from pricingPolicy
+      price = parseFloat(plan.pricingPolicy.basePrice.amount);
+    } else {
+      for (const adjObj of plan.priceAdjustments || []) {
+        const adj = adjObj.adjustmentValue;
+        if (!adj) continue;
+
+        if (adj.__typename === "SellingPlanPercentagePriceAdjustment") {
+          price = price * (1 - (adj.adjustmentPercentage ?? 0) / 100);
+        } else if (adj.__typename === "SellingPlanFixedAmountPriceAdjustment") {
+          if (adj.adjustmentAmount) {
+            price = price - parseFloat(adj.adjustmentAmount.amount);
+          }
+        }
+      }
+    }
+
+    break;
+  }
+  return parseFloat(price.toFixed(2));
+}
+
 function createOrUpdateCartItem(
   existingItem: CartItem | undefined,
   variant: ProductVariant,
   product: Product,
-  quantity: number
+  quantity: number,
+  sellingPlanId?: string,
+  priceOverride?: number
 ): CartItem {
   // const quantity = existingItem ? existingItem.quantity + 1 : 1;
   // const totalAmount = calculateItemCost(quantity, variant.price.amount);
+  // const newQuantity = existingItem
+  //   ? existingItem.quantity + quantity
+  //   : quantity;
+  // const totalAmount = calculateItemCost(newQuantity, variant.price.amount);
   const newQuantity = existingItem
     ? existingItem.quantity + quantity
     : quantity;
-  const totalAmount = calculateItemCost(newQuantity, variant.price.amount);
+
+  // Nếu có priceOverride, bỏ sellingPlanId để cart popup hiển thị đúng giá
+  const useSellingPlanId = sellingPlanId;
+
+  const price =
+    priceOverride !== undefined
+      ? priceOverride
+      : getPriceForVariant(variant, product, sellingPlanId);
+
+  const totalAmount = (price * newQuantity).toFixed(2);
 
   return {
     id: existingItem?.id,
@@ -134,6 +215,7 @@ function createOrUpdateCartItem(
         featuredImage: product.featuredImage,
       },
     },
+    sellingPlanId: useSellingPlanId,
   };
 }
 
@@ -170,20 +252,44 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
       };
     }
     case "ADD_ITEM": {
-      const { variant, product, quantity = 1 } = action.payload;
+      const {
+        variant,
+        product,
+        quantity = 1,
+        sellingPlanId,
+        priceOverride,
+      } = action.payload;
+      // Luôn tìm existingItem dựa trên variant.id, sellingPlanId và selectedOptions
+      // để merge đúng, bất kể có priceOverride hay không
       const existingItem = currentCart.lines.find(
-        (item) => item.merchandise.id === variant.id
+        (item) =>
+          item.merchandise.id === variant.id &&
+          item.sellingPlanId === sellingPlanId &&
+          areSelectedOptionsEqual(
+            item.merchandise.selectedOptions,
+            variant.selectedOptions
+          )
       );
+
       const updatedItem = createOrUpdateCartItem(
         existingItem,
         variant,
         product,
-        quantity
+        quantity,
+        sellingPlanId,
+        priceOverride
       );
 
       const updatedLines = existingItem
         ? currentCart.lines.map((item) =>
-            item.merchandise.id === variant.id ? updatedItem : item
+            item.merchandise.id === variant.id &&
+            item.sellingPlanId === sellingPlanId &&
+            areSelectedOptionsEqual(
+              item.merchandise.selectedOptions,
+              variant.selectedOptions
+            )
+              ? updatedItem
+              : item
           )
         : [...currentCart.lines, updatedItem];
 
@@ -221,11 +327,13 @@ export function CartProvider({
   const addCartItem = (
     variant: ProductVariant,
     product: Product,
-    quantity: number = 1
+    quantity: number = 1,
+    sellingPlanId?: string,
+    priceOverride?: number
   ) => {
     updateOptimisticCart({
       type: "ADD_ITEM",
-      payload: { variant, product, quantity },
+      payload: { variant, product, quantity, sellingPlanId, priceOverride },
     });
   };
 

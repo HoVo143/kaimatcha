@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 "use server";
 
 import { TAGS } from "../../lib/constants";
@@ -14,23 +15,26 @@ import { redirect } from "next/navigation";
 
 export async function addItem(
   prevState: any,
-  payload: { selectedVariantId: string; quantity: number }
+  payload: { selectedVariantId: string; quantity: number; sellingPlanId?: string }
 ) {
   const cartId = (await cookies()).get("cartId")?.value;
-  const { selectedVariantId, quantity } = payload;
+  const { selectedVariantId, quantity, sellingPlanId } = payload;
 
   if (!cartId || !selectedVariantId) {
     return "Error adding item to cart";
   }
 
   try {
-    await addToCart(cartId, [{ merchandiseId: selectedVariantId, quantity }]);
+    await addToCart(cartId, [
+      { merchandiseId: selectedVariantId, quantity, sellingPlanId }
+    ]);
     revalidateTag(TAGS.cart);
   } catch (error) {
     console.error(error);
     return "Error adding item to cart";
   }
 }
+
 
 // export async function addItem(
 //   prevState: any,
@@ -57,6 +61,7 @@ export async function updateItemQuantity(
   payload: {
     merchandiseId: string;
     quantity: number;
+    sellingPlanId?: string
   }
 ) {
   const cartId = (await cookies()).get("cartId")?.value;
@@ -64,7 +69,7 @@ export async function updateItemQuantity(
     return "Missing cart ID";
   }
 
-  const { merchandiseId, quantity } = payload;
+  const { merchandiseId, quantity, sellingPlanId } = payload;
 
   try {
     const cart = await getCart(cartId);
@@ -85,6 +90,7 @@ export async function updateItemQuantity(
             id: lineItem.id,
             merchandiseId,
             quantity,
+            sellingPlanId
           },
         ]);
       }

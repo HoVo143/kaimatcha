@@ -1,12 +1,11 @@
+"use client";
 /* eslint-disable prettier/prettier */
+import { useState } from "react";
 import { Product } from "../../lib/shopify/types";
 import Price from "../grid/parts/price";
 import VariantSelector from "./variant-selector";
 import Prose from "../ui/prose";
 import { AddToCart } from "../cart/add-to-cart";
-import Link from "next/link";
-import { GridTileImage } from "../grid/tile";
-import { getProducts } from "../../lib/shopify";
 
 export function ProductDescription({ product }: { product: Product }) {
   // const firstVariant = product.variants?.[0];
@@ -33,6 +32,162 @@ export function ProductDescription({ product }: { product: Product }) {
   const isTeaware = product.collections?.some(
     (c) => c.handle.toLowerCase() === "teaware"
   );
+
+  const [purchaseType, setPurchaseType] = useState("oneTime");
+  const [purchasePrice, setPurchasePrice] = useState(
+    parseFloat(product.variants[0].price.amount)
+  );
+
+  const hasSubscription =
+    product.sellingPlanGroups?.edges.some(
+      (group) => group.node.sellingPlans.edges.length > 0
+    ) ?? false;
+
+  // Helper function to format delivery cycle
+  const formatDeliveryCycle = (plan: {
+    billingPolicy?: { interval: string; intervalCount: number } | null;
+    options?: { name: string; value: string }[];
+  }) => {
+    // Check if billingPolicy exists
+    if (plan.billingPolicy) {
+      const { interval, intervalCount } = plan.billingPolicy;
+      if (interval === "WEEK") {
+        if (intervalCount === 2) return "Deliver every 2 weeks";
+        if (intervalCount === 6) return "Deliver every 6 weeks";
+        return `Deliver every ${intervalCount} weeks`;
+      }
+      if (interval === "MONTH") {
+        if (intervalCount === 1) return "Deliver every 1 month";
+        return `Deliver every ${intervalCount} months`;
+      }
+    }
+    // Fallback to options if billingPolicy not available
+    if (plan.options && plan.options.length > 0) {
+      const deliveryOption = plan.options.find(
+        (opt) =>
+          opt.name.toLowerCase().includes("delivery") ||
+          opt.name.toLowerCase().includes("giao")
+      );
+      if (deliveryOption) return deliveryOption.value;
+    }
+    return "Recurring delivery";
+  };
+
+  // Helper function to format subscription description
+  const formatSubscriptionDescription = (
+    plan: {
+      billingPolicy?: { interval: string; intervalCount: number } | null;
+      options?: { name: string; value: string }[];
+    },
+    productTitle: string,
+    quantity: number = 1
+  ) => {
+    let intervalText = "";
+
+    if (plan.billingPolicy) {
+      const { interval, intervalCount } = plan.billingPolicy;
+
+      if (interval === "DAY") {
+        intervalText = intervalCount === 1 ? "day" : `${intervalCount} days`;
+      } else if (interval === "WEEK") {
+        intervalText = intervalCount === 1 ? "week" : `${intervalCount} weeks`;
+      } else if (interval === "MONTH") {
+        intervalText =
+          intervalCount === 1 ? "month" : `${intervalCount} months`;
+      }
+    }
+
+    if (intervalText) {
+      const quantityText = quantity === 1 ? "" : `${quantity} `;
+      return `${quantityText}${productTitle} delivered to you every ${intervalText}. Pause, reschedule, or cancel at anytime.`;
+    }
+
+    return "Pause, reschedule, or cancel at anytime.";
+  };
+
+  // Helper function to get discount display text
+  const getDiscountText = (
+    adjustment:
+      | {
+          __typename: string;
+          adjustmentPercentage?: number;
+          adjustmentAmount?: { amount: string; currencyCode: string };
+          price?: { amount: string; currencyCode: string };
+        }
+      | null
+      | undefined,
+    originalPrice: number,
+    currencyCode: string
+  ) => {
+    if (!adjustment) return null;
+
+    if (
+      adjustment.__typename === "SellingPlanPercentagePriceAdjustment" &&
+      adjustment.adjustmentPercentage
+    ) {
+      return `-${Math.round(adjustment.adjustmentPercentage)}%`;
+    } else if (
+      adjustment.__typename === "SellingPlanFixedAmountPriceAdjustment" &&
+      adjustment.adjustmentAmount
+    ) {
+      return `-${adjustment.adjustmentAmount.amount} ${adjustment.adjustmentAmount.currencyCode || currencyCode}`;
+    } else if (adjustment.__typename === "SellingPlanFixedPriceAdjustment") {
+      const fixedPriceAdj = adjustment as {
+        __typename: "SellingPlanFixedPriceAdjustment";
+        price?: { amount: string; currencyCode: string };
+      };
+      if (fixedPriceAdj.price) {
+        // For fixed price, calculate discount percentage from original price
+        const fixedPrice = parseFloat(fixedPriceAdj.price.amount);
+        const discountPercent = Math.round(
+          ((originalPrice - fixedPrice) / originalPrice) * 100
+        );
+        if (discountPercent > 0) {
+          return `-${discountPercent}%`;
+        }
+      }
+      return null;
+    }
+
+    return null;
+  };
+
+  // Helper function to calculate discounted price
+  const calculateDiscountedPrice = (
+    adjustment:
+      | {
+          __typename: string;
+          adjustmentPercentage?: number;
+          adjustmentAmount?: { amount: string; currencyCode: string };
+          price?: { amount: string; currencyCode: string };
+        }
+      | null
+      | undefined,
+    originalPrice: number
+  ): number => {
+    if (!adjustment) return originalPrice;
+
+    if (adjustment.__typename === "SellingPlanPercentagePriceAdjustment") {
+      return originalPrice * (1 - (adjustment.adjustmentPercentage ?? 0) / 100);
+    } else if (
+      adjustment.__typename === "SellingPlanFixedAmountPriceAdjustment"
+    ) {
+      if (adjustment.adjustmentAmount) {
+        return originalPrice - parseFloat(adjustment.adjustmentAmount.amount);
+      }
+    } else if (adjustment.__typename === "SellingPlanFixedPriceAdjustment") {
+      const fixedPriceAdj = adjustment as unknown as {
+        __typename: "SellingPlanFixedPriceAdjustment";
+        price?: { amount: string; currencyCode: string };
+      };
+      if (fixedPriceAdj.price) {
+        return parseFloat(fixedPriceAdj.price.amount);
+      }
+    }
+
+    return originalPrice;
+  };
+
   return (
     <>
       {isTeaware && product.descriptionHtml ? (
@@ -91,22 +246,120 @@ export function ProductDescription({ product }: { product: Product }) {
                 )}
               </div>
             </div>
-            <div>
-              <RelatedPRoducts
-                currentProduct={product} // sản phẩm hiện tại đang xem
-                currentCollectionHandle={product.collections?.[0]?.handle}
-                currentMedium={medium}
-                currentOrigin={origin}
-                // currentSize={size}
-              />
-            </div>
             <VariantSelector
               options={product.options}
               variants={product.variants}
             />
           </div>
           <div className="basis-2/6 py-6">
-            <AddToCart product={product} />
+            {/* --- Subscription Option --- */}
+            {hasSubscription && (
+              <div className="border border-neutral-300 p-4 rounded-sm space-y-3 mb-6">
+                <h3 className="font-medium text-sm uppercase mb-2">
+                  purchase options
+                </h3>
+                <label
+                  className={`flex items-start gap-3 cursor-pointer p-3 rounded border-2 transition-all ${
+                    purchaseType === "oneTime"
+                      ? "border-black bg-neutral-100"
+                      : "border-transparent hover:border-neutral-200 hover:bg-neutral-50"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="purchaseOption"
+                    value="oneTime"
+                    checked={purchaseType === "oneTime"}
+                    onChange={() => {
+                      setPurchaseType("oneTime");
+                      setPurchasePrice(
+                        parseFloat(product.variants[0].price.amount)
+                      );
+                    }}
+                    className="mt-1 w-4 h-4 accent-black border-neutral-300 focus:ring-black focus:ring-2 checked:bg-black checked:border-black"
+                  />
+                  <div className="flex-1">
+                    <div className="font-medium">One-time purchase</div>
+                    <div className="text-sm text-neutral-600">
+                      {product.variants[0].price.amount}{" "}
+                      {product.variants[0].price.currencyCode}
+                    </div>
+                  </div>
+                </label>
+
+                {product.sellingPlanGroups?.edges[0]?.node.sellingPlans.edges.map(
+                  ({ node: plan }) => {
+                    const adjustment =
+                      plan.priceAdjustments?.[0]?.adjustmentValue;
+                    const originalPrice = parseFloat(
+                      product.variants[0].price.amount
+                    );
+                    const discountedPrice = parseFloat(
+                      calculateDiscountedPrice(
+                        adjustment,
+                        originalPrice
+                      ).toFixed(2)
+                    );
+                    const discountText = getDiscountText(
+                      adjustment,
+                      originalPrice,
+                      product.variants[0].price.currencyCode
+                    );
+                    const deliveryCycle = formatDeliveryCycle(plan);
+                    const subscriptionDescription =
+                      formatSubscriptionDescription(plan, product.title, 1);
+
+                    return (
+                      <label
+                        className={`flex items-start gap-3 cursor-pointer p-3 rounded border-2 transition-all ${
+                          purchaseType === plan.id
+                            ? "border-black bg-neutral-100"
+                            : "border-transparent hover:border-neutral-200 hover:bg-neutral-50"
+                        }`}
+                        key={plan.id}
+                      >
+                        <input
+                          type="radio"
+                          name="purchaseOption"
+                          value={plan.id}
+                          checked={purchaseType === plan.id}
+                          onChange={() => {
+                            setPurchaseType(plan.id);
+                            setPurchasePrice(discountedPrice);
+                          }}
+                          className="mt-1 w-4 h-4 accent-black border-neutral-300 focus:ring-black focus:ring-2 checked:bg-black checked:border-black"
+                        />
+                        <div className="flex-1">
+                          <div className="font-medium flex items-center gap-2">
+                            <span>Subscribe & Save</span>
+                            {discountText && (
+                              <span className="text-emerald-600 text-xs font-semibold">
+                                {discountText}
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-sm text-neutral-600">
+                            {deliveryCycle}
+                          </div>
+                          <div className="text-sm font-medium text-neutral-800 mt-1">
+                            {discountedPrice}{" "}
+                            {product.variants[0].price.currencyCode}
+                          </div>
+                          <div className="text-sm text-neutral-500 mt-1 italic">
+                            {subscriptionDescription}
+                          </div>
+                        </div>
+                      </label>
+                    );
+                  }
+                )}
+              </div>
+            )}
+            <AddToCart
+              product={product}
+              purchaseType={purchaseType}
+              purchasePrice={purchasePrice}
+            />
           </div>
         </div>
       ) : (
@@ -151,137 +404,118 @@ export function ProductDescription({ product }: { product: Product }) {
               currencyCode={product.priceRange.maxVariantPrice.currencyCode}
             />
           </div>
-          <div className="mb-6">
-            <RelatedPRoducts
-              currentProduct={product}
-              currentCollectionHandle={product.collections?.[0]?.handle}
-              currentMedium={medium}
-              currentOrigin={origin}
-              // currentSize={size}
-            />
-          </div>
-          <AddToCart product={product} />
+          {/* --- Subscription Option --- */}
+          {hasSubscription && (
+            <div className="border border-neutral-300 p-4 rounded-sm space-y-3 mb-6">
+              <h3 className="font-medium text-sm uppercase mb-2">
+                purchase options
+              </h3>
+              <label
+                className={`flex items-start gap-3 cursor-pointer p-3 rounded border-2 transition-all ${
+                  purchaseType === "oneTime"
+                    ? "border-black bg-neutral-100"
+                    : "border-transparent hover:border-neutral-200 hover:bg-neutral-50"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="purchaseOption"
+                  value="oneTime"
+                  checked={purchaseType === "oneTime"}
+                  onChange={() => {
+                    setPurchaseType("oneTime");
+                    setPurchasePrice(
+                      parseFloat(product.variants[0].price.amount)
+                    );
+                  }}
+                  className="mt-1 w-4 h-4 accent-black border-neutral-300 focus:ring-black focus:ring-2 checked:bg-black checked:border-black"
+                />
+                <div className="flex-1">
+                  <div className="font-medium">One-time purchase</div>
+                  <div className="text-sm text-neutral-600">
+                    {product.variants[0].price.amount}{" "}
+                    {product.variants[0].price.currencyCode}
+                  </div>
+                </div>
+              </label>
+
+              {product.sellingPlanGroups?.edges[0]?.node.sellingPlans.edges.map(
+                ({ node: plan }) => {
+                  const adjustment =
+                    plan.priceAdjustments?.[0]?.adjustmentValue;
+                  const originalPrice = parseFloat(
+                    product.variants[0].price.amount
+                  );
+                  const discountedPrice = parseFloat(
+                    calculateDiscountedPrice(adjustment, originalPrice).toFixed(
+                      2
+                    )
+                  );
+                  const discountText = getDiscountText(
+                    adjustment,
+                    originalPrice,
+                    product.variants[0].price.currencyCode
+                  );
+                  const deliveryCycle = formatDeliveryCycle(plan);
+                  const subscriptionDescription = formatSubscriptionDescription(
+                    plan,
+                    product.title,
+                    1
+                  );
+
+                  return (
+                    <label
+                      className={`flex items-start gap-3 cursor-pointer p-3 rounded border-2 transition-all ${
+                        purchaseType === plan.id
+                          ? "border-black bg-neutral-100"
+                          : "border-transparent hover:border-neutral-200 hover:bg-neutral-50"
+                      }`}
+                      key={plan.id}
+                    >
+                      <input
+                        type="radio"
+                        name="purchaseOption"
+                        value={plan.id}
+                        checked={purchaseType === plan.id}
+                        onChange={() => {
+                          setPurchaseType(plan.id);
+                          setPurchasePrice(discountedPrice);
+                        }}
+                        className="mt-1 w-4 h-4 accent-black border-neutral-300 focus:ring-black focus:ring-2 checked:bg-black checked:border-black"
+                      />
+                      <div className="flex-1">
+                        <div className="font-medium flex items-center gap-2">
+                          <span>Subscribe & Save</span>
+                          {discountText && (
+                            <span className="text-emerald-600 text-xs font-semibold">
+                              {discountText}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-neutral-600">
+                          {deliveryCycle}
+                        </div>
+                        <div className="text-sm font-medium text-neutral-800 mt-1">
+                          {discountedPrice}{" "}
+                          {product.variants[0].price.currencyCode}
+                        </div>
+                        <div className="text-sm text-neutral-500 mt-1 italic">
+                          {subscriptionDescription}
+                        </div>
+                      </div>
+                    </label>
+                  );
+                }
+              )}
+            </div>
+          )}
+          <AddToCart
+            product={product}
+            purchaseType={purchaseType}
+            purchasePrice={purchasePrice}
+          />
         </div>
       )}
     </>
-  );
-}
-
-async function RelatedPRoducts({
-  currentProduct,
-  currentCollectionHandle,
-  currentMedium,
-  currentOrigin,
-}: {
-  currentProduct: Product;
-  currentCollectionHandle?: string;
-  currentMedium?: string;
-  currentOrigin?: string;
-}) {
-  if (!currentCollectionHandle) return null;
-
-  const isMatcha = currentCollectionHandle.toLowerCase() === "matcha";
-
-  const query = isMatcha
-    ? `collection_handle:${currentCollectionHandle}`
-    : `
-      collection_handle:${currentCollectionHandle}
-      medium:${currentMedium}
-      origin:${currentOrigin}
-    `;
-
-  const relatedProducts = await getProducts({ query });
-  if (!relatedProducts) return null;
-
-  let filteredProducts = [];
-
-  if (isMatcha) {
-    filteredProducts = relatedProducts.filter((p) =>
-      p.collections?.some((c) => c.handle.toLowerCase() === "matcha")
-    );
-  } else {
-    // Lọc sản phẩm liên quan đúng điều kiện
-    filteredProducts = relatedProducts.filter((p) => {
-      const sameCollection = p.collections?.some(
-        (c) => c.handle === currentCollectionHandle
-      );
-      const metafields = p.metafields || [];
-      const sameMedium =
-        currentMedium &&
-        metafields.some(
-          (m) => m?.key === "medium" && m.value === currentMedium
-        );
-      const sameOrigin =
-        currentOrigin &&
-        metafields.some(
-          (m) => m?.key === "origin" && m.value === currentOrigin
-        );
-
-      return sameCollection && sameMedium && sameOrigin;
-    });
-  }
-  if (filteredProducts.length === 0) return null; //  ẩn luôn nếu không có related product
-
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  return (
-    <div className="md:px-0">
-      <ul
-        className="grid grid-cols-7 max-w-[550px]"
-        style={
-          filteredProducts.length > 6
-            ? {
-                gridTemplateColumns: `repeat(${filteredProducts.length}, minmax(0, 1fr))`,
-              }
-            : undefined
-        }
-      >
-        {filteredProducts.map((product, index) => {
-          const isActive = product.id === currentProduct.id;
-          const isOutOfStock = !product.availableForSale;
-          const size =
-            product.metafields?.find((m) => m?.key === "size")?.value || "";
-
-          return (
-            <li
-              key={product.id}
-              className={`aspect-square flex-1 relative group mb-2 ${isActive ? "border" : ""}`}
-            >
-              <Link
-                className={`relative h-full w-full block ${
-                  isActive ? "opacity-100" : "opacity-80 hover:opacity-100"
-                }`}
-                href={`/product/${product.handle}`}
-                prefetch={true}
-              >
-                <GridTileImage
-                  alt={product.title}
-                  src={product.featuredImage?.url}
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                  hideLabel={true}
-                />
-                {/* Overlay đường chéo nếu out of stock */}
-                {isOutOfStock && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="absolute w-full h-full bg-black/20"></div>
-                    <div className="absolute w-0.5 h-full bg-gray-300 rotate-45"></div>
-                  </div>
-                )}
-
-                {/* Text hover: Thứ tự + size */}
-                <div
-                  className={`absolute ${
-                    isMatcha ? "top-18" : "top-20"
-                  } text-nowrap left-1 right-1 italic text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 py-1 rounded`}
-                >
-                  {alphabet[index] || index + 1} {size}
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
   );
 }
