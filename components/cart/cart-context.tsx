@@ -4,7 +4,6 @@
 import {
   Cart,
   CartItem,
-  Money,
   Product,
   ProductVariant,
 } from "../../lib/shopify/types";
@@ -152,15 +151,6 @@ function getPriceForVariant(
       } else if (adj.__typename === "SellingPlanFixedAmountPriceAdjustment") {
         if (adj.adjustmentAmount) {
           price = price - parseFloat(adj.adjustmentAmount.amount);
-        }
-      } else if (adj.__typename === "SellingPlanFixedPriceAdjustment") {
-        const fixedPriceAdj = adj as {
-          __typename: "SellingPlanFixedPriceAdjustment";
-          price?: Money;
-        };
-        if (fixedPriceAdj.price) {
-          // Fixed price: use the price directly
-          price = parseFloat(fixedPriceAdj.price.amount);
         }
       }
     }
