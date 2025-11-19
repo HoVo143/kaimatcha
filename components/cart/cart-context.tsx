@@ -142,21 +142,20 @@ function getPriceForVariant(
     if (!planEdge) continue;
     const plan = planEdge.node;
 
-    // Check for fixed price in pricingPolicy first
-    if (plan.pricingPolicy?.basePrice) {
-      // Fixed price: use the price directly from pricingPolicy
-      price = parseFloat(plan.pricingPolicy.basePrice.amount);
-    } else {
-      for (const adjObj of plan.priceAdjustments || []) {
-        const adj = adjObj.adjustmentValue;
-        if (!adj) continue;
+    for (const adjObj of plan.priceAdjustments || []) {
+      const adj = adjObj.adjustmentValue;
+      if (!adj) continue;
 
-        if (adj.__typename === "SellingPlanPercentagePriceAdjustment") {
-          price = price * (1 - (adj.adjustmentPercentage ?? 0) / 100);
-        } else if (adj.__typename === "SellingPlanFixedAmountPriceAdjustment") {
-          if (adj.adjustmentAmount) {
-            price = price - parseFloat(adj.adjustmentAmount.amount);
-          }
+      if (adj.__typename === "SellingPlanPercentagePriceAdjustment") {
+        price = price * (1 - (adj.adjustmentPercentage ?? 0) / 100);
+      } else if (adj.__typename === "SellingPlanFixedAmountPriceAdjustment") {
+        if (adj.adjustmentAmount) {
+          price = price - parseFloat(adj.adjustmentAmount.amount);
+        }
+      } else if (adj.__typename === "SellingPlanFixedPriceAdjustment") {
+        if (adj.price) {
+          // Fixed price: use the price directly
+          price = parseFloat(adj.price.amount);
         }
       }
     }
