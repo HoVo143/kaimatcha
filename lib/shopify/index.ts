@@ -49,7 +49,7 @@ import {
   ShopifyUpdateCartOperation,
 } from "./types";
 import { headers } from "next/headers";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 import { getPageQuery, getPagesQuery, getPolicyQuery } from "./queries/page";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -473,10 +473,25 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
 
   if (isCollectionUpdate) {
     revalidateTag(TAGS.collections);
+    revalidatePath("/collections");
   }
 
   if (isProductUpdate) {
     revalidateTag(TAGS.products);
+    // Revalidate all product pages
+    revalidatePath("/product", "layout");
+
+    // If webhook payload contains product handle, revalidate specific product page
+    try {
+      const body = await req.json().catch(() => null);
+      if (body?.handle) {
+        revalidatePath(`/product/${body.handle}`);
+        console.log(`Revalidated product page: /product/${body.handle}`);
+      }
+    } catch {
+      // If body parsing fails, just revalidate all products
+      console.log("Could not parse webhook body, revalidating all products");
+    }
   }
 
   return NextResponse.json({ status: 200, revalidated: true, now: Date.now() });

@@ -60,6 +60,10 @@ export function ProductDescription({ product }: { product: Product }) {
         if (intervalCount === 1) return "Deliver every 1 month";
         return `Deliver every ${intervalCount} months`;
       }
+      if (interval === "YEAR") {
+        if (intervalCount === 1) return "Deliver every 1 year";
+        return `Deliver every ${intervalCount} years`;
+      }
     }
     // Fallback to options if billingPolicy not available
     if (plan.options && plan.options.length > 0) {
@@ -87,13 +91,13 @@ export function ProductDescription({ product }: { product: Product }) {
     if (plan.billingPolicy) {
       const { interval, intervalCount } = plan.billingPolicy;
 
-      if (interval === "DAY") {
-        intervalText = intervalCount === 1 ? "day" : `${intervalCount} days`;
-      } else if (interval === "WEEK") {
+      if (interval === "WEEK") {
         intervalText = intervalCount === 1 ? "week" : `${intervalCount} weeks`;
       } else if (interval === "MONTH") {
         intervalText =
           intervalCount === 1 ? "month" : `${intervalCount} months`;
+      } else if (interval === "YEAR") {
+        intervalText = intervalCount === 1 ? "year" : `${intervalCount} years`;
       }
     }
 
