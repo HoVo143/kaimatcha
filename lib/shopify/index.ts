@@ -49,7 +49,7 @@ import {
   ShopifyUpdateCartOperation,
 } from "./types";
 import { headers } from "next/headers";
-import { revalidateTag, revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { getPageQuery, getPagesQuery, getPolicyQuery } from "./queries/page";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -462,66 +462,24 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   const isCollectionUpdate = collectionWebhooks.includes(topic);
   const isProductUpdate = productWebhooks.includes(topic);
 
-  // Log webhook received for debugging
-  console.log(`[Webhook] Topic: ${topic}, Secret provided: ${!!secret}`);
-
   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-    console.error("[Webhook] Invalid revalidation secret.");
-    return NextResponse.json({ status: 200, error: "Invalid secret" });
+    console.error("Invalid revalidation secret.");
+    return NextResponse.json({ status: 200 });
   }
 
   if (!isCollectionUpdate && !isProductUpdate) {
-    console.log(`[Webhook] Ignoring topic: ${topic}`);
-    return NextResponse.json({ status: 200, ignored: true });
+    return NextResponse.json({ status: 200 });
   }
 
   if (isCollectionUpdate) {
     revalidateTag(TAGS.collections);
-    revalidatePath("/collections");
-    revalidatePath("/search");
-    console.log("[Webhook] Revalidated collections");
   }
 
   if (isProductUpdate) {
-    // Always revalidate products tag first
     revalidateTag(TAGS.products);
-    
-    // Revalidate all product-related pages
-    revalidatePath("/product", "layout");
-    revalidatePath("/search");
-    revalidatePath("/collections");
-
-    // Try to get product handle from webhook payload
-    let productHandle: string | null = null;
-    try {
-      const body = await req.json();
-      console.log("[Webhook] Payload received:", JSON.stringify(body).substring(0, 200));
-      
-      // Shopify Admin API webhook format: body.handle or body.product?.handle
-      productHandle = body?.handle || body?.product?.handle || null;
-
-      if (productHandle) {
-        revalidatePath(`/product/${productHandle}`);
-        console.log(`[Webhook] Revalidated specific product: /product/${productHandle}`);
-      } else {
-        console.log("[Webhook] No product handle found in payload, revalidated all products");
-      }
-    } catch (error) {
-      // If body parsing fails, just revalidate all products
-      console.log("[Webhook] Could not parse webhook body:", error);
-      console.log("[Webhook] Revalidating all products as fallback");
-    }
   }
 
-  // Log webhook received for debugging
-  console.log(`[Webhook] Topic: ${topic}, Revalidated successfully`);
-
-  return NextResponse.json({ 
-    status: 200, 
-    revalidated: true, 
-    topic,
-    now: Date.now() 
-  });
+  return NextResponse.json({ status: 200, revalidated: true, now: Date.now() });
 }
 
 export async function getPage(handle: string): Promise<Page> {
