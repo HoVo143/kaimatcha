@@ -1,5 +1,6 @@
 import ContactForm from "../../components/contact/contact-form";
 import ExhibitionPage from "../../components/exhibition/page";
+import FAQAccordion from "../../components/faq/faq-accordion";
 import Prose from "../../components/ui/prose";
 import { getPage, getPolicy } from "../../lib/shopify";
 import { Metadata } from "next";
@@ -48,7 +49,7 @@ export default async function Page({ params }: { params: { page: string } }) {
   if (!data) return notFound();
 
   return (
-    <>
+    <div className="shopify-page-content">
       {/* Chỉ render H1 nếu không phải exhibition */}
       {page !== "exhibition" && (
         <h1 className="mb-8 text-5xl font-bold">{data.title}</h1>
@@ -59,6 +60,8 @@ export default async function Page({ params }: { params: { page: string } }) {
         <ContactForm />
       ) : page === "exhibition" ? (
         <ExhibitionPage />
+      ) : page === "faq" ? (
+        <FAQAccordion html={data.body as string} />
       ) : (
         <Prose className="mb-8" html={data.body as string} />
       )}
@@ -73,6 +76,6 @@ export default async function Page({ params }: { params: { page: string } }) {
           }
         ).format(new Date(data.updatedAt || Date.now()))}.`}
       </p>
-    </>
+    </div>
   );
 }

@@ -5,8 +5,13 @@ import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Price from "../grid/parts/price";
 import { QuickAddToCart } from "../ui/quick-add-to-cart";
+import { Product } from "../../lib/shopify/types";
 
-export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
+export default function ProductSlider({
+  topProducts,
+}: {
+  topProducts: Product[];
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -44,12 +49,14 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
         {/* Nút scroll */}
         <button
           onClick={() => scroll("left")}
+          aria-label="Scroll left"
           className="hidden md:flex absolute cursor-pointer left-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition"
         >
           <ChevronLeftIcon className="w-6 h-6 text-gray-700" />
         </button>
         <button
           onClick={() => scroll("right")}
+          aria-label="Scroll right"
           className="hidden md:flex absolute cursor-pointer right-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition"
         >
           <ChevronRightIcon className="w-6 h-6 text-gray-700" />
@@ -62,20 +69,25 @@ export default function ProductSlider({ topProducts }: { topProducts: any[] }) {
         >
           {topProducts.map((product) => (
             <div
-              // className="products-price group relative max-w-[250] md:max-w-[450] shrink-0 overflow-hidden rounded-2xl shadow-md bg-white"
               key={product.id}
-              className="products-price max-w-[250] md:max-w-[450] shrink-0 "
+              className="products-price max-w-[250] md:max-w-[450] shrink-0 w-[250px] md:w-[450px]"
             >
-              <div className="group relative overflow-hidden rounded-sm shadow-md">
-                <Link href={`/product/${product.handle}`}>
-                  <Image
-                    src={product.featuredImage?.url || ""}
-                    alt={product.title}
-                    width={400}
-                    height={400}
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+              <div className="group relative overflow-hidden rounded-sm shadow-md aspect-square w-full">
+                <Link
+                  href={`/product/${product.handle}`}
+                  className="block w-full h-full"
+                >
+                  <div className="relative w-full h-full aspect-square">
+                    <Image
+                      src={product.featuredImage?.url || ""}
+                      alt={product.title}
+                      fill
+                      sizes="(max-width: 768px) 250px, 450px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      priority={false}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors pointer-events-none" />
                 </Link>
                 <div
                   className="

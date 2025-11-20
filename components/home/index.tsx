@@ -36,15 +36,9 @@ export default async function HomeSection() {
           className="w-full h-[60vh] object-cover md:h-full"
         />
         <div className="absolute top-26 md:top-48 inset-0 flex flex-col items-center justify-start text-center text-white px-6">
-          {/* <img
-            src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Full_Logo_Horizontal_White_d8930ed5-d908-473f-906d-bffc347a58b4.png?v=1762318374"
-            alt=""
-            className="md:h-[120px]"
-          /> */}
           <h1 className="mt-2 text-xl md:text-4xl font-medium tracking-tight">
             Single-Origin Ceremonial Matcha
           </h1>
-          {/* <p className="mt-2 text-md md:text-3xl font-medium "></p> */}
           <p>
             <Link
               href="/collections/matcha"
@@ -87,7 +81,6 @@ export default async function HomeSection() {
 
       {/* products */}
       <ProductSlider topProducts={topProducts} />
-      {/*  */}
 
       {/* hr */}
       <SectionDivider />
