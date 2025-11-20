@@ -134,7 +134,7 @@ export default function ProductSlider({
         {/* Container scroll */}
         <div
           ref={scrollRef}
-          className="flex gap-2 md:gap-24 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+          className="flex gap-2 md:gap-20 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
         >
           {topProducts.map((product) => (
             <ProductItem key={product.id} product={product} />
