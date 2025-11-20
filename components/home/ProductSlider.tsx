@@ -82,6 +82,7 @@ export default function ProductSlider({
   topProducts: Product[];
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -115,30 +116,41 @@ export default function ProductSlider({
           </Link>
         </p>
 
-        {/* Nút scroll */}
-        <button
-          onClick={() => scroll("left")}
-          aria-label="Scroll left"
-          className="hidden md:flex absolute cursor-pointer left-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition"
-        >
-          <ChevronLeftIcon className="w-6 h-6 text-gray-700" />
-        </button>
-        <button
-          onClick={() => scroll("right")}
-          aria-label="Scroll right"
-          className="hidden md:flex absolute cursor-pointer right-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition"
-        >
-          <ChevronRightIcon className="w-6 h-6 text-gray-700" />
-        </button>
-
-        {/* Container scroll */}
+        {/* Wrapper for scroll container and buttons */}
         <div
-          ref={scrollRef}
-          className="flex gap-2 md:gap-20 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {topProducts.map((product) => (
-            <ProductItem key={product.id} product={product} />
-          ))}
+          {/* Nút scroll */}
+          <button
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className={`hidden md:flex absolute cursor-pointer left-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition-opacity duration-300 ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <ChevronLeftIcon className="w-6 h-6 text-gray-700" />
+          </button>
+          <button
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className={`hidden md:flex absolute cursor-pointer right-28 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full shadow p-2 z-10 transition-opacity duration-300 ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <ChevronRightIcon className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Container scroll */}
+          <div
+            ref={scrollRef}
+            className="flex gap-2 md:gap-20 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+          >
+            {topProducts.map((product) => (
+              <ProductItem key={product.id} product={product} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
