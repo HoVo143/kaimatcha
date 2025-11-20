@@ -37,17 +37,19 @@ export default async function HomeSection() {
           className="w-full h-[60vh] object-cover md:h-full"
         />
         <div className="absolute top-26 md:top-48 inset-0 flex flex-col items-center justify-start text-center text-white px-6">
-          <h1 className="mt-2 text-xl md:text-4xl font-medium tracking-tight">
-            Single-Origin Ceremonial Matcha
-          </h1>
-          <p>
-            <Link
-              href="/collections/matcha"
-              className="tracking-wider uppercase text-link mt-2 md:mt-8 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
-            >
-              Explore matcha
-            </Link>
-          </p>
+          <ScrollReveal direction="up" delay={100}>
+            <h1 className="mt-2 text-xl md:text-4xl font-medium tracking-tight">
+              Single-Origin Ceremonial Matcha
+            </h1>
+            <p>
+              <Link
+                href="/collections/matcha"
+                className="tracking-wider uppercase text-link mt-2 md:mt-8 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
+              >
+                Explore matcha
+              </Link>
+            </p>
+          </ScrollReveal>
         </div>
       </section>
       {/* Text */}
@@ -92,25 +94,28 @@ export default async function HomeSection() {
       <SectionDivider />
 
       {/* Our Collection */}
-      <ScrollReveal direction="up" delay={100}>
-        <section className="w-full py-6 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 text-center">
+      <section className="w-full py-6 md:py-24">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <ScrollReveal direction="up" delay={100}>
             <h2 className="text-3xl md:text-4xl font-medium mb-8 uppercase">
               Our Collection
             </h2>
+          </ScrollReveal>
 
-            <div className="grid gap-2 md:gap-12 grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
-              {topCollections
-                .filter((collection) =>
-                  ["matcha", "goods", "teaware"].includes(
-                    collection.handle.toLowerCase()
-                  )
+          <div className="grid gap-2 md:gap-12 grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
+            {topCollections
+              .filter((collection) =>
+                ["matcha", "goods", "teaware"].includes(
+                  collection.handle.toLowerCase()
                 )
-                .map((collection) => (
-                  <div
-                    key={collection.id}
-                    className="group relative overflow-hidden"
-                  >
+              )
+              .map((collection, index) => (
+                <ScrollReveal
+                  key={collection.id}
+                  direction="up"
+                  delay={100 + index * 100}
+                >
+                  <div className="group relative overflow-hidden">
                     <Link href={`/collections/${collection.handle}`}>
                       {collection.image?.url && (
                         <Image
@@ -129,11 +134,11 @@ export default async function HomeSection() {
                       </div>
                     </Link>
                   </div>
-                ))}
-            </div>
+                </ScrollReveal>
+              ))}
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
       {/* Sale / CTA Section */}
       <ScrollReveal direction="fade" delay={100}>
@@ -146,21 +151,24 @@ export default async function HomeSection() {
             className="w-full h-[50vh] object-cover md:h-[60vh]"
           />
           <div className="absolute pb-4 md:pb-24 inset-0 bg-black/40 flex flex-col items-center justify-center text-center md:items-end md:justify-end md:text-end text-white px-10 md:px-22">
-            <h1 className="text-2xl md:text-4xl font-medium tracking-normal">
-              Signature Tea Collection
-            </h1>
-            <p className="mt-4 max-w-[500px] text-sm md:text-lg">
-              Discover our master blender’s exclusive creations, available only
-              at Herbal Haven. Limited quantities, infinite possibilities.
-            </p>
-            <p>
-              <Link
-                href="/collections/matcha"
-                className="tracking-wider uppercase text-link mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
-              >
-                Explore matcha
-              </Link>
-            </p>
+            <ScrollReveal direction="up" delay={100}>
+              <h1 className="text-2xl md:text-4xl font-medium tracking-normal">
+                Signature Tea Collection
+              </h1>
+              <p className="mt-4 max-w-[500px] text-sm md:text-lg">
+                Discover our master blender’s exclusive creations, available
+                only at Herbal Haven. Limited quantities, infinite
+                possibilities.
+              </p>
+              <p>
+                <Link
+                  href="/collections/matcha"
+                  className="tracking-wider uppercase text-link mt-2 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
+                >
+                  Explore matcha
+                </Link>
+              </p>
+            </ScrollReveal>
           </div>
         </section>
       </ScrollReveal>
