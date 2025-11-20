@@ -33,6 +33,12 @@ body {
   line-height: 1.2;
 }
 
+html,
+.swal2-shown,
+.swal2-shown.swal2-height-auto {
+  padding-right: 0px !important;
+}
+
 /* H3 titles font */
 /* h1,
 h2,
