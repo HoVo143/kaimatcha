@@ -20,6 +20,7 @@ export default function Gallery({
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,27 +69,63 @@ export default function Gallery({
     <div className="relative w-full select-none">
       {/* Slider */}
       <div ref={sliderRef} className="keen-slider">
-        {images.map((image, index) => (
-          <div
-            key={image.src}
-            className={`
-              keen-slider__slide relative aspect-4/3 w-full md:w-auto
-              ${images.length === 1 ? "mx-auto max-w-[500px]" : ""}
-            `}
-            onClick={() => openModal(image)}
-          >
-            <Image
-              src={image.src}
-              alt={image.altText || "Product image"}
-              fill
-              className="object-cover select-none pointer-events-none"
-              priority={index === 0}
-              draggable={false}
-              onDragStart={(e) => e.preventDefault()}
-              onLoadingComplete={() => setIsLoading(false)}
-            />
-          </div>
-        ))}
+        {images.map((image, index) => {
+          const isImageLoaded = loadedImages.has(image.src);
+          const isFirstImage = index === 0;
+
+          return (
+            <div
+              key={image.src}
+              className={`
+                keen-slider__slide relative aspect-4/3 w-full md:w-auto
+                ${images.length === 1 ? "mx-auto max-w-[500px]" : ""}
+              `}
+              onClick={() => openModal(image)}
+            >
+              {/* Skeleton Loading Placeholder */}
+              {!isImageLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-500 rounded-full animate-spin" />
+                  </div>
+                </div>
+              )}
+
+              {/* Actual Image */}
+              <Image
+                src={image.src}
+                alt={image.altText || "Product image"}
+                fill
+                className={`object-cover select-none pointer-events-none transition-opacity duration-500 ${
+                  isImageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                priority={isFirstImage}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                onLoad={() => {
+                  setLoadedImages((prev) => {
+                    const newSet = new Set(prev);
+                    newSet.add(image.src);
+                    return newSet;
+                  });
+                  if (isFirstImage) {
+                    setIsLoading(false);
+                  }
+                }}
+                onLoadingComplete={() => {
+                  setLoadedImages((prev) => {
+                    const newSet = new Set(prev);
+                    newSet.add(image.src);
+                    return newSet;
+                  });
+                  if (isFirstImage) {
+                    setIsLoading(false);
+                  }
+                }}
+              />
+            </div>
+          );
+        })}
       </div>
       {/* --- LOADING BAR --- */}
       <LoadingBar isLoading={isLoading} />
@@ -137,6 +174,7 @@ export default function Gallery({
             />
             <button
               onClick={closeModal}
+              aria-label="Close image modal"
               className="absolute top-20 md:top-2 right-2 p-2 bg-white rounded-full cursor-pointer"
             >
               <XIcon className="h-5 w-5 text-black hover:text-red-500" />
