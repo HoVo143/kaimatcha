@@ -62,7 +62,7 @@ function ProductItem({ product }: { product: Product }) {
         </div>
       </div>
       <div className="mt-4">
-        <h3 className=" text-black text-base md:text-lg font-medium tracking-wide uppercase">
+        <h3 className="text-black text-base md:text-lg font-medium tracking-wide uppercase product-slider-title">
           {product.title}
         </h3>
         <Price
