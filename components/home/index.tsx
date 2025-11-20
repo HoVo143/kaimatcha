@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ProductSlider from "./ProductSlider";
 import HeroCarousel from "./hero-carousel";
-import { getCollections, getProducts } from "../../lib/shopify";
+import { getCollections, getCollectionProducts } from "../../lib/shopify";
 import SectionDivider from "../ui/divider-section";
 import ScrollReveal from "../ui/scroll-reveal";
 
@@ -18,13 +18,14 @@ export default async function HomeSection() {
   );
   // .slice(0, 5);
 
-  // const products = await getProducts({ sortKey: "CREATED_AT", reverse: true });
-  const products = await getProducts({
-    sortKey: "BEST_SELLING",
-    reverse: false, // không cần đảo ngược vì Shopify đã sắp giảm dần sẵn
+  // Get latest teaware products
+  const teawareProducts = await getCollectionProducts({
+    collection: "teaware",
+    sortKey: "CREATED_AT",
+    reverse: true, // newest first
   });
 
-  const topProducts = products.slice(0, 6);
+  const topProducts = teawareProducts.slice(0, 6);
   // bg-[#F6F6F6]
   return (
     <main className="main-home flex-1 bg-white text-[#2c2c2c]">

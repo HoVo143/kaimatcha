@@ -236,7 +236,7 @@ export default function CartModal() {
                     <form action={redirectToCheckout}>
                       <CheckoutButton />
                     </form>
-                    <p className="text-xs text-neutral-500 text-center mt-3">
+                    <p className="text-sm text-neutral-500 text-center mt-3">
                       Shipping, taxes, and discount codes are calculated at
                       checkout
                     </p>

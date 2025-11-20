@@ -20,7 +20,7 @@ export function QuickAddToCart({ product }: { product: Product }) {
   const selectedVariantId = firstVariant?.id;
 
   const buttonClasses =
-    "cursor-pointer relative flex w-full items-center justify-center rounded-full p-2 tracking-wide text-white text-sm";
+    "cursor-pointer relative flex w-full items-center justify-center rounded-full p-2 tracking-wide text-gray-500 text-sm";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!product.availableForSale) {

@@ -17,7 +17,7 @@ function ProductItem({ product }: { product: Product }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="group relative overflow-hidden rounded-sm shadow-md aspect-square w-full">
+      <div className="group relative overflow-hidden aspect-square w-full">
         <Link
           href={`/product/${product.handle}`}
           className="block w-full h-full"
@@ -48,7 +48,7 @@ function ProductItem({ product }: { product: Product }) {
               />
             )}
           </div>
-          <div className="absolute inset-0 bg-black/5 transition-colors pointer-events-none" />
+          <div className="absolute inset-0 transition-colors pointer-events-none" />
         </Link>
         <div
           className="
@@ -134,7 +134,7 @@ export default function ProductSlider({
         {/* Container scroll */}
         <div
           ref={scrollRef}
-          className="flex gap-2 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+          className="flex gap-2 md:gap-24 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
         >
           {topProducts.map((product) => (
             <ProductItem key={product.id} product={product} />
