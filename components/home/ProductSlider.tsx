@@ -1,11 +1,80 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Price from "../grid/parts/price";
 import { QuickAddToCart } from "../ui/quick-add-to-cart";
 import { Product } from "../../lib/shopify/types";
+
+function ProductItem({ product }: { product: Product }) {
+  const secondImage = product.images?.[1]?.url;
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="products-price max-w-[250] md:max-w-[450] shrink-0 w-[250px] md:w-[450px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="group relative overflow-hidden rounded-sm shadow-md aspect-square w-full">
+        <Link
+          href={`/product/${product.handle}`}
+          className="block w-full h-full"
+        >
+          <div className="relative w-full h-full aspect-square">
+            {/* First image (default) */}
+            <Image
+              src={product.featuredImage?.url || ""}
+              alt={product.title}
+              fill
+              sizes="(max-width: 768px) 250px, 450px"
+              className={`object-cover transition-opacity duration-500 ${
+                isHovered && secondImage ? "opacity-0" : "opacity-100"
+              }`}
+              priority={false}
+            />
+            {/* Second image (on hover) */}
+            {secondImage && (
+              <Image
+                src={secondImage}
+                alt={product.title}
+                fill
+                sizes="(max-width: 768px) 250px, 450px"
+                className={`absolute inset-0 object-cover transition-opacity duration-500 ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
+                priority={false}
+              />
+            )}
+          </div>
+          <div className="absolute inset-0 bg-black/5 transition-colors pointer-events-none" />
+        </Link>
+        <div
+          className="
+                      absolute bottom-2 md:bottom-4 left-1/9 md:left-1/2 -translate-x-1/2
+                      md:opacity-0 md:translate-y-6
+                      md:group-hover:opacity-100 md:group-hover:translate-y-0
+                      md:transition-all md:duration-500 md:ease-out
+                    "
+        >
+          <QuickAddToCart product={product} />
+        </div>
+      </div>
+      <div className="mt-4">
+        <h3 className=" text-black text-base md:text-lg font-medium tracking-wide uppercase">
+          {product.title}
+        </h3>
+        <Price
+          className="text-black text-sm font-medium tracking-wide mt-2"
+          amount={product.priceRange?.minVariantPrice?.amount}
+          currencyCode={product.priceRange?.minVariantPrice?.currencyCode}
+          currencyCodeClassName="hidden src[275px]/label:inline"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function ProductSlider({
   topProducts,
@@ -68,52 +137,7 @@ export default function ProductSlider({
           className="flex gap-2 overflow-x-auto px-2 scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
         >
           {topProducts.map((product) => (
-            <div
-              key={product.id}
-              className="products-price max-w-[250] md:max-w-[450] shrink-0 w-[250px] md:w-[450px]"
-            >
-              <div className="group relative overflow-hidden rounded-sm shadow-md aspect-square w-full">
-                <Link
-                  href={`/product/${product.handle}`}
-                  className="block w-full h-full"
-                >
-                  <div className="relative w-full h-full aspect-square">
-                    <Image
-                      src={product.featuredImage?.url || ""}
-                      alt={product.title}
-                      fill
-                      sizes="(max-width: 768px) 250px, 450px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      priority={false}
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors pointer-events-none" />
-                </Link>
-                <div
-                  className="
-                      absolute bottom-2 md:bottom-4 left-1/9 md:left-1/2 -translate-x-1/2
-                      md:opacity-0 md:translate-y-6
-                      md:group-hover:opacity-100 md:group-hover:translate-y-0
-                      md:transition-all md:duration-500 md:ease-out
-                    "
-                >
-                  <QuickAddToCart product={product} />
-                </div>
-              </div>
-              <div className="mt-4">
-                <h3 className=" text-black text-base md:text-lg font-medium tracking-wide uppercase">
-                  {product.title}
-                </h3>
-                <Price
-                  className="text-black text-sm font-medium tracking-wide mt-2"
-                  amount={product.priceRange?.minVariantPrice?.amount}
-                  currencyCode={
-                    product.priceRange?.minVariantPrice?.currencyCode
-                  }
-                  currencyCodeClassName="hidden src[275px]/label:inline"
-                />
-              </div>
-            </div>
+            <ProductItem key={product.id} product={product} />
           ))}
         </div>
       </div>
