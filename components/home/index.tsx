@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProductSlider from "./ProductSlider";
+import HeroCarousel from "./hero-carousel";
 import { getCollections, getProducts } from "../../lib/shopify";
 import SectionDivider from "../ui/divider-section";
 import ScrollReveal from "../ui/scroll-reveal";
@@ -27,31 +28,8 @@ export default async function HomeSection() {
   // bg-[#F6F6F6]
   return (
     <main className="main-home flex-1 bg-white text-[#2c2c2c]">
-      {/* Hero Banner */}
-      <section className="relative w-full">
-        <Image
-          src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
-          alt="Matcha Banner"
-          width={1600}
-          height={600}
-          className="w-full h-[60vh] object-cover md:h-full"
-        />
-        <div className="absolute top-26 md:top-48 inset-0 flex flex-col items-center justify-start text-center text-white px-6">
-          <ScrollReveal direction="up" delay={100}>
-            <h1 className="mt-2 text-xl md:text-4xl font-medium tracking-tight">
-              Single-Origin Ceremonial Matcha
-            </h1>
-            <p>
-              <Link
-                href="/collections/matcha"
-                className="tracking-wider uppercase text-link mt-2 md:mt-8 inline-flex h-10 items-start justify-start underline text-sm font-medium hover:text-emerald-400 transition-colors"
-              >
-                Explore matcha
-              </Link>
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Hero Banner Carousel */}
+      <HeroCarousel />
       {/* Text */}
       <ScrollReveal direction="up" delay={100}>
         <section className="w-full flex flex-col items-center justify-start text-center mt-5 md:mt-20 my-14">
