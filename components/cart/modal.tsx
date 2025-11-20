@@ -11,15 +11,18 @@ import Price from "../grid/parts/price";
 import OpenCart from "./open-cart";
 import CloseCart from "./close-cart";
 import { DEFAULT_OPTION } from "../../lib/constants";
-import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
+import { DeleteItemButton } from "./delete-item-button";
 import { useFormStatus } from "react-dom";
 import { createCartAndSetCookie, redirectToCheckout } from "./actions";
 import LoadingDots from "../ui/loading-dots";
+import FreeShippingBanner from "./free-shipping-banner";
 
 type MerchandiseSearchParams = {
   [key: string]: string;
 };
+
+const FREE_SHIPPING_THRESHOLD = 50; // $50
 
 export default function CartModal() {
   const { cart, updateCartItem } = useCart();
@@ -27,6 +30,12 @@ export default function CartModal() {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+
+  // Calculate free shipping progress
+  const subtotal = cart ? parseFloat(cart.cost.totalAmount.amount) : 0;
+  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+  const qualifiesForFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
 
   useEffect(() => {
     if (!cart) {
@@ -75,13 +84,25 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white p-6 text-black backdrop-blur-xl md:w-[390px] ">
-              <div className="flex items-center justify-between">
-                <p className="text-lg font-medium">My Cart</p>
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white text-black backdrop-blur-xl md:w-[440px] ">
+              {/* Header */}
+              <div className="products-price flex items-center justify-between px-4 pt-3 pb-2 border-b border-neutral-200">
+                <p className="text-md font-medium uppercase">
+                  Cart ({cart?.totalQuantity || 0})
+                </p>
                 <button aria-label="Close cart" onClick={closeCart}>
                   <CloseCart />
                 </button>
               </div>
+
+              {/* Free Shipping Banner */}
+              {cart && cart.lines.length > 0 && (
+                <FreeShippingBanner
+                  qualifiesForFreeShipping={qualifiesForFreeShipping}
+                  remaining={remaining}
+                  progress={progress}
+                />
+              )}
 
               {!cart || cart.lines.length === 0 ? (
                 <div className="flex items-center gap-2 mt-24 justify-center">
@@ -91,8 +112,8 @@ export default function CartModal() {
                   </p>
                 </div>
               ) : (
-                <div className="flex h-full flex-col justify-between overflow-hidden p-1">
-                  <ul className="grow overflow-auto py-4">
+                <div className="flex h-full flex-col justify-between overflow-hidden">
+                  <ul className="cart-scrollbar grow overflow-auto px-4 py-4 pr-2">
                     {cart.lines
                       .sort((a, b) =>
                         a.merchandise.product.title.localeCompare(
@@ -120,14 +141,18 @@ export default function CartModal() {
                         return (
                           <li
                             key={i}
-                            className="lex w-full flex-col border-b border-neutral-300 mb-4 "
+                            className="flex w-full flex-col border-b border-neutral-100 pb-4 mb-4"
                           >
-                            <div className="relative flex flex-row">
-                              <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 ">
+                            <div className="relative flex flex-row gap-3">
+                              <Link
+                                href={merchandiseUrl}
+                                onClick={closeCart}
+                                className="relative h-24 w-24 shrink-0 overflow-hidden rounded-sm border border-neutral-200 bg-neutral-100"
+                              >
                                 <Image
                                   className="h-full w-full object-cover"
-                                  width={64}
-                                  height={64}
+                                  width={80}
+                                  height={80}
                                   alt={
                                     item.merchandise.product.featuredImage
                                       .altText || item.merchandise.product.title
@@ -136,85 +161,86 @@ export default function CartModal() {
                                     item.merchandise.product.featuredImage.url
                                   }
                                 />
-                              </div>
-                              <Link
-                                href={merchandiseUrl}
-                                onClick={closeCart}
-                                className="z-30 ml-2 flex flex-row space-x-4"
-                              >
-                                <div className="flex flex-1 flex-col text-base">
-                                  <span className="leading-tight">
-                                    {item.merchandise.product.title}
-                                  </span>
-                                  {item.merchandise.title !== DEFAULT_OPTION ? (
-                                    <p className="text-sm text-neutral-500 ">
-                                      {item.merchandise.title}
-                                    </p>
-                                  ) : null}
-                                </div>
                               </Link>
-                              <div className="absolute right-2 transition-all ease-in-out hover:scale-110">
-                                <DeleteItemButton
-                                  item={item}
-                                  optimisticUpdate={updateCartItem}
-                                />
-                              </div>
-                            </div>
-                            <div className="products-price flex h-16 justify-between items-center">
-                              <Price
-                                className="flex justify-end space-y-2 text-right text-sm"
-                                amount={item.cost.totalAmount.amount}
-                                currencyCode={
-                                  item.cost.totalAmount.currencyCode
-                                }
-                              />
-                              <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 ">
-                                <EditItemQuantityButton
-                                  item={item}
-                                  type="minus"
-                                  optimisticUpdate={updateCartItem}
-                                />
-                                <p className="w-6 text-center">
-                                  <span className="w-full text-sm">
-                                    {item.quantity}
-                                  </span>
-                                </p>
-                                <EditItemQuantityButton
-                                  item={item}
-                                  type="plus"
-                                  optimisticUpdate={updateCartItem}
-                                />
+                              <div className="flex flex-1 flex-col justify-between">
+                                <div className="flex items-start justify-between gap-2">
+                                  <Link
+                                    href={merchandiseUrl}
+                                    onClick={closeCart}
+                                    className="flex-1"
+                                  >
+                                    <span className="text-sm md:text-lg uppercase font-medium leading-tight block">
+                                      {item.merchandise.product.title}
+                                    </span>
+                                    {item.merchandise.title !==
+                                    DEFAULT_OPTION ? (
+                                      <p className="text-xs text-neutral-500 mt-0.5">
+                                        {item.merchandise.title}
+                                      </p>
+                                    ) : null}
+                                  </Link>
+                                </div>
+                                <div className="products-price flex items-center justify-between mt-2">
+                                  <Price
+                                    className="text-sm font-medium text-black"
+                                    amount={item.cost.totalAmount.amount}
+                                    currencyCode={
+                                      item.cost.totalAmount.currencyCode
+                                    }
+                                  />
+                                  <div className="flex items-center gap-3">
+                                    <div className="flex h-8 flex-row items-center rounded-sm border border-neutral-200">
+                                      <EditItemQuantityButton
+                                        item={item}
+                                        type="minus"
+                                        optimisticUpdate={updateCartItem}
+                                      />
+                                      <p className="w-8 text-center">
+                                        <span className="w-full text-sm">
+                                          {item.quantity}
+                                        </span>
+                                      </p>
+                                      <EditItemQuantityButton
+                                        item={item}
+                                        type="plus"
+                                        optimisticUpdate={updateCartItem}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="mt-1 self-start">
+                                  <DeleteItemButton
+                                    item={item}
+                                    optimisticUpdate={updateCartItem}
+                                    variant="text"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </li>
                         );
                       })}
                   </ul>
-                  <div className="products-price py-4 text-sm text-neutral-500 ">
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 ">
-                      <p>Taxes</p>
+                  {/* Footer */}
+                  <div className="border-t border-neutral-200 bg-white px-4 pt-4 pb-4">
+                    <div className="products-price mb-4 flex items-center justify-between">
+                      <p className="text-sm font-medium text-black uppercase">
+                        Subtotal
+                      </p>
                       <Price
-                        className="text-right text-base text-black "
-                        amount={cart.cost.totalTaxAmount.amount}
-                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
-                      />
-                    </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 ">
-                      <p>Shipping</p>
-                      <p className="text-right">Calculated at checkout</p>
-                    </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 ">
-                      <p>Total</p>
-                      <Price
-                        className="text-right text-base text-black "
+                        className="text-right text-lg md:text-2xl font-medium text-black"
                         amount={cart.cost.totalAmount.amount}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
                     </div>
+                    <form action={redirectToCheckout}>
+                      <CheckoutButton />
+                    </form>
+                    <p className="text-xs text-neutral-500 text-center mt-3">
+                      Shipping, taxes, and discount codes are calculated at
+                      checkout
+                    </p>
                   </div>
-                  <form action={redirectToCheckout}>
-                    <CheckoutButton />
-                  </form>
                 </div>
               )}
             </Dialog.Panel>
@@ -230,11 +256,11 @@ function CheckoutButton() {
 
   return (
     <button
-      className="block w-full rounded-full bg-black p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
+      className="block w-full rounded-sm bg-black p-3.5 text-center text-sm font-medium uppercase tracking-wide text-white hover:bg-neutral-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       type="submit"
       disabled={pending}
     >
-      {pending ? <LoadingDots className="bg-white" /> : "Proceed to Checkout"}
+      {pending ? <LoadingDots className="bg-white" /> : "Check Out"}
     </button>
   );
 }

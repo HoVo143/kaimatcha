@@ -86,6 +86,154 @@ h2.swal2-title,
   display: none; /* Chrome, Safari */
 }
 
+/* Custom scrollbar for cart modal */
+.cart-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgb(212 212 212) transparent; /* thumb and track */
+}
+
+.cart-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+.cart-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+
+.cart-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(212 212 212); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners */
+  border: 2px solid transparent; /* Creates padding around thumb */
+  background-clip: content-box; /* Ensures border doesn't affect thumb color */
+}
+
+.cart-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(163 163 163); /* Darker on hover */
+  background-clip: content-box;
+}
+
+/* Free shipping progress bar */
+.free-shipping-progress {
+  width: calc(var(--progress) * 1%);
+}
+
+/* Mobile main menu container - slide in from left when returning */
+.mobile-main-menu-container {
+  animation: mobileMainMenuSlideIn 0.4s ease-out forwards;
+}
+
+@keyframes mobileMainMenuSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile main menu items - stagger from top when opening */
+.mobile-main-menu-item {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: mobileMainMenuItemSlideDown 0.4s ease-out forwards;
+  animation-delay: var(--item-delay, 0s);
+}
+
+@keyframes mobileMainMenuItemSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile submenu container - slide in from left */
+.mobile-submenu-container {
+  animation: mobileSubmenuSlideIn 0.4s ease-out forwards;
+}
+
+@keyframes mobileSubmenuSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile menu item animation - stagger from top */
+.mobile-menu-item {
+  opacity: 0;
+  transform: translateY(-15px);
+  animation: mobileMenuItemSlideDown 0.4s ease-out forwards;
+  animation-delay: var(--item-delay, 0s);
+}
+
+@keyframes mobileMenuItemSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Desktop menu item animation - stagger from top when hover */
+.desktop-menu-item {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: desktopMenuItemSlideDown 0.4s ease-out forwards;
+  animation-delay: var(--item-delay, 0s);
+}
+
+@keyframes desktopMenuItemSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Confetti animation */
+.confetti-container {
+  height: 200px;
+  top: -50px;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  left: calc(var(--confetti-left) * 1%);
+  background-color: var(--confetti-color);
+  animation: confetti-fall 3s ease-out forwards;
+  animation-delay: calc(var(--confetti-delay) * 1s);
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(250px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
 /* hide spinner for webkit */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

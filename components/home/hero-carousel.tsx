@@ -130,7 +130,7 @@ export default function HeroCarousel() {
 
   return (
     <section
-      className="relative w-full overflow-hidden h-[60vh] md:h-screen cursor-grab active:cursor-grabbing bg-black"
+      className="relative w-full overflow-hidden h-[70vh] md:h-screen cursor-grab active:cursor-grabbing bg-black"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

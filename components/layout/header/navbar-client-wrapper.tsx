@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 import { Menu } from "../../../lib/shopify/types";
@@ -17,21 +17,18 @@ import { usePathname } from "next/navigation";
 interface HeaderClientProps {
   menu: Menu[];
   teawareSubmenu: Menu[];
-  goodsSubmenu: Menu[];
   teawareSubmenuMedium: Menu[];
-  goodsSubmenuMedium: Menu[];
 }
 
 export default function HeaderClient({
   menu,
   teawareSubmenu,
-  goodsSubmenu,
   teawareSubmenuMedium,
-  goodsSubmenuMedium,
 }: HeaderClientProps) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const [menuHover, setMenuHover] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   //  Logic scroll + kiểm tra trang matcha
   useEffect(() => {
@@ -57,6 +54,22 @@ export default function HeaderClient({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
+
+  // Set animation delay for desktop menu items dynamically
+  useEffect(() => {
+    if (menuHover === "Teaware" && dropdownRef.current) {
+      const menuItems =
+        dropdownRef.current.querySelectorAll(".desktop-menu-item");
+      menuItems.forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        const delay = htmlEl.dataset.delay || "0";
+        htmlEl.style.setProperty(
+          "--item-delay",
+          `${parseFloat(delay) * 0.05}s`
+        );
+      });
+    }
+  }, [menuHover]);
 
   //  Xác định trạng thái để đổi className
 
@@ -88,7 +101,7 @@ export default function HeaderClient({
           scrolled ? "bg-neutral-200 text-neutral-500" : "bg-black text-white"
         )}
       >
-        Free US shipping over $200
+        Free US shipping over $50
       </div>
       <nav
         // className={clsx(
@@ -122,8 +135,6 @@ export default function HeaderClient({
             menu={menu}
             teawareSubmenu={teawareSubmenu}
             teawareSubmenuMedium={teawareSubmenuMedium}
-            goodsSubmenu={goodsSubmenu}
-            goodsSubmenuMedium={goodsSubmenuMedium}
           />
         </div>
 
@@ -184,9 +195,10 @@ export default function HeaderClient({
         </div>
         {/* Menu con hiển thị khi hover menu cha hoặc submenu */}
         <div
+          ref={dropdownRef}
           className={clsx(
             "absolute left-0 top-full w-full bg-white transition-all duration-300 ease-in-out shadow-md overflow-hidden z-998",
-            menuHover === "Teaware" || menuHover === "Goods"
+            menuHover === "Teaware"
               ? "max-h-[600px] opacity-100 visible"
               : "max-h-0 opacity-0 invisible"
           )}
@@ -200,14 +212,12 @@ export default function HeaderClient({
                 <div className="flex-1">
                   <h1 className="text-lg uppercase">Type</h1>
                   <div className="flex flex-col gap-3 mt-3">
-                    {(menuHover === "Teaware"
-                      ? teawareSubmenu
-                      : goodsSubmenu
-                    ).map((sub) => (
+                    {teawareSubmenu.map((sub, index) => (
                       <Link
                         key={sub.title}
                         href={`/${sub.path}`}
-                        className="underline-center transition text-black font-medium text-2xl"
+                        className="desktop-menu-item underline-center transition text-black font-medium text-2xl"
+                        data-delay={index}
                       >
                         {sub.title}
                       </Link>
@@ -217,14 +227,12 @@ export default function HeaderClient({
                 <div className="flex-1">
                   <h1 className="text-lg uppercase">Medium</h1>
                   <div className="flex flex-col gap-3 mt-3">
-                    {(menuHover === "Teaware"
-                      ? teawareSubmenuMedium
-                      : goodsSubmenuMedium
-                    ).map((sub) => (
+                    {teawareSubmenuMedium.map((sub, index) => (
                       <Link
                         key={sub.title}
                         href={`/${sub.path}`}
-                        className="underline-center transition text-black font-medium text-2xl"
+                        className="desktop-menu-item underline-center transition text-black font-medium text-2xl"
+                        data-delay={index}
                       >
                         {sub.title}
                       </Link>
@@ -237,14 +245,8 @@ export default function HeaderClient({
               {/* Bên phải: banner cố định */}
               <div className="flex-1">
                 <img
-                  src={
-                    menuHover === "Teaware"
-                      ? "https://cdn.shopify.com/s/files/1/0682/6636/0920/files/banner-exhibition.jpg?v=1762940727"
-                      : "https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Banner.png?v=1762588669"
-                  }
-                  alt={
-                    menuHover === "Teaware" ? "Teaware banner" : "Goods banner"
-                  }
+                  src="https://cdn.shopify.com/s/files/1/0682/6636/0920/files/banner-exhibition.jpg?v=1762940727"
+                  alt="Teaware banner"
                   className="w-full h-[50vh] object-cover rounded-xs shadow-sm"
                 />
               </div>

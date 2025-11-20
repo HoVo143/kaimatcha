@@ -7,7 +7,14 @@ import {
   Product,
   ProductVariant,
 } from "../../lib/shopify/types";
-import { createContext, use, useContext, useMemo, useOptimistic } from "react";
+import {
+  createContext,
+  use,
+  useContext,
+  useMemo,
+  useOptimistic,
+  startTransition,
+} from "react";
 
 type UpdateType = "plus" | "minus" | "delete";
 
@@ -312,9 +319,11 @@ export function CartProvider({
   );
 
   const updateCartItem = (merchandiseId: string, updateType: UpdateType) => {
-    updateOptimisticCart({
-      type: "UPDATE_ITEM",
-      payload: { merchandiseId, updateType },
+    startTransition(() => {
+      updateOptimisticCart({
+        type: "UPDATE_ITEM",
+        payload: { merchandiseId, updateType },
+      });
     });
   };
 

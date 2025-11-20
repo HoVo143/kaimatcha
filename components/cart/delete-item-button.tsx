@@ -8,10 +8,12 @@ import Swal from "sweetalert2";
 export function DeleteItemButton({
   item,
   optimisticUpdate,
+  variant = "icon",
 }: {
   item: CartItem;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   optimisticUpdate: any;
+  variant?: "icon" | "text";
 }) {
   const [message, formAction] = useActionState(removeItem, null);
   const merchandiseId = item.merchandise.id;
@@ -25,7 +27,7 @@ export function DeleteItemButton({
       icon: "warning",
       background: `
         linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14.png?v=1761554661")
+        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14_4e19d17f-152e-4892-b529-fe94b1bd676e.png?v=1762511378")
         center / cover no-repeat
       `,
       showCancelButton: true,
@@ -68,9 +70,17 @@ export function DeleteItemButton({
         type="submit"
         aria-label="Remove cart item"
         disabled={isPending}
-        className="flex h-6 w-6 items-center justify-center rounded-full bg-red-600 cursor-pointer"
+        className={
+          variant === "text"
+            ? "text-xs cursor-pointer text-neutral-500 hover:text-neutral-700 transition-colors disabled:opacity-50"
+            : "flex h-6 w-6 items-center justify-center rounded-full bg-red-600 cursor-pointer disabled:opacity-50"
+        }
       >
-        <XMarkIcon className="mx-px h-4 w-4 text-white " />
+        {variant === "text" ? (
+          "REMOVE"
+        ) : (
+          <XMarkIcon className="mx-px h-4 w-4 text-white " />
+        )}
       </button>
       <p aria-live="polite" className="sr-only" role="status">
         {message}
