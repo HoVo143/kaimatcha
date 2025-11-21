@@ -183,7 +183,7 @@ export default function CartModal() {
                                     ) : null}
                                   </Link>
                                 </div>
-                                <div className="products-price flex items-center justify-between mt-2">
+                                <div className="products-price flex items-center justify-between mt-1">
                                   <Price
                                     className="text-sm font-medium text-black"
                                     amount={item.cost.totalAmount.amount}

@@ -51,8 +51,7 @@ export function EditItemQuantityButton({
         title: "Quantity limit",
         text: "You must have at least one item in your cart. To remove it, please use the delete button instead.",
         background: `
-          linear-gradient(rgb(0 0 0 / 58%), rgb(0 0 0 / 58%)),
-          url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/12.png?v=1761022125")
+          url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System.jpg?v=1762316911")
           center / cover no-repeat
         `,
         confirmButtonText: "OK",

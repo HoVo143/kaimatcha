@@ -24,10 +24,9 @@ export function DeleteItemButton({
     const result = await Swal.fire({
       title: "Remove item?",
       text: `Do you want to remove "${item.merchandise.product.title}" from your cart?`,
-      icon: "warning",
       background: `
         linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/14_4e19d17f-152e-4892-b529-fe94b1bd676e.png?v=1762511378")
+        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System_1.jpg?v=1762323474")
         center / cover no-repeat
       `,
       showCancelButton: true,
@@ -53,7 +52,7 @@ export function DeleteItemButton({
     Swal.fire({
       background: `
         linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/banner_14.png?v=1761554025")
+        url("https://cdn.shopify.com/s/files/1/0682/6636/0920/files/Kai_Matcha_Brand_Identity_System_1.jpg?v=1762323474")
         center / cover no-repeat
       `,
       icon: "success",
