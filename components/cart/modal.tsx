@@ -150,7 +150,7 @@ export default function CartModal() {
                               <Link
                                 href={merchandiseUrl}
                                 onClick={closeCart}
-                                className="relative h-24 w-24 shrink-0 overflow-hidden rounded-sm border border-neutral-200 bg-neutral-100"
+                                className="relative h-24 w-24 shrink-0 overflow-hidden rounded-sm"
                               >
                                 <Image
                                   className="h-full w-full object-cover"

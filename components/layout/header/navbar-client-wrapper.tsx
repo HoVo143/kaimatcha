@@ -119,7 +119,7 @@ export default function HeaderClient({
           isMatchaPage
             ? "fixed top-0 left-0 w-full z-999"
             : "sticky top-0 z-999",
-          isMatchaPage && !scrolled ? "mt-8 md:mt-9" : "mt-0",
+          isMatchaPage && !scrolled ? "mt-8" : "mt-0",
           // chỉ áp dụng flex layout ở mobile, bỏ ở desktop
           "flex items-center justify-between lg:block",
           "p-4 lg:px-10 transition-all duration-500 ease-in-out",
