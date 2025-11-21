@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type ReactElement } from "react";
+import { useState } from "react";
 
 // Payment icons - load từ /public/payment-icons/ hoặc fallback SVG
 // fullWidth: true = không có border/padding, full width để đều hơn
@@ -70,7 +70,7 @@ const PAYMENT_ICONS = [
 
 // SVG Fallback nếu không có image trong /public
 const getFallbackSVG = (name: string) => {
-  const fallbacks: Record<string, ReactElement> = {
+  const fallbacks: Record<string, JSX.Element> = {
     american_express: (
       <svg
         viewBox="0 0 64 40"

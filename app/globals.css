@@ -354,7 +354,7 @@ h2[dir="ltr"] span {
 }
 
 /* Shopify Pages - Apply system font to all pages from Online Store/Pages */
-.shopify-page-content {
+/* .shopify-page-content {
   font-family:
     ui-sans-serif,
     system-ui,
@@ -366,7 +366,7 @@ h2[dir="ltr"] span {
     Arial,
     "Noto Sans",
     sans-serif !important;
-}
+} */
 
 /* FAQ Accordion - Override global styles */
 
