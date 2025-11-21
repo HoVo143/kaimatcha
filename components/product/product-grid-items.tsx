@@ -20,34 +20,34 @@ export default function ProductGridItems({
           className="relative group mb-8 md:mb-10"
         >
           <Grid.Item className="animate-fadeIn">
-            <Link
-              href={`/product/${product.handle}`}
-              className="relative inline-block h-full w-full"
-              prefetch={true}
-            >
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
-                }}
-                src={product.featuredImage?.url}
+          <Link
+            href={`/product/${product.handle}`}
+            className="relative inline-block h-full w-full"
+            prefetch={true}
+          >
+            <GridTileImage
+              alt={product.title}
+              label={{
+                title: product.title,
+                amount: product.priceRange.maxVariantPrice.amount,
+                currencyCode: product.priceRange.maxVariantPrice.currencyCode,
+              }}
+              src={product.featuredImage?.url}
                 secondImage={product.images?.[1]?.url}
-                fill
-                sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-              />
-            </Link>
-            <div
-              className="
+              fill
+              sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            />
+          </Link>
+          <div
+            className="
             absolute bottom-9 md:bottom-12 left-1/7 md:left-1/2 -translate-x-1/2
             md:opacity-0 md:translate-y-6
             md:group-hover:opacity-100 md:group-hover:translate-y-0
             md:transition-all md:duration-500 md:ease-out"
-            >
-              <QuickAddToCart product={product} />
-            </div>
-          </Grid.Item>
+          >
+            <QuickAddToCart product={product} />
+          </div>
+        </Grid.Item>
         </ScrollReveal>
       ))}
     </>
