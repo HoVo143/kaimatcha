@@ -7,7 +7,16 @@ import type { ReactElement } from "react";
 // Payment icons - load từ /public/payment-icons/ hoặc fallback SVG
 // fullWidth: true = không có border/padding, full width để đều hơn
 // borderOnly: true = có border và border-radius nhưng không có padding
-const PAYMENT_ICONS = [
+type PaymentIconConfig = {
+  name: string;
+  label: string;
+  fileName: string;
+  fullWidth: boolean;
+  borderOnly?: boolean;
+  scale?: number;
+};
+
+const PAYMENT_ICONS: PaymentIconConfig[] = [
   // {
   //   name: "american_express",
   //   label: "American Express",
@@ -387,7 +396,7 @@ const getFallbackSVG = (name: string) => {
   return fallbacks[name] || <div className="h-9 w-14 bg-gray-200 rounded" />;
 };
 
-function PaymentIcon({ icon }: { icon: (typeof PAYMENT_ICONS)[0] }) {
+function PaymentIcon({ icon }: { icon: PaymentIconConfig }) {
   const [useFallback, setUseFallback] = useState(false);
 
   // Icons full width không có border/padding
