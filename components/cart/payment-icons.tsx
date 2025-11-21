@@ -2,24 +2,25 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import type { ReactElement } from "react";
 
 // Payment icons - load từ /public/payment-icons/ hoặc fallback SVG
 // fullWidth: true = không có border/padding, full width để đều hơn
 // borderOnly: true = có border và border-radius nhưng không có padding
 const PAYMENT_ICONS = [
-  {
-    name: "american_express",
-    label: "American Express",
-    fileName: "american_express.svg",
-    fullWidth: false,
-    borderOnly: true,
-  },
-  {
-    name: "diners_club",
-    label: "Diners Club",
-    fileName: "diners_club.svg",
-    fullWidth: false,
-  },
+  // {
+  //   name: "american_express",
+  //   label: "American Express",
+  //   fileName: "american_express.svg",
+  //   fullWidth: false,
+  //   borderOnly: true,
+  // },
+  // {
+  //   name: "diners_club",
+  //   label: "Diners Club",
+  //   fileName: "diners_club.svg",
+  //   fullWidth: false,
+  // },
   {
     name: "google_pay",
     label: "Google Pay",
@@ -46,14 +47,14 @@ const PAYMENT_ICONS = [
     fileName: "apple_pay.svg",
     fullWidth: true,
   },
-  {
-    name: "discover",
-    label: "Discover",
-    fileName: "discover.svg",
-    fullWidth: false,
-    borderOnly: true,
-    scale: 0.85,
-  },
+  // {
+  //   name: "discover",
+  //   label: "Discover",
+  //   fileName: "discover.svg",
+  //   fullWidth: false,
+  //   borderOnly: true,
+  //   scale: 0.85,
+  // },
   {
     name: "mastercard",
     label: "Mastercard",
@@ -70,7 +71,7 @@ const PAYMENT_ICONS = [
 
 // SVG Fallback nếu không có image trong /public
 const getFallbackSVG = (name: string) => {
-  const fallbacks: Record<string, JSX.Element> = {
+  const fallbacks: Record<string, ReactElement> = {
     american_express: (
       <svg
         viewBox="0 0 64 40"
@@ -111,35 +112,35 @@ const getFallbackSVG = (name: string) => {
         </text>
       </svg>
     ),
-    diners_club: (
-      <svg
-        viewBox="0 0 64 40"
-        className="h-9 w-14"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <rect
-          width="64"
-          height="40"
-          rx="4"
-          fill="#fff"
-          stroke="#E5E7EB"
-          strokeWidth="1"
-        />
-        <ellipse cx="32" cy="20" rx="11" ry="8" fill="#0079BE" />
-        <rect x="28" y="14" width="8" height="12" fill="#fff" />
-        <text
-          x="32"
-          y="24"
-          fontSize="12"
-          fill="#0079BE"
-          textAnchor="middle"
-          fontWeight="700"
-          fontFamily="Arial, sans-serif"
-        >
-          D
-        </text>
-      </svg>
-    ),
+    // diners_club: (
+    //   <svg
+    //     viewBox="0 0 64 40"
+    //     className="h-9 w-14"
+    //     preserveAspectRatio="xMidYMid meet"
+    //   >
+    //     <rect
+    //       width="64"
+    //       height="40"
+    //       rx="4"
+    //       fill="#fff"
+    //       stroke="#E5E7EB"
+    //       strokeWidth="1"
+    //     />
+    //     <ellipse cx="32" cy="20" rx="11" ry="8" fill="#0079BE" />
+    //     <rect x="28" y="14" width="8" height="12" fill="#fff" />
+    //     <text
+    //       x="32"
+    //       y="24"
+    //       fontSize="12"
+    //       fill="#0079BE"
+    //       textAnchor="middle"
+    //       fontWeight="700"
+    //       fontFamily="Arial, sans-serif"
+    //     >
+    //       D
+    //     </text>
+    //   </svg>
+    // ),
     google_pay: (
       <svg
         viewBox="0 0 64 40"
@@ -290,49 +291,49 @@ const getFallbackSVG = (name: string) => {
         </text>
       </svg>
     ),
-    discover: (
-      <svg
-        viewBox="0 0 64 40"
-        className="h-9 w-14"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <rect
-          width="64"
-          height="40"
-          rx="4"
-          fill="#000"
-          stroke="#E5E7EB"
-          strokeWidth="1"
-        />
-        <text
-          x="32"
-          y="22"
-          fontSize="10"
-          fill="#fff"
-          textAnchor="middle"
-          fontWeight="700"
-          fontFamily="Arial, sans-serif"
-          letterSpacing="0.5"
-        >
-          DISCOVER
-        </text>
-        {/* Orange/yellow wave arc below text */}
-        <defs>
-          <linearGradient id="discoverWave" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#FF6000" />
-            <stop offset="50%" stopColor="#FF8C00" />
-            <stop offset="100%" stopColor="#FFB800" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M10 30 Q32 27, 54 30"
-          stroke="url(#discoverWave)"
-          strokeWidth="3.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
+    // discover: (
+    //   <svg
+    //     viewBox="0 0 64 40"
+    //     className="h-9 w-14"
+    //     preserveAspectRatio="xMidYMid meet"
+    //   >
+    //     <rect
+    //       width="64"
+    //       height="40"
+    //       rx="4"
+    //       fill="#000"
+    //       stroke="#E5E7EB"
+    //       strokeWidth="1"
+    //     />
+    //     <text
+    //       x="32"
+    //       y="22"
+    //       fontSize="10"
+    //       fill="#fff"
+    //       textAnchor="middle"
+    //       fontWeight="700"
+    //       fontFamily="Arial, sans-serif"
+    //       letterSpacing="0.5"
+    //     >
+    //       DISCOVER
+    //     </text>
+    //     {/* Orange/yellow wave arc below text */}
+    //     <defs>
+    //       <linearGradient id="discoverWave" x1="0%" y1="0%" x2="100%" y2="0%">
+    //         <stop offset="0%" stopColor="#FF6000" />
+    //         <stop offset="50%" stopColor="#FF8C00" />
+    //         <stop offset="100%" stopColor="#FFB800" />
+    //       </linearGradient>
+    //     </defs>
+    //     <path
+    //       d="M10 30 Q32 27, 54 30"
+    //       stroke="url(#discoverWave)"
+    //       strokeWidth="3.5"
+    //       fill="none"
+    //       strokeLinecap="round"
+    //     />
+    //   </svg>
+    // ),
     mastercard: (
       <svg
         viewBox="0 0 64 40"
