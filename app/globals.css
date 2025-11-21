@@ -63,7 +63,8 @@ footer .bottom-line,
 .font-family-text-canela p,
 .font-family-text-canela li,
 .font-text-product-detail,
-.font-family-text-canela {
+.font-family-text-canela,
+.shopify-page-content {
   font-family: "Canela Text Web", serif !important;
 }
 
