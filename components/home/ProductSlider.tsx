@@ -62,11 +62,11 @@ function ProductItem({ product }: { product: Product }) {
         </div>
       </div>
       <div className="mt-4">
-        <h3 className="text-black text-base md:text-lg font-medium tracking-wide uppercase product-slider-title">
+        <h3 className="text-black text-base md:text-lg font-bold tracking-wide uppercase product-slider-title">
           {product.title}
         </h3>
         <Price
-          className="text-black text-sm font-medium tracking-wide mt-2"
+          className="text-gray-500 text-md font-medium tracking-wide mt-2"
           amount={product.priceRange?.minVariantPrice?.amount}
           currencyCode={product.priceRange?.minVariantPrice?.currencyCode}
           currencyCodeClassName="hidden src[275px]/label:inline"

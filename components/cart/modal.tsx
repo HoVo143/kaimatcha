@@ -17,6 +17,7 @@ import { useFormStatus } from "react-dom";
 import { createCartAndSetCookie, redirectToCheckout } from "./actions";
 import LoadingDots from "../ui/loading-dots";
 import FreeShippingBanner from "./free-shipping-banner";
+import PaymentIcons from "./payment-icons";
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -86,23 +87,25 @@ export default function CartModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white text-black backdrop-blur-xl md:w-[440px] ">
               {/* Header */}
-              <div className="products-price flex items-center justify-between px-4 pt-3 pb-2 border-b border-neutral-200">
-                <p className="text-md font-medium uppercase">
-                  Cart ({cart?.totalQuantity || 0})
-                </p>
-                <button aria-label="Close cart" onClick={closeCart}>
-                  <CloseCart />
-                </button>
-              </div>
+              <div className="pt-3 pb-2 border-b border-neutral-200">
+                <div className="products-price flex items-center justify-between px-4 ">
+                  <p className="text-sm font-medium uppercase">
+                    Cart ({cart?.totalQuantity || 0})
+                  </p>
+                  <button aria-label="Close cart" onClick={closeCart}>
+                    <CloseCart />
+                  </button>
+                </div>
 
-              {/* Free Shipping Banner */}
-              {cart && cart.lines.length > 0 && (
-                <FreeShippingBanner
-                  qualifiesForFreeShipping={qualifiesForFreeShipping}
-                  remaining={remaining}
-                  progress={progress}
-                />
-              )}
+                {/* Free Shipping Banner */}
+                {cart && cart.lines.length > 0 && (
+                  <FreeShippingBanner
+                    qualifiesForFreeShipping={qualifiesForFreeShipping}
+                    remaining={remaining}
+                    progress={progress}
+                  />
+                )}
+              </div>
 
               {!cart || cart.lines.length === 0 ? (
                 <div className="flex items-center gap-2 mt-24 justify-center">
@@ -236,6 +239,7 @@ export default function CartModal() {
                     <form action={redirectToCheckout}>
                       <CheckoutButton />
                     </form>
+                    <PaymentIcons />
                     <p className="text-sm text-neutral-500 text-center mt-3">
                       Shipping, taxes, and discount codes are calculated at
                       checkout

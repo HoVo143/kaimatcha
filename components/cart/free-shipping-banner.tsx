@@ -67,7 +67,7 @@ export default function FreeShippingBanner({
   }, [showConfetti]);
 
   return (
-    <div className="px-4 pt-3 pb-2 bg-white relative">
+    <div className="px-4 pb-2 bg-white relative">
       {showConfetti && (
         <div
           ref={confettiRef}
