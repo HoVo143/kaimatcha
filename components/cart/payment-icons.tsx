@@ -7,7 +7,7 @@ const PAYMENT_ICONS = [
     name: "visa",
     label: "Visa",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#1A1F71" />
         <text
           x="19"
@@ -26,7 +26,7 @@ const PAYMENT_ICONS = [
     name: "mastercard",
     label: "Mastercard",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#EB001B" />
         <circle cx="14" cy="12" r="6" fill="#F79E1B" />
         <circle cx="24" cy="12" r="6" fill="#FF5F00" />
@@ -37,7 +37,7 @@ const PAYMENT_ICONS = [
     name: "american_express",
     label: "American Express",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#006FCF" />
         <text
           x="19"
@@ -56,7 +56,7 @@ const PAYMENT_ICONS = [
     name: "paypal",
     label: "PayPal",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#003087" />
         <text
           x="19"
@@ -75,7 +75,7 @@ const PAYMENT_ICONS = [
     name: "apple_pay",
     label: "Apple Pay",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#000" />
         <text
           x="19"
@@ -94,7 +94,7 @@ const PAYMENT_ICONS = [
     name: "google_pay",
     label: "Google Pay",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#4285F4" />
         <text
           x="19"
@@ -113,7 +113,7 @@ const PAYMENT_ICONS = [
     name: "shopify_pay",
     label: "Shop Pay",
     svg: (
-      <svg viewBox="0 0 38 24" className="h-7 w-auto">
+      <svg viewBox="0 0 38 24" className="h-8 w-auto">
         <rect width="38" height="24" rx="2" fill="#95BF47" />
         <text
           x="19"
@@ -132,7 +132,7 @@ const PAYMENT_ICONS = [
 
 export default function PaymentIcons() {
   return (
-    <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
+    <div className="flex items-center justify-between gap-1 mt-3 flex-wrap">
       {PAYMENT_ICONS.map((icon) => (
         <div
           key={icon.name}
