@@ -96,7 +96,7 @@ export default function FreeShippingBanner({
       )}
       {qualifiesForFreeShipping ? (
         <div className="space-y-2 relative z-10">
-          <p className="text-lg italic font-medium text-emerald-600">
+          <p className="text-sm md:text-lg italic font-medium text-emerald-600">
             Congratulations! Your order qualifies for free shipping
           </p>
           <div className="w-full h-2 bg-emerald-100 rounded-full overflow-hidden">
@@ -105,7 +105,7 @@ export default function FreeShippingBanner({
         </div>
       ) : (
         <div className="space-y-2">
-          <p className="text-lg italic font-medium text-neutral-700">
+          <p className="text-sm md:text-lg italic font-medium text-neutral-700">
             You are{" "}
             <span className="font-semibold">${remaining.toFixed(2)}</span> away
             from free shipping.

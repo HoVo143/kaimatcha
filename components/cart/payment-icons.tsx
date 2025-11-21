@@ -42,7 +42,7 @@ const PAYMENT_ICONS = [
         <text
           x="19"
           y="15"
-          fontSize="7"
+          fontSize="10"
           fill="#fff"
           textAnchor="middle"
           fontWeight="bold"
@@ -61,7 +61,7 @@ const PAYMENT_ICONS = [
         <text
           x="19"
           y="16"
-          fontSize="9"
+          fontSize="10"
           fill="#009CDE"
           textAnchor="middle"
           fontWeight="bold"
@@ -99,7 +99,7 @@ const PAYMENT_ICONS = [
         <text
           x="19"
           y="15"
-          fontSize="8"
+          fontSize="10"
           fill="#fff"
           textAnchor="middle"
           fontWeight="600"
@@ -114,16 +114,16 @@ const PAYMENT_ICONS = [
     label: "Shop Pay",
     svg: (
       <svg viewBox="0 0 38 24" className="h-8 w-auto">
-        <rect width="38" height="24" rx="2" fill="#95BF47" />
+        <rect width="38" height="24" rx="2" fill="rgb(90, 49, 244)" />
         <text
           x="19"
           y="15"
-          fontSize="8"
+          fontSize="10"
           fill="#fff"
           textAnchor="middle"
           fontWeight="600"
         >
-          Shop Pay
+          Shop
         </text>
       </svg>
     ),
@@ -134,11 +134,7 @@ export default function PaymentIcons() {
   return (
     <div className="flex items-center justify-between gap-1 mt-3 flex-wrap">
       {PAYMENT_ICONS.map((icon) => (
-        <div
-          key={icon.name}
-          className="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity"
-          title={icon.label}
-        >
+        <div key={icon.name} className="h-7 w-auto" title={icon.label}>
           {icon.svg}
         </div>
       ))}

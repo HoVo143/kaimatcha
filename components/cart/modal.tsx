@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
@@ -260,7 +261,7 @@ function CheckoutButton() {
 
   return (
     <button
-      className="block w-full rounded-sm bg-black p-3.5 text-center text-sm font-medium uppercase tracking-wide text-white hover:bg-neutral-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="block w-full rounded-xs bg-black p-3.5 text-center text-sm font-medium uppercase tracking-wide text-white cursor-pointer hover:bg-neutral-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       type="submit"
       disabled={pending}
     >
